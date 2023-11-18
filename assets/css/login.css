@@ -73,13 +73,21 @@ small {font-size: 0.750rem; /* 12px */}
 }
 
 .login-form .form-action {
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: var(--primaryo-color);
   /* box-shadow: 3px 2px rgb(45, 44, 44); */
 }
 
-button.btn{
-    color: white;
+.btn-brown {
+  background-color: var(--primaryo-color); /* saddle brown */
+  color: #fff; /* white text color */
+  border-color: var(--primaryo-color); /* saddle brown border */
+}
+
+/* If you want to change the hover state as well */
+.btn-brown:hover {
+  background-color: var(--accento-color); /* sienna, a lighter brown */
+  border-color: var(--accento-color); /* sienna border */
 }
 
 a {

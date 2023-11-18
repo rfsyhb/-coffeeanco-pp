@@ -26,7 +26,7 @@
                             <input type="text" name="password" class="form-control my-2 py-2" placeholder="Password" />
                         </div>
                         <div class="form-action"> <!-- Container for the button -->
-                            <button class="btn">Login</button>
+                            <button class="btn btn-brown">Login</button>
                         </div>
                         <a href="path_to_your_registration_script.php" class="register-link text-decoration-none">Register</a>
                     </div>

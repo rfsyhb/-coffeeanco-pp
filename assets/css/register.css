@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:700|Poppins:400');
+
+@media (max-width: 767px) { /* For smaller devices */
+    .form-action {
+        width: 100%; /* Full width for the button */
+        margin-top: 10px; /* Space above the button */
+    }
+}
+
+:root{
+  --texto-color: #180202;
+  --backgroundo-color: #FCFBF9;
+  --primaryo-color: #6E493A;
+  --secondaryo-color: #A17A74;
+  --accento-color: #D08770;  
+}
+
+*{
+  font-family: 'Poppins', sans-serif;
+  margin:0; padding:0;
+  box-sizing: border-box;
+  outline: none; border:none;
+  text-decoration: none;
+}
+
+body {
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Poppins';
+  font-weight: 700;
+}
+
+html {font-size: 100%;} /* 16px */
+h1 {font-size: 4.210rem; /* 67.36px */}
+h2 {font-size: 3.158rem; /* 50.56px */}
+h3 {font-size: 2.369rem; /* 37.92px */}
+h4 {font-size: 1.777rem; /* 28.48px */}
+h5 {font-size: 1.333rem; /* 21.28px */}
+small {font-size: 0.750rem; /* 12px */}
+
+.register-form {
+    background-color: rgb(255, 255, 255);
+    width: 45%;
+    border-radius: 4px;
+    margin: 120px auto;
+    padding: 50px;
+    box-shadow: 10px 10px 5px rgb(81, 81, 81);
+    position: relative; /* Added this line */
+}
+
+.form-action{
+    margin-bottom: -8px;
+}
+
+.btn-brown {
+    background-color: var(--primaryo-color); /* saddle brown */
+    color: #fff; /* white text color */
+    border-color: var(--primaryo-color); /* saddle brown border */
+}
+
+/* If you want to change the hover state as well */
+.btn-brown:hover {
+    background-color: var(--accento-color); /* sienna, a lighter brown */
+    border-color: var(--accento-color); /* sienna border */
+}
