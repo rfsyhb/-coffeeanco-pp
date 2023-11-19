@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($admin_row && password_verify($password, $admin_row['password'])) {
         $_SESSION['username'] = $username;
         $_SESSION['status'] = "admin";
-        header("location:index.php");
+        header("location:admin/index.php");
         exit();
     }
     // Verify customer password

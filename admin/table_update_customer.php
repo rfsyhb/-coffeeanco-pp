@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username'])) {
-    header("Location: Login/login.php");
+if ($_SESSION['status'] != "admin") {
+    header("Location: ../login.php");
 }
 
-include "../config.php";
+include "../includes/config.php";
 ?>
 
 <!DOCTYPE html>
@@ -26,8 +26,8 @@ include "../config.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
-    <link href="assets/css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>\
+    <link href="../assets/css/admin.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -62,16 +62,17 @@ include "../config.php";
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-
-                        <!-- Menu 1 -->
+                        <!-- produk -->
                         <a class="nav-link collapsed" href="display_product.php" role="button">
                             <i class="fas fa-store-alt me-2"></i>Products
                         </a>
+                        <!-- order -->
                         <a class="nav-link collapsed" href="display_order.php" role="button">
                             <i class="fas fa-shopping-cart me-2"></i>Orders
                         </a>
-                        <a class="nav-link collapsed" href="display_subscribe.php" role="button">
-                            <i class="fas fa-sharp fa-solid fa-circle-user me-2"></i>Subscribers
+                        <!-- pengunjung -->
+                        <a class="nav-link collapsed" href="display_customer.php" role="button">
+                            <i class="fas fa-sharp fa-solid fa-circle-user me-2"></i>Customer
                         </a>
 
                     </div>
@@ -80,7 +81,7 @@ include "../config.php";
                     <div class="small">Logged in as:</div>
                     <i class=""></i>
                     <?php
-                    $query = mysqli_prepare($connect, "SELECT name FROM login_admin WHERE username=?");
+                    $query = mysqli_prepare($connect, "SELECT name FROM admin WHERE username=?");
                     mysqli_stmt_bind_param($query, "s", $_SESSION['username']);
                     mysqli_stmt_execute($query);
                     $result = mysqli_stmt_get_result($query);
@@ -109,8 +110,8 @@ include "../config.php";
                         </div>
                         <div class="mb-3">
                             <label>Subscriber Email</label>
-                            <input type="text" name="email_subs" id="email_subs" value="<?php echo $data['email_subs']; ?>"
-                                class="form-control" require>
+                            <input type="text" name="email_subs" id="email_subs"
+                                value="<?php echo $data['email_subs']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
                             <input type="submit" value="Update Order" class="btn btn-sm btn-primary" />&nbsp;

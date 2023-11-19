@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username'])) {
-    header("Location: Login/login.php");
+if ($_SESSION['status'] != "admin") {
+    header("Location: ../login.php");
 }
 
-include "../config.php";
+include "../includes/config.php";
 ?>
 
 <!DOCTYPE html>
@@ -26,8 +26,8 @@ include "../config.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
-    <link href="assets/css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>\
+    <link href="../assets/css/admin.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -47,7 +47,7 @@ include "../config.php";
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="Login/logout.php">Logout</a></li>
+                    <li><a class="dropdown-item" href="../includes/logout.php">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -57,21 +57,22 @@ include "../config.php";
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        
+
                         <a class="nav-link mt-3" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-
-                        <!-- Menu 1 -->
+                        <!-- produk -->
                         <a class="nav-link collapsed" href="display_product.php" role="button">
-                        <i class="fas fa-store-alt me-2"></i>Products
+                            <i class="fas fa-store-alt me-2"></i>Products
                         </a>
+                        <!-- order -->
                         <a class="nav-link collapsed" href="display_order.php" role="button">
                             <i class="fas fa-shopping-cart me-2"></i>Orders
                         </a>
-                        <a class="nav-link collapsed" href="display_subscribe.php" role="button">
-                            <i class="fas fa-sharp fa-solid fa-circle-user me-2"></i>Subscribers
+                        <!-- pengunjung -->
+                        <a class="nav-link collapsed" href="display_customer.php" role="button">
+                            <i class="fas fa-sharp fa-solid fa-circle-user me-2"></i>Customer
                         </a>
 
                     </div>
@@ -80,7 +81,7 @@ include "../config.php";
                     <div class="small">Logged in as:</div>
                     <i class=""></i>
                     <?php
-                    $query = mysqli_prepare($connect, "SELECT name FROM login_admin WHERE username=?");
+                    $query = mysqli_prepare($connect, "SELECT name FROM admin WHERE username=?");
                     mysqli_stmt_bind_param($query, "s", $_SESSION['username']);
                     mysqli_stmt_execute($query);
                     $result = mysqli_stmt_get_result($query);
@@ -92,41 +93,58 @@ include "../config.php";
         </div>
         <div id="layoutSidenav_content">
             <main>
-                
-                <div class="row mx-5">
-                    <h3 class="fs-4 mb-3">Products</h3>
+                <div class="row mx-5 mt-3">
+                    <h3 class="fs-4 mb-3 ">Products</h3>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" width="80">ID</th>
                                     <th scope="col">Product</th>
+                                    <th scope="col">Type</th>
                                     <th scope="col">Description</th>
+                                    <th scope="col">Stock</th>
                                     <th scope="col" width="80">Price</th>
                                     <th scope="col" width="112">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    $datas = mysqli_query($connect, "SELECT * FROM product");
-                                    while($data = mysqli_fetch_array($datas)) {
-                                ?>
-                                        <tr>
-                                            <td><?php echo $data['prod_id']; ?></td>
-                                            <td><?php echo $data['prod_name']; ?></td>
-                                            <td><?php echo $data['prod_desc']; ?></td>
-                                            <td>$<?php echo $data['prod_price']; ?></td>
-                                            <td>
-                                                <a href="table_update_product.php?prod_id=<?php echo $data['prod_id']; ?> " class="btn-sm btn-primary">
-                                                    <span class="fas fa-edit">
-                                                </a>
-                                                <a href="delete_product.php?prod_id=<?php echo $data['prod_id']; ?>" class="btn-sm btn-danger">
-                                                    <span class="fas fa-trash">
-                                                </a>
-                                            </td>
-                                        </tr>
-                                <?php
-                                    }
+                                $datas = mysqli_query($connect, "SELECT * FROM produk");
+                                while ($data = mysqli_fetch_array($datas)) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $data['prod_id']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['prod_name']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['prod_type']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['prod_desc']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['prod_stock']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['prod_price']; ?>
+                                        </td>
+                                        <td>
+                                            <a href="table_update_product.php?prod_id=<?php echo $data['prod_id']; ?> "
+                                                class="btn-sm btn-primary">
+                                                <span class="fas fa-edit">
+                                            </a>
+                                            <a href="delete_product.php?prod_id=<?php echo $data['prod_id']; ?>"
+                                                class="btn-sm btn-danger">
+                                                <span class="fas fa-trash">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
                                 ?>
                             </tbody>
                         </table>
@@ -145,7 +163,7 @@ include "../config.php";
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
+    <script src="../assets/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>
