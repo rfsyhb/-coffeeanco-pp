@@ -16,7 +16,7 @@
     <div class="container mb-5">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="register-form">
-                <form action="register.php" method="post">
+                <form action="" method="post">
                     <h3>Daftar User</h3>
                     <div class="form-group">
                         <input type="text" id="name" name="name" class="form-control my-2 py-2" placeholder="Name"
@@ -51,12 +51,11 @@
                             placeholder="Province" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" id="postal code" name="postal code" class="form-control my-2 py-2"
+                        <input type="text" id="postalcode" name="postalcode" class="form-control my-2 py-2"
                             placeholder="Postal Code" required>
                     </div>
                     <div class="form-action d-flex justify-content-end mt-3"> <!-- Container for the button -->
-                        <button
-                            class="btn btn-brown shadow">Register</button>
+                        <button class="btn btn-brown shadow">Register</button>
                     </div>
                 </form>
             </div>
@@ -65,3 +64,33 @@
 </body>
 
 </html>
+
+<?php
+include 'includes/config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = "TES01";
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $phone = $_POST["phone"];
+    $address = $_POST["address"];
+    $city = $_POST["city"];
+    $province = $_POST["province"];
+    $postalcode = $_POST["postalcode"];
+
+    // Hash password sebelum disimpan di database (disarankan)
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Query SQL untuk memasukkan data admin ke dalam tabel Admin
+    $sql = "INSERT INTO pengunjung (cust_name, cust_email, cust_username, cust_password, cust_phone, cust_address, cust_city, cust_province, cust_postalcode) VALUES ('$name', '$email', '$username', '$hashed_password', '$phone', '$address', '$city', '$province', '$postalcode')";
+
+    if ($connect->query($sql) === TRUE) {
+        echo "Pendaftaran pengunjung berhasil.";
+        header("location:index.php");
+    } else {
+        echo "Error: " . $sql . "<br>" . $connect->error;
+    }
+}
+?>

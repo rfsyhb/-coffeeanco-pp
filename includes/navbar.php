@@ -35,7 +35,7 @@
         </ul>
 
         <div class="main">
-            <a href="#" class="cart">
+            <a href="cart.php" class="cart">
                 <i class="ri-shopping-cart-line"></i>
             </a>
             <div class="bx bx-menu" id="menu-icon"></div>

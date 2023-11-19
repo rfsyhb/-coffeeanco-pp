@@ -1,10 +1,19 @@
 html,
 body {
-    min-height: 100%;
-    /* Memastikan halaman minimal setinggi viewport */
-    position: relative;
-    /* Membuat posisi body relatif agar footer dapat diabsolutkan */
+    height: 100%;
+    margin: 0;
+    display: flex !important;
+    flex-direction: column !important;
 }
+
+#contents {
+    flex: 1 0 auto;
+}
+
+#footers {
+    flex-shrink: 0;
+}
+
 
 .button-action {
     border-radius: 10px;
@@ -20,6 +29,7 @@ body {
     border-color: var(--primaryo-color);
     /* saddle brown border */
 }
+
 
 .account-page {
     padding: 30px 0;
