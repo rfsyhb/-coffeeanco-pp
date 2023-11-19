@@ -1,0 +1,15 @@
+.card-img-top-wrapper {
+    position: relative;
+    width: 100%;    
+    padding-top: 100%; /* The padding-top trick to maintain aspect ratio */
+    background: #f8f9fa; /* Optional: background color for the wrapper */
+}
+
+.card-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will cover the area of the wrapper without losing aspect ratio */
+}

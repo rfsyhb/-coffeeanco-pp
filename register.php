@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="register-form">
                 <form action="register.php" method="post">

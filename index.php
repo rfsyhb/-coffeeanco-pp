@@ -11,6 +11,8 @@
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" /> -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- AOS Animate -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <title>Document</title>
 </head>
 
@@ -49,7 +51,6 @@
 
   <!-- vendia -->
 
-
   <section class="bg-secondary-dark" style="background-color: #111215 !important;">
     <div class="position-relative">
       <img class="d-none d-lg-block position-absolute top-0 start-0 h-100 img-fluid col-4 col-lg-5"
@@ -85,8 +86,7 @@
 
   <!-- Flaro -->
 
-  <section class="py-16 position-relative overflow-hidden"><img class="position-absolute top-0 start-0 h-100"
-      src="../flaro-assets/images/footers/gradient4.svg" alt="">
+  <section class="py-16 position-relative overflow-hidden">
     <div class="container position-relative">
       <div
         class="d-none d-md-inline-flex flex-wrap position-absolute top-50 start-50 translate-middle justify-content-center"
@@ -124,6 +124,7 @@
               </svg></a></div>
         </div>
       </div>
+      <p class="copyright small">This website is developed by Rafi Syihab © 2023</p>
     </div>
   </section>
 

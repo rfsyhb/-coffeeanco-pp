@@ -21,16 +21,16 @@
         </a>
         <ul class="navbarun">
             <li>
-                <a href="#" class="baten">Home</a>
+                <a href="index.php" class="baten">Home</a>
             </li>
             <li>
-                <a href="#" class="baten">Product</a>
+                <a href="products.php" class="baten">Product</a>
             </li>
             <li>
-                <a href="#" class="baten">Learn</a>
+                <a href="coffee_info.php" class="baten">Learn</a>
             </li>
             <li>
-                <a href="#" class="baten">Account</a>
+                <a href="user_profile.php" class="baten">Account</a>
             </li>
         </ul>
 
