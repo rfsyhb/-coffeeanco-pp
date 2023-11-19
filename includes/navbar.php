@@ -19,18 +19,18 @@
         <a href="#" class="logo">
             <i class="ri-shopping-bag-2-line"></i><span>CoffeeanCo</span>
         </a>
-        <ul class="navbar">
+        <ul class="navbarun">
             <li>
-                <a href="#" class="btn">Home</a>
+                <a href="#" class="baten">Home</a>
             </li>
             <li>
-                <a href="#" class="btn">Product</a>
+                <a href="#" class="baten">Product</a>
             </li>
             <li>
-                <a href="#" class="btn">Learn</a>
+                <a href="#" class="baten">Learn</a>
             </li>
             <li>
-                <a href="#" class="btn">Account</a>
+                <a href="#" class="baten">Account</a>
             </li>
         </ul>
 

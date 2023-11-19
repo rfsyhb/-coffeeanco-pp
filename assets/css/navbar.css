@@ -24,13 +24,15 @@ header{
     width: 100%;
     top: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 10001;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: transparent;
     padding: 28px 12%;
     transform: all .50s ease;
+    border-bottom: 1px solid transparent; /* Border transparan di awal */
+    transition: background-color 0.2s, opacity 0.2s border-color 0.2s; /* Transisi untuk border */
 }
 
 .logo{
@@ -39,7 +41,7 @@ header{
 }
 
 .logo i{
-    color: var(--main-color);
+    color: var(--text-color);
     font-size: 28px;
     margin-right: 3px;
 }
@@ -50,20 +52,27 @@ header{
     font-weight: 600;
 }
 
-.navbar{
-    display: flex;
+a{
+    text-decoration: none !important;
 }
 
-.navbar a{
+.navbarun{
+    display: flex;
+    margin-left: auto;
+    margin-bottom: 0;
+}
+
+.navbarun a{
     color: var(--text-color);
     font-size: 1.1rem;
     font-weight: 500;
     padding: 5px 0;
     margin: 0px 30px;
     transition: all .50s ease;
+    text-decoration: none;
 }
 
-.navbar a:hover{
+.navbarun a:hover{
     color: var(--main-color);
 }
 
@@ -79,6 +88,7 @@ header{
     font-size: 1.1rem;
     font-weight: 500;
     transition: all .50s ease;
+    text-decoration: none;
 }
 
 .main a:hover{
@@ -99,7 +109,7 @@ header{
 }
 
 .cart{
-    color: var(--main-color);
+    color: var(--text-color);
     font-size: 28px;
     margin-right: 7px;
 }
@@ -109,22 +119,22 @@ header{
         padding: 14px 2%;
         transition: .2s;
     }
-    .navbar a{
+    .navbarun a{
         padding: 5px 0;
         margin: 0px 20px;
     }
 }
 
-@media (max-width: 1090px){
+@media (max-width: 1090px) {
     #menu-icon{
         display: block;
     }
-    .navbar{
-        position: absolute;
+    .navbarun{
+        position: absolute; 
         top: 100%;
         right: -100%;
         width: 270px;
-        height: 23vh;
+        height: 315%;
         background: var(--main-color);
         display: flex;
         flex-direction: column;
@@ -132,20 +142,26 @@ header{
         border-radius: 10px;
         transform: all .50s ease;
     }
-    .navbar a{
+    .navbarun a{
         display: block;
         margin: 12px 0;
         padding: 0px 25px;
         transform: all .50s ease;
+        margin-left: -5px;
     }
-    .navbar a:hover{
+    .navbarun a:hover{
         color: var(--bg-color);
         transform: translateY(5px);
     }
-    .navbar a.cart{
+    .navbarun a.cart{
         color: var(--text-color);
     }
-    .navbar.open{
+    .navbarun.open{
         right: 2%;
     }
+}
+
+header.scrolled {
+    border-color: #161616; /* Ganti dengan warna border yang Anda inginkan */
+    background-color: rgb(238, 221, 195, 0.9);
 }
