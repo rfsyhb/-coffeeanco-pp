@@ -20,9 +20,9 @@
         <!-- This will make the div take up full viewport height and center its children vertically -->
         <section class="w-100"> <!-- This will ensure the section takes the full width -->
             <section class="container h-100">
-                <div class="row h-100">
+                <div class="row h-100 align-items-center justify-content-center">
                     <!-- Image Column -->
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-6 d-flex justify-content-center">
                         <img class="img-fluid d-block w-100" src="assets/images/coffeebagdote.png" alt=""
                             style="object-fit: cover;">
                     </div>
@@ -61,8 +61,9 @@
                                 <!-- Up-sell Product 2 -->
                                 <div class="col-6 col-lg-3 mb-3">
                                     <div class="card h-100">
-                                        <img class="card-img-top" src="path_to_upsell_product_image_2.jpg"
-                                            alt="Product 2">
+                                        <div class="card-img-top-wrapper">
+                                            <img class="card-img" src="assets/images/coffeeroaster.png" alt="Product 2">
+                                        </div>
                                         <div class="card-body text-center">
                                             <h6 class="card-title">Product 2</h6>
                                             <p class="card-text">$29.99</p>
@@ -72,8 +73,9 @@
                                 <!-- Up-sell Product 3 -->
                                 <div class="col-6 col-lg-3 mb-3">
                                     <div class="card h-100">
-                                        <img class="card-img-top" src="path_to_upsell_product_image_3.jpg"
-                                            alt="Product 3">
+                                        <div class="card-img-top-wrapper">
+                                            <img class="card-img" src="assets/images/coffeeroaster.png" alt="Product 3">
+                                        </div>
                                         <div class="card-body text-center">
                                             <h6 class="card-title">Product 3</h6>
                                             <p class="card-text">$39.99</p>
@@ -83,8 +85,9 @@
                                 <!-- Up-sell Product 4 -->
                                 <div class="col-6 col-lg-3 mb-3">
                                     <div class="card h-100">
-                                        <img class="card-img-top" src="path_to_upsell_product_image_4.jpg"
-                                            alt="Product 4">
+                                        <div class="card-img-top-wrapper">
+                                            <img class="card-img" src="assets/images/coffeeroaster.png" alt="Product 2">
+                                        </div>
                                         <div class="card-body text-center">
                                             <h6 class="card-title">Product 4</h6>
                                             <p class="card-text">$49.99</p>
@@ -138,6 +141,8 @@
             </div>
         </div>
     </header> -->
+    <?php include 'includes/footer.php'; ?>
+    <script type="text/javascript" src="assets/js/navbarscript.js"></script>
 </body>
 
 </html>

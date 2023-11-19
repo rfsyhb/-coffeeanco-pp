@@ -4,49 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/uprofile.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <title>Document</title>
 </head>
 
 <body>
-    <header>
-        <!-- navbar -->
-    </header>
+    <!-- navbar -->
+    <?php include 'includes/navbar.php'; ?>
+    <!-- End of the navbar section -->
 
-    <h1>My Account</h1>
-    <div class="wrapper">
-        <div class="left">
-            <?php
-            // Your MySQL connection code here
-            // Assuming you have a connection variable $conn
-            
-            // Example of fetching data from the database
-            $query = "SELECT cust_name, cust_email, cust_address, cust_city, cust_province, cust_postalcode FROM pengunjung WHERE cust_id = ?";
-            // Use prepared statement to prevent SQL injection
-            if ($stmt = $conn->prepare($query)) {
-                // Assuming you have a session or a variable that stores the customer ID
-                $stmt->bind_param("i", $customerID);
-                $stmt->execute();
-                $stmt->bind_result($cust_name, $cust_email, $cust_address, $cust_city, $cust_province, $cust_postalcode);
-                $stmt->fetch();
-                echo "<p>" . htmlspecialchars($cust_name) . "</p>";
-                echo "<p>" . htmlspecialchars($cust_email) . "</p>";
-                echo "<p>" . htmlspecialchars($cust_address) . "</p>";
-                echo "<p>" . htmlspecialchars($cust_city) . "</p>";
-                echo "<p>" . htmlspecialchars($cust_province) . "</p>";
-                echo "<p>" . htmlspecialchars($cust_postalcode) . "</p>";
-                $stmt->close();
-            }
-            ?>
-            <a href="edit_account.php" class="btn">Edit</a>
-        </div>
-        <div class="right">
-            <a href="my_orders.php" class="text-link">My Orders</a>
-            <a href="logout.php" class="text-link">Log out</a>
+    <div class="container account-page mt-40">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="mb-28">My Account</h2>
+                <div class="user-info fs-sm">
+                    <div class="data-pelanggan">
+                        <h5>Rafi Syihab</h5>
+                        <p>rafisyihab3@gmail.com</p>
+                        <p>Jl. Bandeng x Gg. X No. x</p>
+                        <p>Palangka Raya</p>
+                        <p>Kalimantan Tengah</p>
+                        <p>73112</p>
+                    </div>
+                    <div class="action-profile mt-8">
+                        <a class="btn-edit" href="#">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 account-actions">
+                <a class="btn btn-edit fs-8" href="#">My Orders</a>
+                <a class="btn btn-edit fs-8" href="#">Log out</a>
+            </div>
         </div>
     </div>
-    <footer>
-        <!-- footer -->
-    </footer>
+
+    
+    <?php include 'includes/footer.php'; ?>
+    <script type="text/javascript" src="assets/js/navbarscript.js"></script>
 </body>
 
 </html>

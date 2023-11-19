@@ -65,7 +65,8 @@
             </div>
         </div>
     </section>
-
+    <?php include 'includes/footer.php'; ?>
+    <script type="text/javascript" src="assets/js/navbarscript.js"></script>
 </body>
 
 </html>

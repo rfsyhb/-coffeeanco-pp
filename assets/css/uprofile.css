@@ -1,0 +1,54 @@
+html,
+body {
+    min-height: 100%;
+    /* Memastikan halaman minimal setinggi viewport */
+    position: relative;
+    /* Membuat posisi body relatif agar footer dapat diabsolutkan */
+}
+
+.button-action {
+    border-radius: 10px;
+    background-color: var(--primaryo-color);
+    /* box-shadow: 3px 2px rgb(45, 44, 44); */
+}
+
+.btn-brown {
+    background-color: var(--primaryo-color);
+    /* saddle brown */
+    color: #fff;
+    /* white text color */
+    border-color: var(--primaryo-color);
+    /* saddle brown border */
+}
+
+.account-page {
+    padding: 30px 0;
+}
+
+.account-actions {
+    text-align: right;
+}
+
+.account-actions button {
+    display: block;
+    margin-bottom: 10px;
+    /* Spacing between buttons */
+}
+
+.user-info {
+    margin-bottom: 10px;
+    /* Spacing for the Edit button */
+}
+
+.btn-edit {
+    padding: 5px 20px;
+    /* Adjust padding to make the button thinner and wider */
+    background-color: #6E493A;
+    /* Your desired button color */
+    color: #fff;
+    /* Button text color */
+    border: none;
+    /* Remove border if not needed */
+    border-radius: 4px;
+    /* Adjust border-radius for rounded corners */
+}
