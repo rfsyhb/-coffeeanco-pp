@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 value="<?php echo $data['cust_postalcode']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
-                            <input type="submit" value="Update Order" class="btn btn-sm btn-primary" />&nbsp;
+                            <input type="submit" value="Update Customer" class="btn btn-sm btn-primary" />&nbsp;
                         </div>
                     </form>
                 </div>

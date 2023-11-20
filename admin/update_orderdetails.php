@@ -117,58 +117,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="row mx-5 mt-5">
-                    <h3 class="fs-4 mb-3">Kelola Data Order</h3>
-                    <div class="col">
-                        <table class="table bg-white rounded shadow-sm  table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col" width="80">ID</th>
-                                    <th scope="col">Order Date</th>
-                                    <th scope="col">Total Amount</th>
-                                    <th scope="col">Customer ID</th>
-                                    <th scope="col">Order Status</th>
-                                    <th scope="col" width="112">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $datas = mysqli_query($connect, "SELECT * FROM order_details");
-                                while ($data = mysqli_fetch_array($datas)) {
-                                    ?>
-                                    <tr>
-                                        <td>
-                                            <?php echo $data['order_item_id']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $data['order_date']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $data['total_amount']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $data['cust_id']; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $data['order_status']; ?>
-                                        </td>
-                                        <td>
-                                            <a href="table_update_order.php?order_id=<?php echo $data['order_id']; ?> "
-                                                class="btn-sm btn-primary">
-                                                <span class="fas fa-edit">
-                                            </a>
-                                            <a href="display_order.php?action=delete&order_id=<?php echo $data['order_id']; ?>"
-                                                class="btn-sm btn-danger">
-                                                <span class="fas fa-trash"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="container-fluid px-4">
+                    <?php
+                    $id = $_GET['order_item_id'];
+                    $query = mysqli_query($connect, "SELECT * FROM order_details WHERE order_item_id='$id'");
+                    $data = mysqli_fetch_array($query);
+
+                    ?>
+                    <h2>Update Order Details</h2>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label>ID</label>
+                            <input type="text" name="order_item_id" id="order_item_id"
+                                value="<?php echo $data['order_item_id']; ?>" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label>Order ID</label>
+                            <input type="text" name="order_id" id="order_id" value="<?php echo $data['order_id']; ?>"
+                                class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Product ID</label>
+                            <input type="text" name="prod_id" id="prod_id" value="<?php echo $data['prod_id']; ?>"
+                                class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Quantity</label>
+                            <input type="text" name="quantity" id="quantity" value="<?php echo $data['quantity']; ?>"
+                                class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Unit Price</label>
+                            <input type="text" name="unit_price" id="unit_price"
+                                value="<?php echo $data['unit_price']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Update Order Details" class="btn btn-sm btn-primary" />&nbsp;
+                        </div>
+                    </form>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-1">

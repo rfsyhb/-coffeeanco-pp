@@ -151,7 +151,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
                                             <?php echo $data['prod_price']; ?>
                                         </td>
                                         <td>
-                                            <a href="table_update_product.php?prod_id=<?php echo $data['prod_id']; ?> "
+                                            <a href="update_product.php?prod_id=<?php echo $data['prod_id']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">
                                             </a>

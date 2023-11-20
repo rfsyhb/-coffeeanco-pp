@@ -160,7 +160,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_i
                                             <?php echo $data['cust_postalcode']; ?>
                                         </td>
                                         <td>
-                                            <a href="table_update_customer.php?cust_id=<?php echo $data['cust_id']; ?> "
+                                            <a href="update_customer.php?cust_id=<?php echo $data['cust_id']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">
                                             </a>
