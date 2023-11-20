@@ -144,7 +144,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                             <?php echo $data['order_status']; ?>
                                         </td>
                                         <td>
-                                            <a href="table_update_product.php?order_id=<?php echo $data['order_id']; ?> "
+                                            <a href="table_update_order.php?order_id=<?php echo $data['order_id']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">
                                             </a>

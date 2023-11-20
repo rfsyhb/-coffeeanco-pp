@@ -6,6 +6,27 @@ if ($_SESSION['status'] != "admin") {
 }
 
 include "../includes/config.php";
+
+// Check if the form has been submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Extract product details from POST request
+    $order_id = $_POST['order_id'];
+    $order_date = $_POST['order_date'];
+    $total_amount = $_POST['total_amount'];
+    $cust_id = $_POST['cust_id'];
+    $order_status = $_POST['order_status'];
+
+    // Update query
+    $query = "UPDATE orders SET order_date = '$order_date', total_amount = '$total_amount', cust_id = '$cust_id', order_status = '$order_status' WHERE order_id = '$order_id'";
+    $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
+
+    if ($statement) {
+        echo "<script>alert('Product has been updated!'); window.location = 'display_order.php'</script>";
+    } else {
+        echo "<script>alert('Update product failed!'); window.location = 'display_order.php'</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -102,30 +123,30 @@ include "../includes/config.php";
 
                     ?>
                     <h2>Update Order</h2>
-                    <form action="update_order.php" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label>ID Order</label>
                             <input type="text" name="order_id" id="order_id" value="<?php echo $data['order_id']; ?>"
                                 class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label>Customer Email</label>
-                            <input type="text" name="cust_email" id="cust_email"
-                                value="<?php echo $data['cust_email']; ?>" class="form-control" require>
+                            <label>Order Date</label>
+                            <input type="text" name="order_date" id="order_date"
+                                value="<?php echo $data['order_date']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
-                            <label>Customer Phone</label>
-                            <input type="text" name="cust_phone" id="cust_phone"
-                                value="<?php echo $data['cust_phone']; ?>" class="form-control" require>
+                            <label>Total Amount</label>
+                            <input type="text" name="total_amount" id="total_amount"
+                                value="<?php echo $data['total_amount']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
-                            <label>Customer Address</label>
-                            <input type="text" name="cust_address" id="cust_address"
-                                value="<?php echo $data['cust_address']; ?>" class="form-control" require>
+                            <label>Customer ID</label>
+                            <input type="text" name="cust_id" id="cust_id"
+                                value="<?php echo $data['cust_id']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
-                            <label>Product ID</label>
-                            <input type="text" name="prod_id" id="prod_id" value="<?php echo $data['prod_id']; ?>"
+                            <label>Order Status</label>
+                            <input type="text" name="order_status" id="order_status" value="<?php echo $data['order_status']; ?>"
                                 class="form-control" require>
                         </div>
                         <div class="mb-3">
@@ -146,12 +167,7 @@ include "../includes/config.php";
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="js/datatables-simple-demo.js"></script>
+    <script src="../assets/js/scripts.js"></script>
 </body>
 
 </html>
