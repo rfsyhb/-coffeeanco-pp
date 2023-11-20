@@ -33,26 +33,33 @@ include "includes/config.php";
                 <div class="col-md-8">
                     <h2 class="mb-28">My Account</h2>
                     <div class="user-info fs-sm">
-                        <div class="data-pelanggan">
-                            <?php
-                            $select_data = mysqli_query($connect, "SELECT * FROM pengunjung");
-                            if (mysqli_num_rows($select_data) > 0) {
-                                while ($fetch_data = mysqli_fetch_assoc($select_data)) {
-                                    echo "<h5>" . htmlspecialchars($fetch_data['cust_name']) . "</h5>";
-                                    echo "<p>" . htmlspecialchars($fetch_data['cust_email']) . "</p>";
-                                    echo "<p>" . htmlspecialchars($fetch_data['cust_address']) . "</p>";
-                                    echo "<p>" . htmlspecialchars($fetch_data['cust_city']) . "</p>";
-                                    echo "<p>" . htmlspecialchars($fetch_data['cust_province']) . "</p>";
-                                    echo "<p>" . htmlspecialchars($fetch_data['cust_postalcode']) . "</p>";
-                                }
-                            } else {
-                                echo "<p>No records found.</p>";
+                        <?php
+                        $select_data = mysqli_query($connect, "SELECT * FROM pengunjung");
+                        if (mysqli_num_rows($select_data) > 0) {
+                            while ($data = mysqli_fetch_array($select_data)) {
+                                ?>
+                                <div class="data-pelanggan">
+                                    <?php
+                                    echo "<h5>" . htmlspecialchars($data['cust_name']) . "</h5>";
+                                    echo "<p>" . htmlspecialchars($data['cust_email']) . "</p>";
+                                    echo "<p>" . htmlspecialchars($data['cust_address']) . "</p>";
+                                    echo "<p>" . htmlspecialchars($data['cust_city']) . "</p>";
+                                    echo "<p>" . htmlspecialchars($data['cust_province']) . "</p>";
+                                    echo "<p>" . htmlspecialchars($data['cust_postalcode']) . "</p>";
+                                    ?>
+                                    <div class="action-profile mt-8">
+                                        <a class="btn-edit"
+                                            href="user_editprofile.php?cust_id=<?php echo $data['cust_id']; ?>">Edit</a>
+                                    </div>
+                                </div>
+                                <?php
                             }
+                        } else {
+                            echo "<p>No records found.</p>";
                             ?>
-                        </div>
-                        <div class="action-profile mt-8">
-                            <a class="btn-edit" href="#">Edit</a>
-                        </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="col-md-4 account-actions">

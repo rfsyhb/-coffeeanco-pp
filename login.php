@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verify customer password
     elseif ($cust_row && password_verify($password, $cust_row['cust_password'])) {
         $_SESSION['username'] = $username;
+        $_SESSION['cust_id'] = $cust_id;
         $_SESSION['status'] = "customer";
         header("location:index.php");
         exit();
