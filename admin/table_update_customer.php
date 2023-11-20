@@ -6,6 +6,30 @@ if ($_SESSION['status'] != "admin") {
 }
 
 include "../includes/config.php";
+
+// Check if the form has been submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Extract product details from POST request
+    $cust_id = $_POST['cust_id'];
+    $cust_name = $_POST['cust_name'];
+    $cust_email = $_POST['cust_email'];
+    $cust_phone = $_POST['cust_phone'];
+    $cust_address = $_POST['cust_address'];
+    $cust_city = $_POST['cust_city'];
+    $cust_province = $_POST['cust_province'];
+    $cust_postalcode = $_POST['cust_postalcode'];
+
+    // Update query
+    $query = "UPDATE pengunjung SET cust_name = '$cust_name', cust_email = '$cust_email', cust_phone = '$cust_phone', cust_address = '$cust_address', cust_city = '$cust_city', cust_province = '$cust_province', cust_postalcode = '$cust_postalcode' WHERE cust_id = '$cust_id'";
+    $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
+
+    if ($statement) {
+        echo "<script>alert('Product has been updated!'); window.location = 'display_customer.php'</script>";
+    } else {
+        echo "<script>alert('Update product failed!'); window.location = 'display_customer.php'</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -96,22 +120,52 @@ include "../includes/config.php";
 
                 <div class="container-fluid px-4">
                     <?php
-                    $id = $_GET['id_subs'];
-                    $query = mysqli_query($connect, "SELECT * FROM subscribing WHERE id_subs='$id'");
+                    $id = $_GET['cust_id'];
+                    $query = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_id='$id'");
                     $data = mysqli_fetch_array($query);
 
                     ?>
-                    <h2>Update Subscriber</h2>
-                    <form action="update_subscribing.php" method="POST" enctype="multipart/form-data">
+                    <h2>Update Customer</h2>
+                    <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label>ID Subscriber</label>
-                            <input type="text" name="id_subs" id="id_subs" value="<?php echo $data['id_subs']; ?>"
+                            <label>ID Customer</label>
+                            <input type="text" name="cust_id" id="cust_id" value="<?php echo $data['cust_id']; ?>"
                                 class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label>Subscriber Email</label>
-                            <input type="text" name="email_subs" id="email_subs"
-                                value="<?php echo $data['email_subs']; ?>" class="form-control" require>
+                            <label>Name</label>
+                            <input type="text" name="cust_name" id="cust_name"
+                                value="<?php echo $data['cust_name']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="text" name="cust_email" id="cust_email"
+                                value="<?php echo $data['cust_email']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Phone</label>
+                            <input type="text" name="cust_phone" id="cust_phone"
+                                value="<?php echo $data['cust_phone']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Address</label>
+                            <input type="text" name="cust_address" id="cust_address"
+                                value="<?php echo $data['cust_address']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>City</label>
+                            <input type="text" name="cust_city" id="cust_city"
+                                value="<?php echo $data['cust_city']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Province</label>
+                            <input type="text" name="cust_province" id="cust_province"
+                                value="<?php echo $data['cust_province']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Postal Code</label>
+                            <input type="text" name="cust_postalcode" id="cust_postalcode"
+                                value="<?php echo $data['cust_postalcode']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
                             <input type="submit" value="Update Order" class="btn btn-sm btn-primary" />&nbsp;
@@ -131,12 +185,7 @@ include "../includes/config.php";
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="js/datatables-simple-demo.js"></script>
+    <script src="../assets/js/scripts.js"></script>
 </body>
 
 </html>
