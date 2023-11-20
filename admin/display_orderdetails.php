@@ -6,6 +6,21 @@ if ($_SESSION['status'] != "admin") {
 }
 
 include "../includes/config.php";
+
+// Check if the action is delete and order_item_id is set
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_item_id'])) {
+    $order_item_id = $_GET['order_item_id'];
+
+    $query = "DELETE FROM order_details WHERE order_item_id='$order_item_id'";
+    $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
+
+    if ($statement) {
+        echo "<script>alert('Order Detail has been Deleted!'); window.location = 'display_orderdetails.php'</script>";
+    } else {
+        echo "<script>alert('Delete Order Detail Failed!'); window.location = 'display_orderdetails.php'</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +33,7 @@ include "../includes/config.php";
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="icon" href="assets/img/database.svg">
-    <title>Dashboard - Admin</title>
+    <title>Dashboard - SB Admin</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -57,7 +72,7 @@ include "../includes/config.php";
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        
+
                         <a class="nav-link mt-3" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
@@ -96,16 +111,59 @@ include "../includes/config.php";
         </div>
         <div id="layoutSidenav_content">
             <main>
-
-                <!-- Page Content -->
-                <div id="page-content-wrapper">
-                    <div class="container-fluid px-4">
-                        <?php
-                        include 'container_fluid.php';
-                        ?>
+                <div class="row mx-5 mt-5">
+                    <h3 class="fs-4 mb-3">Kelola Data Order</h3>
+                    <div class="col">
+                        <table class="table bg-white rounded shadow-sm  table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="80">ID</th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Product ID</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Unit Price</th>
+                                    <th scope="col" width="112">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $datas = mysqli_query($connect, "SELECT * FROM order_details");
+                                while ($data = mysqli_fetch_array($datas)) {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $data['order_item_id']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['order_id']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['prod_id']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['quantity']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['unit_price']; ?>
+                                        </td>
+                                        <td>
+                                            <a href="update_orderdetails.php?order_item_id=<?php echo $data['order_item_id']; ?> "
+                                                class="btn-sm btn-primary">
+                                                <span class="fas fa-edit">
+                                            </a>
+                                            <a href="display_orderdetails.php?action=delete&order_item_id=<?php echo $data['order_item_id']; ?>"
+                                                class="btn-sm btn-danger">
+                                                <span class="fas fa-trash"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
             </main>
             <footer class="py-4 bg-light mt-1">
                 <div class="container-fluid px-4">
@@ -118,7 +176,7 @@ include "../includes/config.php";
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="../assets/js/script.js"></script>
+        <script src="../assets/js/script.js"></script>
 </body>
 
 </html>

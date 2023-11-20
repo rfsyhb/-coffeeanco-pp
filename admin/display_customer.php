@@ -85,11 +85,14 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_i
                         <a class="nav-link collapsed" href="display_order.php" role="button">
                             <i class="fas fa-shopping-cart me-2"></i>Orders
                         </a>
+                        <!-- order -->
+                        <a class="nav-link collapsed" href="display_orderdetails.php" role="button">
+                            <i class="fas fa-book me-2"></i>Order Details
+                        </a>
                         <!-- pengunjung -->
                         <a class="nav-link collapsed" href="display_customer.php" role="button">
                             <i class="fas fa-sharp fa-solid fa-circle-user me-2"></i>Customer
                         </a>
-
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">

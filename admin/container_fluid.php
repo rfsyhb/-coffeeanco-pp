@@ -26,6 +26,20 @@
             <i class="fas fa-shopping-cart fs-1 primary-text border rounded-full secondary-bg p-3"></i>
         </div>
     </div>
+    
+    <div class="col-md-3">
+        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div>
+                <?php
+                $query = mysqli_query($connect, "SELECT order_item_id FROM order_details ORDER BY order_item_id");
+                $row = mysqli_num_rows($query);
+                echo '<h3 class="fs-2">' . $row . '</h3>';
+                ?>
+                <p class="fs-5">Order Details</p>
+            </div>
+            <i class="fas fa-book fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+        </div>
+    </div>
 
     <div class="col-md-3">
         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
