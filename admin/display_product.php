@@ -108,8 +108,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="row mx-5 mt-3">
-                    <h3 class="fs-4 mb-3 ">Products</h3>
+                <div class="row mx-5 mt-5">
+                    <h3 class="fs-4 mb-3 ">Kelola Data Produk</h3>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
