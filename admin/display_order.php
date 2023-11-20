@@ -6,6 +6,21 @@ if ($_SESSION['status'] != "admin") {
 }
 
 include "../includes/config.php";
+
+// Check if the action is delete and order_id is set
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_id'])) {
+    $order_id = $_GET['order_id'];
+
+    $query = "DELETE FROM orders WHERE order_id='$order_id'";
+    $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
+
+    if ($statement) {
+        echo "<script>alert('Order has been Deleted!'); window.location = 'display_order.php'</script>";
+    } else {
+        echo "<script>alert('Delete Order Failed!'); window.location = 'display_order.php'</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,18 +108,17 @@ include "../includes/config.php";
         </div>
         <div id="layoutSidenav_content">
             <main>
-
-                <div class="row mx-5">
+                <div class="row mx-5 mt-3">
                     <h3 class="fs-4 mb-3">Orders</h3>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col" width="80">ID</th>
-                                    <th scope="col">Customer Email</th>
-                                    <th scope="col">Customer Phone</th>
-                                    <th scope="col">Customer Address</th>
-                                    <th scope="col">Product ID</th>
+                                    <th scope="col">Order Date</th>
+                                    <th scope="col">Total Amount</th>
+                                    <th scope="col">Customer ID</th>
+                                    <th scope="col">Order Status</th>
                                     <th scope="col" width="112">Action</th>
                                 </tr>
                             </thead>
@@ -118,25 +132,25 @@ include "../includes/config.php";
                                             <?php echo $data['order_id']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $data['cust_email']; ?>
+                                            <?php echo $data['order_date']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $data['cust_phone']; ?>
+                                            <?php echo $data['total_amount']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $data['cust_address']; ?>
+                                            <?php echo $data['cust_id']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $data['prod_id']; ?>
+                                            <?php echo $data['order_status']; ?>
                                         </td>
                                         <td>
-                                            <a href="table_update_order.php?order_id=<?php echo $data['order_id']; ?> "
+                                            <a href="table_update_product.php?order_id=<?php echo $data['order_id']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">
                                             </a>
-                                            <a href="delete_order.php?order_id=<?php echo $data['order_id']; ?>"
+                                            <a href="display_order.php?action=delete&order_id=<?php echo $data['order_id']; ?>"
                                                 class="btn-sm btn-danger">
-                                                <span class="fas fa-trash">
+                                                <span class="fas fa-trash"></span>
                                             </a>
                                         </td>
                                     </tr>
@@ -147,7 +161,6 @@ include "../includes/config.php";
                         </table>
                     </div>
                 </div>
-
             </main>
             <footer class="py-4 bg-light mt-1">
                 <div class="container-fluid px-4">

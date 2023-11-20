@@ -6,6 +6,22 @@ if ($_SESSION['status'] != "admin") {
 }
 
 include "../includes/config.php";
+
+// Check if the action is delete and prod_id is set
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_id'])) {
+    $prod_id = $_GET['prod_id'];
+
+    $query = "DELETE FROM produk WHERE prod_id='$prod_id'";
+    $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
+
+    if ($statement) {
+        echo "<script>alert('Order has been Deleted!'); window.location = 'display_product.php'</script>";
+    } else {
+        echo "<script>alert('Delete Order Failed!'); window.location = 'display_product.php'</script>";
+    }
+}
+?>
 ?>
 
 <!DOCTYPE html>
@@ -137,7 +153,7 @@ include "../includes/config.php";
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">
                                             </a>
-                                            <a href="delete_product.php?prod_id=<?php echo $data['prod_id']; ?>"
+                                            <a href="display_product.php?action=delete&prod_id=<?php echo $data['prod_id']; ?>"
                                                 class="btn-sm btn-danger">
                                                 <span class="fas fa-trash">
                                             </a>

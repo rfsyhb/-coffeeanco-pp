@@ -6,6 +6,21 @@ if ($_SESSION['status'] != "admin") {
 }
 
 include "../includes/config.php";
+
+// Check if the action is delete and cust_id is set
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_id'])) {
+    $cust_id = $_GET['cust_id'];
+
+    $query = "DELETE FROM pengunjung WHERE cust_id='$cust_id'";
+    $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
+
+    if ($statement) {
+        echo "<script>alert('Order has been Deleted!'); window.location = 'display_customer.php'</script>";
+    } else {
+        echo "<script>alert('Delete Order Failed!'); window.location = 'display_customer.php'</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -94,35 +109,59 @@ include "../includes/config.php";
         <div id="layoutSidenav_content">
             <main>
 
-                <div class="row mx-5">
-                    <h3 class="fs-4 mb-3">Subscribers</h3>
+                <div class="row mx-5 mt-3">
+                    <h3 class="fs-4 mb-3">Customer Data</h3>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col" width="80">ID</th>
-                                    <th scope="col">Email Subscribers</th>
-                                    <th scope="col" width="112">Action</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Province</th>
+                                    <th scope="col" width="105">Postal Code</th>
+                                    <th scope="col" width="80">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $datas = mysqli_query($connect, "SELECT * FROM subscribing");
+                                $datas = mysqli_query($connect, "SELECT * FROM pengunjung");
                                 while ($data = mysqli_fetch_array($datas)) {
                                     ?>
                                     <tr>
                                         <td>
-                                            <?php echo $data['id_subs']; ?>
+                                            <?php echo $data['cust_id']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $data['email_subs']; ?>
+                                            <?php echo $data['cust_name']; ?>
                                         </td>
                                         <td>
-                                            <a href="table_update_subscribing.php?id_subs=<?php echo $data['id_subs']; ?> "
+                                            <?php echo $data['cust_email']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['cust_phone']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['cust_address']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['cust_city']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['cust_province']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['cust_postalcode']; ?>
+                                        </td>
+                                        <td>
+                                            <a href="table_update_customer.php?cust_id=<?php echo $data['cust_id']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">
                                             </a>
-                                            <a href="delete_subscribing.php?id_subs=<?php echo $data['id_subs']; ?>"
+                                            <a href="display_customer.php?action=delete&cust_id=<?php echo $data['cust_id']; ?>"
                                                 class="btn-sm btn-danger">
                                                 <span class="fas fa-trash">
                                             </a>
@@ -149,11 +188,6 @@ include "../includes/config.php";
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="js/datatables-simple-demo.js"></script>
 </body>
 
 </html>
