@@ -6,6 +6,30 @@ if ($_SESSION['status'] != "admin") {
 }
 
 include "../includes/config.php";
+
+// Check if the form has been submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Extract product details from POST request
+    $product_id = $_POST['prod_id'];
+    $product_name = $_POST['prod_name'];
+    $product_type = $_POST['prod_type'];
+    $product_desc = $_POST['prod_desc'];
+    $product_stock = $_POST['prod_stock'];
+    $product_price = $_POST['prod_price'];
+    $product_image1 = $_POST['prod_image1'];
+    $product_image2 = $_POST['prod_image2'];
+
+    // Update query
+    $query = "UPDATE produk SET prod_name = '$product_name', prod_type = '$product_type', prod_desc = '$product_desc', prod_stock = '$product_stock', prod_price = '$product_price', prod_image1 = '$product_image1', prod_image2 = '$product_image2' WHERE prod_id = '$product_id'";
+    $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
+
+    if ($statement) {
+        echo "<script>alert('Product has been updated!'); window.location = 'display_product.php'</script>";
+    } else {
+        echo "<script>alert('Update product failed!'); window.location = 'display_product.php'</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,16 +117,14 @@ include "../includes/config.php";
         </div>
         <div id="layoutSidenav_content">
             <main>
-
                 <div class="container-fluid px-4">
                     <?php
                     $id = $_GET['prod_id'];
-                    $query = mysqli_query($connect, "SELECT * FROM product WHERE prod_id='$id'");
+                    $query = mysqli_query($connect, "SELECT * FROM produk WHERE prod_id='$id'");
                     $data = mysqli_fetch_array($query);
-
                     ?>
                     <h2>Update Product</h2>
-                    <form action="update_product.php" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label>ID Product</label>
                             <input type="text" name="prod_id" id="prod_id" value="<?php echo $data['prod_id']; ?>"
@@ -114,9 +136,19 @@ include "../includes/config.php";
                                 class="form-control" require>
                         </div>
                         <div class="mb-3">
+                            <label>Product Type</label>
+                            <input type="text" name="prod_type" id="prod_type" value="<?php echo $data['prod_type']; ?>"
+                                class="form-control" require>
+                        </div>
+                        <div class="mb-3">
                             <label>Description</label>
                             <input type="text" name="prod_desc" id="prod_desc" value="<?php echo $data['prod_desc']; ?>"
                                 class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Stock</label>
+                            <input type="text" name="prod_stock" id="prod_stock"
+                                value="<?php echo $data['prod_stock']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
                             <label>Price</label>
@@ -124,11 +156,20 @@ include "../includes/config.php";
                                 value="<?php echo $data['prod_price']; ?>" class="form-control" require>
                         </div>
                         <div class="mb-3">
+                            <label>Image 1</label>
+                            <input type="text" name="prod_image1" id="prod_image1"
+                                value="<?php echo $data['prod_image1']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
+                            <label>Image 2</label>
+                            <input type="text" name="prod_image2" id="prod_image2"
+                                value="<?php echo $data['prod_image2']; ?>" class="form-control" require>
+                        </div>
+                        <div class="mb-3">
                             <input type="submit" value="Update Product" class="btn btn-sm btn-primary" />&nbsp;
                         </div>
                     </form>
                 </div>
-
             </main>
             <footer class="py-4 bg-light mt-1">
                 <div class="container-fluid px-4">
@@ -141,12 +182,7 @@ include "../includes/config.php";
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-    <script src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="js/datatables-simple-demo.js"></script>
+    <script src="../assets/js/scripts.js"></script>
 </body>
 
 </html>
