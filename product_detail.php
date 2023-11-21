@@ -23,7 +23,7 @@
                 <div class="row h-100 align-items-center justify-content-center">
                     <!-- Image Column -->
                     <div class="col-12 col-lg-6 d-flex justify-content-center">
-                        <img class="img-fluid d-block w-100" src="assets/images/coffeebagdote.png" alt=""
+                        <img style="width : 80% " class="img-fluid d-block" src="assets/images/coffeebagdote.png" alt=""
                             style="object-fit: cover;">
                     </div>
                     <!-- Details Column -->
