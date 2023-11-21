@@ -3,6 +3,7 @@ session_start();
 
 if ($_SESSION['status'] != "admin") {
     header("Location: ../login.php");
+    exit;
 }
 
 include "../includes/config.php";
@@ -35,15 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_image2 = uploadImage('prod_image2', $target_dir);
 
     if ($product_image1 && $product_image2) {
-        $query = "UPDATE produk SET prod_name = '$product_name', prod_type = '$product_type', prod_desc = '$product_desc', prod_stock = '$product_stock', prod_price = '$product_price', prod_image1 = '$product_image1', prod_image2 = '$product_image2' WHERE prod_id = '$product_id'";
+        $query = "INSERT INTO produk (prod_id, prod_name, prod_type, prod_desc, prod_stock, prod_price, prod_image1, prod_image2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = mysqli_prepare($connect, $query);
+
+        // Mengikat parameter ke statement
+        mysqli_stmt_bind_param($statement, "ssssiiss", $product_id, $product_name, $product_type, $product_desc, $product_stock, $product_price, $product_image1, $product_image2);
 
         $result = mysqli_stmt_execute($statement);
 
         if ($result) {
-            echo "<script>alert('Product has been updated!'); window.location = 'display_product.php'</script>";
+            echo "<script>alert('Product has been uploaded!'); window.location = 'display_product.php'</script>";
         } else {
-            echo "<script>alert('Update product failed!'); window.location = 'display_product.php'</script>";
+            echo "<script>alert('Upload product failed!'); window.location = 'display_product.php'</script>";
         }
     } else {
         echo "<script>alert('Upload image failed!'); window.location = 'display_product.php'</script>";
@@ -90,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="Login/logout.php">Logout</a></li>
+                    <li><a class="dropdown-item" href="../includes/logout.php">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -140,53 +144,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <?php
-                    $id = $_GET['prod_id'];
-                    $query = mysqli_query($connect, "SELECT * FROM produk WHERE prod_id='$id'");
-                    $data = mysqli_fetch_array($query);
-                    ?>
-                    <h2>Update Product</h2>
+                    <h2>Add New Product</h2>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label>ID Product</label>
-                            <input type="text" name="prod_id" id="prod_id" value="<?php echo $data['prod_id']; ?>"
-                                class="form-control" readonly>
+                            <input type="text" name="prod_id" id="prod_id" class="form-control my-2 py-2"
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Product Name</label>
-                            <input type="text" name="prod_name" id="prod_name" value="<?php echo $data['prod_name']; ?>"
-                                class="form-control" require>
+                            <input type="text" name="prod_name" id="prod_name" class="form-control my-2 py-2"
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Product Type</label>
-                            <input type="text" name="prod_type" id="prod_type" value="<?php echo $data['prod_type']; ?>"
-                                class="form-control" require>
+                            <input type="text" name="prod_type" id="prod_type" class="form-control my-2 py-2"
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Description</label>
-                            <input type="text" name="prod_desc" id="prod_desc" value="<?php echo $data['prod_desc']; ?>"
-                                class="form-control" require>
+                            <input type="text" name="prod_desc" id="prod_desc" class="form-control my-2 py-2"
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Stock</label>
-                            <input type="text" name="prod_stock" id="prod_stock"
-                                value="<?php echo $data['prod_stock']; ?>" class="form-control" require>
+                            <input type="text" name="prod_stock" id="prod_stock" class="form-control my-2 py-2"
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Price</label>
-                            <input type="text" name="prod_price" id="prod_price"
-                                value="<?php echo $data['prod_price']; ?>" class="form-control" require>
+                            <input type="text" name="prod_price" id="prod_price" class="form-control my-2 py-2"
+                                class="form-control" required>
                         </div>
-                        <!-- new -->
                         <div class="mb-3">
                             <label>Image 1</label>
-                            <input type="file" name="prod_image1" id="prod_image1" class="form-control"
-                                value="<?php echo $data['prod_image1']; ?>" required>
+                            <input type="file" name="prod_image1" id="prod_image1" class="form-control my-2 py-2"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label>Image 2</label>
-                            <input type="file" name="prod_image2" id="prod_image2" class="form-control"
-                                value="<?php echo $data['prod_image2']; ?>" required>
+                            <input type="file" name="prod_image2" id="prod_image2" class="form-control my-2 py-2"
+                                required>
                         </div>
                         <div class="mb-3">
                             <input type="submit" value="Update Product" class="btn btn-sm btn-primary" />&nbsp;
