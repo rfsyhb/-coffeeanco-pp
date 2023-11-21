@@ -14,9 +14,9 @@
             <div class="container position-relative">
                 <div class="d-none d-md-inline-flex flex-wrap position-absolute top-50 start-50 translate-middle justify-content-center"
                     style="z-index: 10;">
-                    <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="#">Home</a></div>
-                    <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="#">Product</a></div>
-                    <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="#">Learn</a></div>
+                    <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="index.php">Home</a></div>
+                    <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="products.php">Product</a></div>
+                    <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="coffee_info.php">Learn</a></div>
                 </div>
                 <div class="position-relative row justify-content-between align-items-center">
                     <div class="col-auto"><a class="d-inline-block" href="#">
@@ -25,7 +25,7 @@
                     <div class="col-auto">
                         <div class="d-flex align-items-center"><a
                                 class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center me-2 rounded-pill"
-                                href="#" style="width: 35px; height: 35px;">
+                                href="https://www.facebook.com/OzRafi/" style="width: 35px; height: 35px;">
                                 <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -33,15 +33,15 @@
                                         fill="#27272A"></path>
                                 </svg></a><a
                                 class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center me-2 rounded-pill"
-                                href="#" style="width: 35px; height: 35px;">
-                                <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
+                                href="https://github.com/rfsyhb" style="width: 35px; height: 35px;">
+                                <svg width="16" height="15" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
-                                        d="M13.6655 1.39641C13.1901 1.60149 12.6728 1.74907 12.1399 1.80656C12.6931 1.47788 13.1074 0.958619 13.3051 0.346204C12.7859 0.655036 12.2172 0.871595 11.6241 0.986274C11.3762 0.721276 11.0764 0.510168 10.7434 0.366102C10.4104 0.222036 10.0512 0.1481 9.68836 0.148902C8.22024 0.148902 7.03953 1.33893 7.03953 2.79928C7.03953 3.00436 7.06439 3.20943 7.10478 3.40673C4.90649 3.29177 2.94589 2.24155 1.64246 0.633614C1.40495 1.03927 1.2805 1.50117 1.28203 1.97123C1.28203 2.89094 1.74965 3.70191 2.46274 4.17885C2.0425 4.1623 1.63211 4.0468 1.26494 3.84173V3.87435C1.26494 5.16226 2.17533 6.22956 3.38866 6.47502C3.16084 6.5342 2.92649 6.56447 2.69111 6.56513C2.51866 6.56513 2.35554 6.54804 2.19086 6.52474C2.52643 7.57495 3.50362 8.33775 4.66724 8.3626C3.75685 9.07569 2.61654 9.49515 1.37835 9.49515C1.15619 9.49515 0.951119 9.48738 0.738281 9.46253C1.91278 10.216 3.30632 10.651 4.80706 10.651C9.67904 10.651 12.345 6.61484 12.345 3.11155C12.345 2.99659 12.345 2.88162 12.3372 2.76666C12.853 2.38914 13.3051 1.92152 13.6655 1.39641Z"
+                                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
                                         fill="#27272A"></path>
                                 </svg></a><a
                                 class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center rounded-pill"
-                                href="#" style="width: 35px; height: 35px;">
+                                href="https://www.instagram.com/ozrafi/" style="width: 35px; height: 35px;">
                                 <svg width="16" height="15" viewBox="0 0 16 15" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path

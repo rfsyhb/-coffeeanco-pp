@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cust_row = mysqli_fetch_assoc($cust_data);
 
     // Verify admin password
-    if ($admin_row && password_verify($password, $admin_row['password'])) {
+    if ($admin_row && password_verify($password, $admin_row['PASSWORD'])) {
         $_SESSION['username'] = $username;
         $_SESSION['status'] = "admin";
         header("location:admin/index.php");

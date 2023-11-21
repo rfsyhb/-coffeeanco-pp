@@ -52,20 +52,18 @@ include "includes/config.php";
                                             href="user_editprofile.php?cust_id=<?php echo $data['cust_id']; ?>">Edit</a>
                                     </div>
                                 </div>
-                                <?php
+                            </div>
+                        </div>
+                        <div class="col-md-4 account-actions">
+                            <a class="btn btn-edit fs-8" href="user_orders.php?cust_id=<?php echo $data['cust_id']; ?>">My Orders</a>
+                            <a class="btn btn-edit fs-8" href="includes/logout.php">Log out</a>
+                        </div>
+                        <?php
                             }
                         } else {
                             echo "<p>No records found.</p>";
-                            ?>
-                            <?php
                         }
                         ?>
-                    </div>
-                </div>
-                <div class="col-md-4 account-actions">
-                    <a class="btn btn-edit fs-8" href="#">My Orders</a>
-                    <a class="btn btn-edit fs-8" href="includes/logout.php">Log out</a>
-                </div>
             </div>
         </div>
     </div>

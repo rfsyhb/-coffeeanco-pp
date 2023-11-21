@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container account-page mt-40">
             <div class="row">
                 <div class="col-md-8">
-                    <h2 class="mb-28">My Account</h2>
+                    <h2 class="mb-8">My Account</h2>
                     <div class="user-info fs-sm">
                         <div class="data-pelanggan">
                             <?php
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $query = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_id='$id'");
                             $data = mysqli_fetch_array($query);
                             ?>
-                            <h2>Update User</h2>
+                            <h4>Update User</h4>
                             <form action="" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <input type="hidden" name="cust_id"
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 <div class="col-md-4 account-actions">
-                    <a class="btn btn-edit fs-8" href="#">My Orders</a>
+                    <a class="btn btn-edit fs-8" href="user_profile.php">Back</a>
                     <a class="btn btn-edit fs-8" href="includes/logout.php">Log out</a>
                 </div>
             </div>
