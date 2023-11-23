@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Jika tidak ada, buat cart baru
             $cart_id = uniqid('cart_');
             $_SESSION['cart_id'] = $cart_id;
+            $_SESSION['cust_id'] = $cust_id;
             $insertCartQuery = "INSERT INTO Cart (cart_id, cust_id) VALUES (?, ?)";
             $insertCartStmt = mysqli_prepare($connect, $insertCartQuery);
             mysqli_stmt_bind_param($insertCartStmt, 'ss', $cart_id, $cust_id);

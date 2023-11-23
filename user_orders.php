@@ -19,6 +19,7 @@ include "includes/config.php";
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/uprofile.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <title>Document</title>
 </head>
 
@@ -45,7 +46,8 @@ include "includes/config.php";
                                 <th scope="col" width="100">Order ID</th>
                                 <th scope="col">Order Date</th>
                                 <th scope="col">Total Amount</th>
-                                <th scope="col" width="150">Status</th>
+                                <th scope="col" width="350">Status</th>
+                                <th scope="col" width="250">Pembayaran</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,6 +68,13 @@ include "includes/config.php";
                                     <td>
                                         <?php echo $data['order_status']; ?>
                                     </td>
+                                    <td>
+                                        <a href="https://wa.me/6282154449091?text=Halo!+Saya+ingin+melakukan+pembayaran+untuk+order_id+<?php echo $data['order_id']; ?>"
+                                            class="btn-sm btn-primary" target="_blank">
+                                            <span class="fa-regular fa-handshake">
+                                            <span>Lakukan Pembayaran</span>
+                                        </a>
+                                    </td>   
                                 </tr>
                                 <?php
                             }
