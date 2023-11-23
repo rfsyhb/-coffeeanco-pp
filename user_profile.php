@@ -28,13 +28,13 @@ include "includes/config.php";
     <!-- End of the navbar section -->
 
     <div id="contents">
-        <div class="container account-page mt-40">
+        <div class="container account-page mt-28">
             <div class="row">
                 <div class="col-md-8">
                     <h2 class="mb-28">My Account</h2>
                     <div class="user-info fs-sm">
                         <?php
-                        $select_data = mysqli_query($connect, "SELECT * FROM pengunjung");
+                        $select_data = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_username = '".$_SESSION['username']."'");
                         if (mysqli_num_rows($select_data) > 0) {
                             while ($data = mysqli_fetch_array($select_data)) {
                                 ?>

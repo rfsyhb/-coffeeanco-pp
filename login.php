@@ -28,8 +28,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verify customer password
     elseif ($cust_row && password_verify($password, $cust_row['cust_password'])) {
         $_SESSION['username'] = $username;
-        $_SESSION['cust_id'] = $cust_id;
+        $_SESSION['cust_id'] = $cust_row['cust_id']; // Ambil cust_id dari hasil query
         $_SESSION['status'] = "customer";
+        // Dapatkan cust_id dari hasil query, bukan dari sesi
+        $cust_id = $cust_row['cust_id'];
+
+        // Cek apakah user sudah punya cart
+        $cartCheckQuery = "SELECT cart_id FROM Cart WHERE cust_id = ?";
+        $cartCheckStmt = mysqli_prepare($connect, $cartCheckQuery);
+        mysqli_stmt_bind_param($cartCheckStmt, 's', $cust_id);
+        mysqli_stmt_execute($cartCheckStmt);
+        $result = mysqli_stmt_get_result($cartCheckStmt);
+        $cartExists = mysqli_fetch_assoc($result);
+
+        if ($cartExists) {
+            // Jika cart_id ditemukan, gunakan cart_id yang sudah ada
+            $_SESSION['cart_id'] = $cartExists['cart_id'];
+        } else {
+            // Jika tidak ada, buat cart baru
+            $cart_id = uniqid('cart_');
+            $_SESSION['cart_id'] = $cart_id;
+            $insertCartQuery = "INSERT INTO Cart (cart_id, cust_id) VALUES (?, ?)";
+            $insertCartStmt = mysqli_prepare($connect, $insertCartQuery);
+            mysqli_stmt_bind_param($insertCartStmt, 'ss', $cart_id, $cust_id);
+            mysqli_stmt_execute($insertCartStmt);
+            mysqli_stmt_close($insertCartStmt);
+        }
+        
         header("location:index.php");
         exit();
     } else {

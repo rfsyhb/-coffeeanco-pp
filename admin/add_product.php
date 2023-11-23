@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid px-4">
+                <div class="container-fluid px-4 mt-3">
                     <h2>Add New Product</h2>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
@@ -187,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 required>
                         </div>
                         <div class="mb-3">
-                            <input type="submit" value="Update Product" class="btn btn-sm btn-primary" />&nbsp;
+                            <input type="submit" value="Add Product" class="btn btn-sm btn-light btn-outline-dark" />&nbsp;
                         </div>
                     </form>
                 </div>

@@ -167,7 +167,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
                             </tbody>
                         </table>
                         <!-- Button to add a new product -->
-                        <a href="add_product.php" class="btn btn-dark mt-3">Add New Product</a>
+                        <a href="add_product.php" class="btn btn-light btn-outline-dark mt-3">Add New Product</a>
             </main>
             <footer class="py-4 bg-light mt-1">
                 <div class="container-fluid px-4">
