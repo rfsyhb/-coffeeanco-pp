@@ -20,7 +20,7 @@
                 </div>
                 <div class="position-relative row justify-content-between align-items-center">
                     <div class="col-auto"><a class="d-inline-block" href="#">
-                            <i class="ri-shopping-bag-2-line"></i><span class="fs-10"> CoffeeanCo</span>
+                    <img src="assets/images/coffeeanco.png" style="height: 43px"alt=""><span class="fs-10"> CoffeeanCo</span>
                         </a></a></div>
                     <div class="col-auto">
                         <div class="d-flex align-items-center"><a

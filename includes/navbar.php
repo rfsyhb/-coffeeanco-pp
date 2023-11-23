@@ -10,14 +10,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/navbar.css">
-    <title>Document</title>
+    <title>Navbar</title>
 </head>
 
 <body>
 
     <header>
-        <a href="#" class="logo">
-            <i class="ri-shopping-bag-2-line"></i><span>CoffeeanCo</span>
+        <a href="" class="logo">
+            <img src="assets/images/coffeeanco.png" style="height: 43px" alt=""><span>CoffeeanCo</span>
         </a>
         <ul class="navbarun">
             <li>

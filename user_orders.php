@@ -20,7 +20,7 @@ include "includes/config.php";
     <link rel="stylesheet" href="assets/css/uprofile.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-    <title>Document</title>
+    <title>My Orders</title>
 </head>
 
 <body>

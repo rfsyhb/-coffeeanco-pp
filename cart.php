@@ -127,7 +127,7 @@ if (isset($_POST['checkout'])) {
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/cart.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <title>Document</title>
+    <title>Cart</title>
 </head>
 
 <body>

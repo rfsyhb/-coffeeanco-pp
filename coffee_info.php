@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/cinfo.css">
     <link rel="stylesheet" href="assets/css/navbar.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <title>Document</title>
+    <title>Coffee Info</title>
 </head>
 
 <body>

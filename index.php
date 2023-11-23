@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
   <!-- AOS Animate -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <title>Document</title>
+  <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
+  <title>Homepage</title>
 </head>
 
 <body>
@@ -30,7 +31,7 @@
             <h2 class="mb-14" style="letter-spacing: -1px;">We create coffee experiences which elevate expectations</h2>
             <div class="row g-4">
               <a class="btn mt-auto w-25 text-success-light shadow" style="background-color: var(--primaryo-color);"
-                href="#">Explore Now</a>
+                href="products.php">Explore Now</a>
             </div>
           </div>
         </div>
@@ -67,7 +68,7 @@
                 <p class="mw-lg fs-7 fw-light text-light mb-16">Lorem ipsum dolor sit amet, consectetur adipiscing a
                   elit. Nullam to dictum aliquet accumsan porta lectus ridiculus in these mattis.</p>
                 <div class="button-action">
-                  <a class="btn btn-brown" href="#">
+                  <a class="btn btn-brown" href="products.php">
                     <span class="me-3">Explore Collections</span>
                     <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -84,44 +85,10 @@
     </div>
   </section>
 
-  <!-- Flaro -->
-
   <!-- navbar -->
   <?php include 'includes/footer.php'; ?>
   <!-- End of the navbar section -->
 
-  <!-- <footer>
-    <div class="container">
-      <div class="links-container">
-        <div class="links">
-          <h3>Shop Now</h3>
-          <ul>
-            <li>
-              <a href="#">Products</a>
-            </li>
-            <li>
-              <a href="#">Learn</a>
-            </li>
-          </ul>
-        </div>
-        <div class="links">
-          <h3>Get Connected</h3>
-          <ul>
-            <li>rafisyihab3@gmail.com</li>
-            <li>
-              <a href="#">
-                <img src="assets/images/facebook-logo.svg" alt="">
-              </a>
-              <a href="#">
-                <img src="assets/images/instagram-logo.svg" alt="">
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <p class="copyright">This website is developed by Rafi Syihab © 2023</p>
-    </div>
-  </footer> -->
   <script type="text/javascript" src="assets/js/navbarscript.js"></script>
 </body>
 
