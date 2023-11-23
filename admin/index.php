@@ -134,15 +134,15 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                         include 'container_fluid.php';
                         ?>
                         <div class="row">
-                            <div class="col-md-8 offset-md-2 mt-5">
+                            <div class="col-md-10 offset-md-1 mt-5">
                             <h3 class="fs-3 mb-3 ">Status Pemesanan</h3>
                                 <table class="table bg-white rounded shadow-sm table-hover pad">
                                     <thead>
                                         <tr>
                                             <th scope="col">Nama Customer</th>
-                                            <th scope="col">Order ID</th>
+                                            <th scope="col" width="168">Order ID</th>
                                             <th scope="col" width="110">Order Date</th>
-                                            <th scope="col" width="120">Order Status</th>
+                                            <th scope="col" width="235">Order Status</th>
                                             <th scope="col" width="143">Action</th>
                                         </tr>
                                     </thead>

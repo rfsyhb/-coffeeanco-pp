@@ -122,7 +122,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                     <th scope="col">Product ID</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Unit Price</th>
-                                    <th scope="col" width="112">Action</th>
+                                    <th scope="col" width="50">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -147,10 +147,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                             <?php echo $data['unit_price']; ?>
                                         </td>
                                         <td>
-                                            <a href="update_orderdetails.php?order_item_id=<?php echo $data['order_item_id']; ?> "
-                                                class="btn-sm btn-primary">
-                                                <span class="fas fa-edit">
-                                            </a>
                                             <a href="display_orderdetails.php?action=delete&order_item_id=<?php echo $data['order_item_id']; ?>"
                                                 class="btn-sm btn-danger">
                                                 <span class="fas fa-trash"></span>

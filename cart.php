@@ -29,21 +29,33 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
-    $prod_id = $_POST['prod_id'];
     $cart_id = $_SESSION['cart_id']; // Dapatkan cart_id dari sesi
+    $prod_id = $_POST['prod_id'];
+    $cart_quantity = (int) $_POST['cart_quantity'];
+
+    // Query untuk mendapatkan stok produk
+    $stockQuery = "SELECT prod_stock FROM produk WHERE prod_id = ?";
+    $stockStmt = mysqli_prepare($connect, $stockQuery);
+    mysqli_stmt_bind_param($stockStmt, 's', $prod_id);
+    mysqli_stmt_execute($stockStmt);
+    $stockResult = mysqli_stmt_get_result($stockStmt);
+    $stockRow = mysqli_fetch_assoc($stockResult);
+    $availableStock = $stockRow['prod_stock'];
 
     if ($_POST['action'] == 'update_quantity' && isset($_POST['cart_quantity']) && $_POST['cart_quantity'] > 0) {
-        // Update quantity logic
-        $cart_quantity = (int) $_POST['cart_quantity'];
+        if ($cart_quantity > $availableStock) {
+            // Jumlah yang diminta melebihi stok yang tersedia
+            $_SESSION['message'] = "Jumlah yang diminta melebihi stok yang tersedia.";
+        } else {
+            // Update database dengan jumlah baru
+            $updateQuery = "UPDATE Cart_Details SET cart_quantity = ? WHERE cart_id = ? AND prod_id = ?";
+            $stmt = mysqli_prepare($connect, $updateQuery);
+            mysqli_stmt_bind_param($stmt, 'iss', $cart_quantity, $cart_id, $prod_id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
 
-        // Update database dengan kuantitas baru
-        $updateQuery = "UPDATE Cart_Details SET cart_quantity = ? WHERE cart_id = ? AND prod_id = ?";
-        $stmt = mysqli_prepare($connect, $updateQuery);
-        mysqli_stmt_bind_param($stmt, 'iss', $cart_quantity, $cart_id, $prod_id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-
-        $_SESSION['message'] = "Quantity updated successfully.";
+            $_SESSION['message'] = "Jumlah berhasil diperbarui.";
+        }
     } elseif ($_POST['action'] == 'remove_item') {
         // Remove item logic
         $deleteQuery = "DELETE FROM Cart_Details WHERE cart_id = ? AND prod_id = ?";
@@ -54,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
 
         $_SESSION['message'] = "Item removed successfully.";
     }
+    mysqli_stmt_close($stockStmt);
 
     // Redirect kembali ke halaman cart untuk melihat perubahan
     header("Location: cart.php");
@@ -112,6 +125,7 @@ if (isset($_POST['checkout'])) {
         mysqli_stmt_close($orderStmt);
         mysqli_stmt_close($orderDetailsStmt);
         mysqli_stmt_close($emptyCartStmt);
+        header("Location: user_orders.php?cust_id=$cust_id");
     }
 }
 ?>
@@ -199,14 +213,21 @@ if (isset($_POST['checkout'])) {
                             </span>
                         </div>
                     </div>
-                    <!-- Checkout button -->
-                    <form action="cart.php" method="post">
+
+                    <?php if (!empty($cart_items)): ?>
+                        <!-- Checkout button -->
+                        <form action="" method="post">
+                            <div class="mt-3 d-flex justify-content-end">
+                                <input type="hidden" name="checkout" value="1">
+                                <button type="submit" class="fs-10 btn btn-primary-dark-outline btn-block">CHECK
+                                    OUT</button>
+                            </div>
+                        </form>
+                    <?php else: ?>
                         <div class="mt-3 d-flex justify-content-end">
-                            <input type="hidden" name="checkout" value="1">
-                            <button type="submit" class="fs-10 btn btn-primary-dark-outline btn-block">CHECK
-                                OUT</button>
+                            <p>Keranjang belanja Anda kosong.</p>
                         </div>
-                    </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

@@ -1,8 +1,11 @@
 <?php
 session_start();
 
-include "includes/config.php";
+if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username'])) {
+    header("location:login.php");
+}
 
+include "includes/config.php";
 // Mendapatkan prod_id dari URL
 $prod_id = isset($_GET['prod_id']) ? $_GET['prod_id'] : die('Product ID not specified.');
 
@@ -56,6 +59,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cart_quantity = $_POST['cart_quantity'] ?? 0;
     $prod_id = $_POST['prod_id'] ?? '';
     $cart_unit_price = $_POST['cart_unit_price'] ?? 0;
+
+    // Cek stok yang tersedia
+    $stockQuery = "SELECT prod_stock FROM produk WHERE prod_id = ?";
+    $stockStmt = mysqli_prepare($connect, $stockQuery);
+    mysqli_stmt_bind_param($stockStmt, 's', $prod_id);
+    mysqli_stmt_execute($stockStmt);
+    $stockResult = mysqli_stmt_get_result($stockStmt);
+    $stockRow = mysqli_fetch_assoc($stockResult);
+    $availableStock = $stockRow['prod_stock'];
+
+    // Cek jumlah saat ini di keranjang
+    $checkQuery = "SELECT cart_quantity FROM Cart_Details WHERE prod_id = ?";
+    $checkStmt = mysqli_prepare($connect, $checkQuery);
+    mysqli_stmt_bind_param($checkStmt, 's', $prod_id);
+    mysqli_stmt_execute($checkStmt);
+    $checkResult = mysqli_stmt_get_result($checkStmt);
+    $existingProd = mysqli_fetch_assoc($checkResult);
+    $currentQuantityInCart = $existingProd ? $existingProd['cart_quantity'] : 0;
+
+    if ($cart_quantity > $availableStock) {
+        // Jumlah yang diminta melebihi stok yang tersedia
+        $_SESSION['message'] = "Jumlah yang diminta melebihi stok yang tersedia.";
+        header("Location: detail_product.php?prod_id=$prod_id");
+        exit();
+    }
+
+    // Hitung jumlah total yang diminta
+    $totalRequestedQuantity = $currentQuantityInCart + $cart_quantity;
+
+    if ($totalRequestedQuantity > $availableStock) {
+        // Jumlah total melebihi stok yang tersedia
+        $_SESSION['message'] = "Jumlah total produk melebihi stok yang tersedia.";
+        header("Location: detail_product.php?prod_id=$prod_id");
+        exit();
+    }
 
     // Cek apakah produk sudah ada di cart_details
     $checkQuery = "SELECT cart_quantity FROM Cart_Details WHERE cart_id = ? AND prod_id = ?";
@@ -139,13 +177,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Details Column -->
                     <div class="col-12 col-lg-6">
                         <div class="ps-lg-4">
-                            <h3 class="fs-4 text-dark mb-4 mt-4">
+                            <h3 class="fs-5 text-dark mb-4 mt-4">
                                 <?php echo $product['prod_name']; ?>
                             </h3>
                             <div class="mb-5">
-                                <span class="me-2 fs-7 fw-bold text-dark">
+                                <span class="me-2 fs-8 fw-bold text-dark">
                                     IDR
-                                    <?php echo $product['prod_price']; ?>
+                                    <?php echo number_format($product['prod_price'], 2); ?>
                                 </span>
                             </div>
                             <div class="desc-item">

@@ -16,7 +16,6 @@
     <?php include 'includes/navbar.php'; ?>
     <!-- End of the navbar section -->
 
-    <!-- carousel -->
     <div class="container mt-20">
         <div class="row pt-8 pb-8 g-16 align-items-center">
             <!-- Text Column -->
@@ -29,82 +28,304 @@
                     coffee beans, known for their robust, warm, and captivating flavors. With the golden hues of the
                     afternoon sun and blooming flowers in mind, the mandarin notes from Sumatra paired with the
                     smoothness and depth of Java beans make a perfect ensemble.</p>
-                <p>40% Sumatra Mandheling | Natural</p>
-                <p>60% Java Preanger | Washed</p>
+                <p>Mandarin Orange, Nectarine, Plum, Cantaloupe</p>
             </div>
             <!-- Image Column -->
-            <div class="col-12 col-md-6">
-                <!-- Your image goes here -->
-                <img src="assets/images/thepinkmandarin.png" alt="pinkmandarin" class="img-fluid">
-            </div>
-        </div>
-    </div>
-
-    <!-- The Pink Mandarin -->
-    <div class="wrapper">
-        <div class="left">
-            <h3>ROAST LEVEL 03 MEDIUM/LIGHT</h3>
-            <h1>The Pink Mandarin</h1><br>
-            <p>A cup that takes you to warm sunsets
-                and the aroma of spring blossoms</p>
-            <p>We endeavor to craft The Pink Mandarin blend that reflects the richness
-                and uniqueness of Indonesian coffee beans, known for ther robust,
-                warm, and captivating flavors. With the golden hues of the afternoon sun
-                and blooming flowers in mind, the mandarin notes from Sumatra paired with
-                the smoothness and depth of Java beans make a perfect ensemble</p>
-            <h4>40% Sumatra Mandheling | Natural</h4>
-            <h4>60% Java Preanger | Washed</h4>
-        </div>
-        <div class="right">
-            <img src="assets/images/thepinkmandarin.jpg" alt="">
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-
-    <section class="py-16 position-relative overflow-hidden">
-        <div class="container position-relative">
-            <div class="d-none d-md-inline-flex flex-wrap position-absolute top-50 start-50 translate-middle justify-content-center"
-                style="z-index: 10;">
-                <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="#">Home</a></div>
-                <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="#">Product</a></div>
-                <div class="p-4"><a class="btn p-0 btn-link text-secondary" href="#">Learn</a></div>
-            </div>
-            <div class="position-relative row justify-content-between align-items-center">
-                <div class="col-auto"><a class="d-inline-block" href="#">
-                        <i class="ri-shopping-bag-2-line"></i><span class="fs-10"> CoffeeanCo</span>
-                    </a></a></div>
-                <div class="col-auto">
-                    <div class="d-flex align-items-center"><a
-                            class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center me-2 rounded-pill"
-                            href="#" style="width: 35px; height: 35px;">
-                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M5.55736 5.2L5.55736 3.88C5.55736 3.308 5.69631 3 6.66894 3H7.87315V0.800003L6.02052 0.800003C3.70473 0.800003 2.77841 2.252 2.77841 3.88V5.2H0.925781L0.925781 7.4H2.77841L2.77841 14H5.55736L5.55736 7.4H7.59526L7.87315 5.2H5.55736Z"
-                                    fill="#27272A"></path>
-                            </svg></a><a
-                            class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center me-2 rounded-pill"
-                            href="#" style="width: 35px; height: 35px;">
-                            <svg width="14" height="11" viewBox="0 0 14 11" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M13.6655 1.39641C13.1901 1.60149 12.6728 1.74907 12.1399 1.80656C12.6931 1.47788 13.1074 0.958619 13.3051 0.346204C12.7859 0.655036 12.2172 0.871595 11.6241 0.986274C11.3762 0.721276 11.0764 0.510168 10.7434 0.366102C10.4104 0.222036 10.0512 0.1481 9.68836 0.148902C8.22024 0.148902 7.03953 1.33893 7.03953 2.79928C7.03953 3.00436 7.06439 3.20943 7.10478 3.40673C4.90649 3.29177 2.94589 2.24155 1.64246 0.633614C1.40495 1.03927 1.2805 1.50117 1.28203 1.97123C1.28203 2.89094 1.74965 3.70191 2.46274 4.17885C2.0425 4.1623 1.63211 4.0468 1.26494 3.84173V3.87435C1.26494 5.16226 2.17533 6.22956 3.38866 6.47502C3.16084 6.5342 2.92649 6.56447 2.69111 6.56513C2.51866 6.56513 2.35554 6.54804 2.19086 6.52474C2.52643 7.57495 3.50362 8.33775 4.66724 8.3626C3.75685 9.07569 2.61654 9.49515 1.37835 9.49515C1.15619 9.49515 0.951119 9.48738 0.738281 9.46253C1.91278 10.216 3.30632 10.651 4.80706 10.651C9.67904 10.651 12.345 6.61484 12.345 3.11155C12.345 2.99659 12.345 2.88162 12.3372 2.76666C12.853 2.38914 13.3051 1.92152 13.6655 1.39641Z"
-                                    fill="#27272A"></path>
-                            </svg></a><a
-                            class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center rounded-pill"
-                            href="#" style="width: 35px; height: 35px;">
-                            <svg width="16" height="15" viewBox="0 0 16 15" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M8.00094 0.360001C6.09046 0.360001 5.85022 0.368801 5.09958 0.402241C4.34894 0.437441 3.83766 0.555361 3.38974 0.729601C2.9199 0.906321 2.49433 1.18353 2.14278 1.54184C1.78468 1.89357 1.50751 2.31909 1.33054 2.7888C1.1563 3.23584 1.0375 3.748 1.00318 4.496C0.969738 5.2484 0.960937 5.48776 0.960937 7.40088C0.960937 9.31224 0.969738 9.5516 1.00318 10.3022C1.03838 11.052 1.1563 11.5633 1.33054 12.0112C1.51094 12.4741 1.75118 12.8666 2.14278 13.2582C2.5335 13.6498 2.92598 13.8909 3.38886 14.0704C3.83766 14.2446 4.34806 14.3634 5.09782 14.3978C5.84934 14.4312 6.0887 14.44 8.00094 14.44C9.91318 14.44 10.1517 14.4312 10.9032 14.3978C11.6521 14.3626 12.1651 14.2446 12.613 14.0704C13.0826 13.8936 13.5078 13.6164 13.8591 13.2582C14.2507 12.8666 14.4909 12.4741 14.6713 12.0112C14.8447 11.5633 14.9635 11.052 14.9987 10.3022C15.0321 9.5516 15.0409 9.31224 15.0409 7.4C15.0409 5.48776 15.0321 5.2484 14.9987 4.49688C14.9635 3.748 14.8447 3.23584 14.6713 2.7888C14.4944 2.31908 14.2172 1.89356 13.8591 1.54184C13.5077 1.1834 13.0821 0.906169 12.6121 0.729601C12.1633 0.555361 11.6512 0.436561 10.9023 0.402241C10.1508 0.368801 9.9123 0.360001 7.99918 0.360001H8.00182H8.00094ZM7.36998 1.62896H8.00182C9.8815 1.62896 10.1041 1.63512 10.846 1.66944C11.5324 1.70024 11.9055 1.81552 12.1537 1.91144C12.4819 2.03904 12.7169 2.19216 12.9633 2.43856C13.2097 2.68496 13.3619 2.91904 13.4895 3.24816C13.5863 3.49544 13.7007 3.86856 13.7315 4.55496C13.7658 5.2968 13.7729 5.51944 13.7729 7.39824C13.7729 9.27704 13.7658 9.50056 13.7315 10.2424C13.7007 10.9288 13.5854 11.301 13.4895 11.5492C13.3766 11.8549 13.1965 12.1313 12.9624 12.3579C12.716 12.6043 12.4819 12.7566 12.1528 12.8842C11.9064 12.981 11.5333 13.0954 10.846 13.127C10.1041 13.1605 9.8815 13.1684 8.00182 13.1684C6.12214 13.1684 5.89862 13.1605 5.15678 13.127C4.47038 13.0954 4.09814 12.981 3.84998 12.8842C3.54418 12.7715 3.26753 12.5916 3.04038 12.3579C2.80608 12.1309 2.62565 11.8543 2.51238 11.5483C2.41646 11.301 2.30118 10.9279 2.27038 10.2415C2.23694 9.49968 2.2299 9.27704 2.2299 7.39648C2.2299 5.5168 2.23694 5.29504 2.27038 4.5532C2.30206 3.8668 2.41646 3.49368 2.51326 3.24552C2.64086 2.91728 2.79398 2.68232 3.04038 2.43592C3.28678 2.18952 3.52086 2.03728 3.84998 1.90968C4.09814 1.81288 4.47038 1.69848 5.15678 1.6668C5.80622 1.63688 6.0579 1.62808 7.36998 1.6272V1.62896ZM11.7594 2.7976C11.6485 2.7976 11.5386 2.81945 11.4361 2.86191C11.3336 2.90436 11.2405 2.96659 11.1621 3.04504C11.0836 3.12348 11.0214 3.21661 10.9789 3.31911C10.9365 3.42161 10.9146 3.53146 10.9146 3.6424C10.9146 3.75334 10.9365 3.8632 10.9789 3.96569C11.0214 4.06819 11.0836 4.16132 11.1621 4.23976C11.2405 4.31821 11.3336 4.38044 11.4361 4.42289C11.5386 4.46535 11.6485 4.4872 11.7594 4.4872C11.9835 4.4872 12.1984 4.3982 12.3568 4.23976C12.5152 4.08133 12.6042 3.86646 12.6042 3.6424C12.6042 3.41835 12.5152 3.20347 12.3568 3.04504C12.1984 2.88661 11.9835 2.7976 11.7594 2.7976ZM8.00182 3.78496C7.52228 3.77748 7.04604 3.86547 6.60084 4.0438C6.15563 4.22214 5.75035 4.48726 5.40859 4.82373C5.06683 5.1602 4.79542 5.5613 4.61016 6.00367C4.4249 6.44604 4.32949 6.92084 4.32949 7.40044C4.32949 7.88004 4.4249 8.35484 4.61016 8.79721C4.79542 9.23958 5.06683 9.64068 5.40859 9.97715C5.75035 10.3136 6.15563 10.5787 6.60084 10.7571C7.04604 10.9354 7.52228 11.0234 8.00182 11.0159C8.95093 11.0011 9.85616 10.6137 10.5221 9.93726C11.1881 9.26084 11.5613 8.34967 11.5613 7.40044C11.5613 6.45121 11.1881 5.54004 10.5221 4.86362C9.85616 4.1872 8.95093 3.79977 8.00182 3.78496ZM8.00182 5.05304C8.62427 5.05304 9.22123 5.30031 9.66137 5.74045C10.1015 6.18059 10.3488 6.77755 10.3488 7.4C10.3488 8.02245 10.1015 8.61941 9.66137 9.05955C9.22123 9.49969 8.62427 9.74696 8.00182 9.74696C7.37937 9.74696 6.78241 9.49969 6.34227 9.05955C5.90213 8.61941 5.65486 8.02245 5.65486 7.4C5.65486 6.77755 5.90213 6.18059 6.34227 5.74045C6.78241 5.30031 7.37937 5.05304 8.00182 5.05304Z"
-                                    fill="#27272A"></path>
-                            </svg></a></div>
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/thepinkmandarin.png" alt="pinkmandarin" class="img-fluid">
                 </div>
             </div>
-            <p class="copyright small">This website is developed by Rafi Syihab © 2023</p>
         </div>
-    </section>
+    </div>
+
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/theforbiddentree1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROAST LEVEL 04 MEDIUM/DARK</h2>
+                <h1>The Forbidden Tree</h1>
+                <p>Indulge in the mystery of creation, where every sip is a forbidden pleasure.</p>
+                <p>The Forbidden Tree blend is a symphony of flavors: the fruity punch of ripe strawberries and the
+                    subtle, sweet notes of honey, culminating in a cup that's as tantalizing as the fruit of the tree
+                    it's named after. This blend is your gateway to the Forbidden series – a series that promises to
+                    satisfy your deepest coffee curiosities and take you on a tantalizing voyage beyond the veil of the
+                    everyday.</p>
+                <p>Strawberry, Longan, Osmanthus, Rose, Raisin</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- repeat -->
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROAST LEVEL 03 MEDIUM</h2>
+                <h1>Halu Ciwidey</h1>
+                <p>Embrace the spirit of Simalungun's majestic Halu Mountain with every brew.</p>
+                <p>In the lush highlands of Simalungun, where the air is crisp and the soil is rich with volcanic
+                    nutrients, we find the essence of our Halu Ciwidey beans. Cultivated with care by the skilled
+                    farmers allied with CORCAS COFFEE COMPANY, these beans are a testament to the art of coffee making.
+
+                    Halu Ciwidey is not just a coffee; it's a celebration of the land and its people. Each bean is a
+                    piece of the mountain's soul, processed with passion and precision to bring you a cup that resonates
+                    with the vibrancy of its origin.</p>
+                <p>Fresh citrus, Floral, Hints of spices</p>
+            </div>
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/haluciwidey1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/theforbiddenflower1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROAST LEVEL 04 MEDIUM/DARK</h2>
+                <h1>Forbidden Flower</h1>
+                <p>Embark on a serene journey with the Forbidden Flower, a blend that transcends the ordinary.</p>
+                <p>Forbidden Flower is an exquisite amalgamation of Sakicha Purple Grape from Ethiopia and a unique
+                    experimental coffee from Temanggung. This blend, inspired by the mythical properties of its
+                    namesake, delivers a soothing calmness paired with an invigorating energy. Each sip unfolds a
+                    tapestry of super floral notes, creating a sense of tranquility and happiness that truly captures
+                    the essence of its enigmatic title. It's a harmonious contradiction – a serene yet energetic
+                    experience that was once thought impossible, now a delightful reality in your cup.</p>
+                <p>Lavender, Jasmine, Honeydew, Bergamot, Rosemary</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- repeat -->
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROAST LEVEL 03 MEDIUM</h2>
+                <h1>Forbidden Fruit</h1>
+                <p>Discover a taste that redefines the essence of coffee with the Forbidden Fruit blend.</p>
+                <p>Inspired by the legendary fruit that altered the course of history in the Garden of Eden, the
+                    Forbidden Fruit Filter Blend is a revolutionary creation in the world of coffee. This blend is an
+                    allegory for discovery and transformation, mirroring the pivotal change brought about by the
+                    mythical fruit. With every sip, you are invited to experience a shift in your coffee journey,
+                    exploring flavors that challenge the conventional and transcend the ordinary. This blend is a
+                    harmonious marriage of two unique coffees, each bringing its own character to create a new,
+                    unprecedented flavor profile.</p>
+                <p>Mango, Pomegranate, Cinnamon, Red Apple, and a touch of Almond</p>
+            </div>
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/theforbiddenfruit1.jpg" alt="Forbidden Fruit Coffee"
+                        class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/flowerpower1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROASTING PROFILE: MEDIUM LIGHT</h2>
+                <h1>Flower Power</h1>
+                <p>Experience the blossoming flavors of our Flower Power espresso blend, a true flower bomb in a cup.
+                </p>
+                <p>Flower Power is a rich, sweet, and full-flavored espresso blend, meticulously crafted for the
+                    connoisseur of fine coffee. This blend combines the vibrant and aromatic Ethiopian Yirgacheffe with
+                    the balanced and sweet West Java Gununghalu beans. The Ethiopian beans infuse the blend with
+                    delightful citrus and floral notes, while the Gununghalu contributes to a well-rounded body,
+                    enhancing the sweetness and acidity. As an espresso, Flower Power unfolds a rich tapestry of
+                    flavors, starting with an intoxicating aroma and taste of jasmine, followed by the sweetness of
+                    peach and nectarine, culminating in a lingering sweet aftertaste. When paired with milk, it
+                    transforms to reveal a smooth chocolate finish. This blend is an ode to the power of flowers,
+                    ensuring a captivating coffee experience that will beckon you back time and again.</p>
+                <p>Jasmine, Peach, Nectarine, Sweet Aftertaste, Smooth Chocolate Finish with Milk</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- repeat -->
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROASTING PROFILE: MEDIUM ROAST</h2>
+                <h1>Ijen Mosto</h1>
+                <p>Immerse yourself in the vibrant and juicy world of Ijen Mosto, where coffee transcends into a
+                    fruit-forward experience.</p>
+                <p>Ijen Mosto is a testament to the meticulous art of coffee processing, showcasing the full potential
+                    of fully washed beans. This coffee begins its journey with a selection process in water, where only
+                    the ripest cherries, those that sink, continue to the next stage. After mechanical depulping, the
+                    beans undergo a crucial fermentation process, which is meticulously managed to ensure the perfect
+                    development of flavors without compromising the bean's integrity. Post-fermentation, the beans are
+                    washed again to remove any remaining mucilage, paving the way for a clean and clear flavor profile.
+                </p>
+                <p>But Ijen Mosto's journey doesn't end there. We further enhance these beans by soaking them in a water
+                    and yeast solution. This unique step is crucial in preserving the coffee's fruity notes, often lost
+                    in standard washed processes. As a result, Ijen Mosto offers a harmonious balance between a
+                    substantial body and vibrant acidity, featuring notes of apple and orange that dance on your palate.
+                    This coffee is not just a drink; it's an exploration of how traditional processing and innovative
+                    techniques can coalesce to create a cup that is both grounded and exuberantly fruity.</p>
+                <p>Juicy Texture, Vibrant Apple, Orange</p>
+            </div>
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/ijenmosto1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/papandayanmosto1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROASTING PROFILE: MEDIUM LIGHT</h2>
+                <h1>Papandayan Mosto</h1>
+                <p>Step into a world of complex flavors with Papandayan Mosto, a coffee that redefines the boundaries of
+                    taste.</p>
+                <p>Papandayan Mosto, hailing from the renowned region of Garut in West Java, is a shining example of
+                    innovative coffee processing. Embracing natural processing coupled with anaerobic fermentation, this
+                    coffee is a celebration of strong, concentrated characteristics. The fermentation process is a key
+                    player in this coffee's profile, enhancing its sweetness, enriching its texture, and imparting
+                    unique, distinct aromas. Each sip of Papandayan Mosto is an adventure, offering a surprising and
+                    delightful array of flavors that challenge and satisfy the palate.</p>
+                <p>This coffee is a homage to the evolving nature of coffee, showcasing the endless possibilities within
+                    each bean. With layers of sourplum, cherrypulp, and a hint of berries in the aftertaste,
+                    complemented by the intriguing bitterness of orangepeel, Papandayan Mosto is a testament to the
+                    craftsmanship of its producers.</p>
+                <p>Sourplum, Cherrypulp, Hint of Berries Aftertaste, Bitter Orangepeel</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- repeat -->
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROASTING PROFILE: LIGHT ROAST</h2>
+                <h1>Raspberry Nabila</h1>
+                <p>Rediscover the delightful Raspberry Nabila, a coffee that emerged stronger from adversity.</p>
+                <p>Raspberry Nabila, a name that may already resonate with many of you, has a story of resilience and
+                    adaptation. During the challenging times of the pandemic, we faced significant hurdles that impacted
+                    the quality of our green beans. This setback led us to pause and reevaluate, with a steadfast focus
+                    on the future. Now, in this triumphant return, Raspberry Nabila comes to you with renewed vigor,
+                    featuring the Lini S, Ateng, and Typica varieties from the esteemed Mang Ikhsan farm. This coffee is
+                    a symbol of our commitment to excellence and sustainability, embodying the same spirit that drives
+                    our roastery to deliver only the finest to your cup.</p>
+                <p>Experience the refined taste of Raspberry Nabila, where each sip brings a fusion of raspberry and
+                    hibiscus, intertwined with a candy-like sweetness. Raspberry Nabila is not just a coffee; it's a
+                    promise of better days, served in a cup brimming with vibrant flavors and a spirit of resilience.
+                </p>
+                <p>Raspberry, Hibiscus, Candy-like</p>
+            </div>
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/raspberrynabila1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/josegallardo1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROASTING PROFILE: MEDIUM LIGHT</h2>
+                <h1>Jose Gallardo</h1>
+                <p>Awaken your senses with the soothing and invigorating flavors of Jose Gallardo, a coffee that speaks
+                    of serenity and vitality.</p>
+                <p>Jose Gallardo, originating from the esteemed Finca La Santa, is a blend that epitomizes the
+                    harmonious balance of nature's finest flavors. This coffee is a loving tribute to the hidden gem
+                    that is Finca La Santa, where passion, quality, and dedication converge to produce an exceptional
+                    coffee experience. Each sip of Jose Gallardo is a journey through a landscape of subtle yet profound
+                    flavors, starting with the gentle sweetness of mandarin orange and the calming notes of chamomile.
+                    This delightful introduction paves the way for a finish that echoes the refreshing essence of ginger
+                    tea, perfect for moments of contemplation or a peaceful start to your day.</p>
+                <p>Jose Gallardo is not just a coffee; it's a reflection of a farm's essence, where every bean is
+                    treated with care and respect.</p>
+                <p>Mandarin Orange, Chamomile, Ginger Tea</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- repeat -->
+    <div class="container mt-20">
+        <div class="row pt-8 pb-8 g-16 align-items-center">
+            <!-- Text Column -->
+            <div class="col-12 col-md-6">
+                <!-- Your text content goes here -->
+                <h2>ROASTING PROFILE: LIGHT ROAST</h2>
+                <h1>Geisha Narino</h1>
+                <p>Indulge in the elegance of Geisha Narino, a coffee that embodies the essence of floral delicacy and
+                    subtlety.</p>
+                <p>Geisha Narino, a Washed Geisha variety, is an ode to the art of coffee cultivation at its most
+                    refined. Renowned for its 'smooth and floral' character, this coffee offers a clear and simply
+                    delicious flavor profile that is both rare and exquisite. The delicate floral notes are the heart of
+                    this coffee, elegantly intertwined with subtle hints of citrus, creating a harmonious and
+                    sophisticated taste experience. It stands out as one of the most delicate and elegantly nuanced
+                    coffees we've had the pleasure of encountering, a true testament to its distinguished origins.</p>
+                <p>Orange Blossom, White Peach, Panela, Tea-like</p>
+            </div>
+            <!-- Image Column -->
+            <div class="produk-img col-12 col-md-6">
+                <div class="square-image">
+                    <img src="assets/images/uploaded/geishanarino1.jpg" alt="" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- footer -->
+    <?php include 'includes/footer.php'; ?>
+    <!-- End of the footer section -->
 
     <script type="text/javascript" src="assets/js/navbarscript.js"></script>
 </body>

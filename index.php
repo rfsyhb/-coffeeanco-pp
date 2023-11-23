@@ -30,8 +30,8 @@
             <p class="mb-6 h5 fw-medium text-dark">In pursuit of the perfect cup</p>
             <h2 class="mb-14" style="letter-spacing: -1px;">We create coffee experiences which elevate expectations</h2>
             <div class="row g-4">
-              <a class="btn mt-auto w-25 text-success-light shadow" style="background-color: var(--primaryo-color);"
-                href="products.php">Explore Now</a>
+              <a class="btn mt-auto w-25 text-success-light shadow fs-12" style="background-color: var(--primaryo-color);"
+                href="#about">About Us!</a>
             </div>
           </div>
         </div>
@@ -52,21 +52,23 @@
 
   <!-- vendia -->
 
-  <section class="bg-secondary-dark" style="background-color: #111215 !important;">
+  <section id="about" class="bg-secondary-dark" style="background-color: #111215 !important;">
     <div class="position-relative">
       <img class="d-none d-lg-block position-absolute top-0 start-0 h-100 img-fluid col-4 col-lg-5"
         src="assets/images/coffeefarmer.png" alt="" style="object-fit: cover;">
       <div class="container pt-lg-60 pb-32 position-relative">
         <div class="mw-5xl ms-auto">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-12 col-md-4 mb-16 mb-md-0 mt-n64 mt-lg-0">
               <img class="img-fluid d-block w-100 mx-auto mw-xs shadow" src="assets/images/coffeeroaster.png" alt="">
             </div>
             <div class="col-12 col-md-8">
               <div class="mw-md mw-sm-lg mw-xl-2xl mx-auto ps-lg-10">
-                <h1 class="h1 text-white mb-6">Decorate with minimal interiors</h1>
-                <p class="mw-lg fs-7 fw-light text-light mb-16">Lorem ipsum dolor sit amet, consectetur adipiscing a
-                  elit. Nullam to dictum aliquet accumsan porta lectus ridiculus in these mattis.</p>
+                <h1 class="h1 text-white mb-6">About us</h1>
+                <p class="mw-lg fs-8 fw-light text-light mb-16">Our journey begins at the source, working hand-in-hand
+                  with local farmers across the globe who share our passion and dedication to organic farming and
+                  sustainable practices. We take pride in selecting only the finest beans, ensuring each batch is
+                  harvested at peak ripeness to capture the distinctive tastes and aromas of its origin.</p>
                 <div class="button-action">
                   <a class="btn btn-brown" href="products.php">
                     <span class="me-3">Explore Collections</span>

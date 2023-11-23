@@ -52,7 +52,7 @@ include "includes/config.php";
                         </thead>
                         <tbody>
                             <?php
-                            $datas = mysqli_query($connect, "SELECT * FROM orders");
+                            $datas = mysqli_query($connect, "SELECT * FROM orders WHERE cust_id = '".$_SESSION['cust_id']."'");
                             while ($data = mysqli_fetch_array($datas)) {
                                 ?>
                                 <tr>

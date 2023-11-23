@@ -51,7 +51,7 @@
                                 <?php echo $row['prod_name']; ?>
                             </h6>
                             <span class="fs-10 text-primary-gradient">IDR
-                                <?php echo $row['prod_price']; ?>
+                                <?php echo number_format($row['prod_price'], 2); ?>
                             </span>
                         </div>
                     </div>

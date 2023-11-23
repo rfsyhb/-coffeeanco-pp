@@ -1,15 +1,16 @@
-.card-img-top-wrapper {
-    position: relative;
-    width: 100%;    
-    padding-top: 100%; /* The padding-top trick to maintain aspect ratio */
-    background: #f8f9fa; /* Optional: background color for the wrapper */
-}
-
-.card-img {
-    position: absolute;
+.square-image {
+    width: 100%; /* Mengambil 100% dari kontainer parent */
+    height: 0; /* Awalnya di-set ke 0 */
+    padding-top: 100%; /* Trik untuk membuat tinggi sama dengan lebar */
+    position: relative; /* Posisi relatif untuk posisi absolut pada gambar di dalamnya */
+    overflow: hidden; /* Memastikan konten ekstra tersembunyi */
+  }
+  
+  .square-image img {
+    position: absolute; /* Absolut terhadap parent yang relatif */
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* This will cover the area of the wrapper without losing aspect ratio */
-}
+    width: 100%; /* Mengatur ulang ini untuk menyesuaikan dengan kontainer */
+    height: 100%; /* Mengatur ulang ini untuk menyesuaikan dengan kontainer */
+    object-fit: cover; /* Memotong gambar secara proporsional */
+  }  
