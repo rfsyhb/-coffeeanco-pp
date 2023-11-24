@@ -16,7 +16,7 @@
 <body>
 
     <header>
-        <a href="" class="logo">
+        <a href="index.php" class="logo">
             <img src="assets/images/coffeeanco.png" style="height: 43px" alt=""><span>CoffeeanCo</span>
         </a>
         <ul class="navbarun">

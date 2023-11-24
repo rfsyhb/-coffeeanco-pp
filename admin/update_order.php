@@ -22,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_execute($statement);
 
     if ($statement) {
-        echo "<script>alert('Product has been updated!'); window.location = 'display_order.php'</script>";
+        echo "<script>alert('Order has been updated!'); window.location = 'display_order.php'</script>";
     } else {
-        echo "<script>alert('Update product failed!'); window.location = 'display_order.php'</script>";
+        echo "<script>alert('Update Order failed!'); window.location = 'display_order.php'</script>";
     }
 }
 ?>
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div id="layoutSidenav_content">
             <main>
 
-                <div class="container-fluid px-4">
+                <div class="container-fluid px-4 mt-3">
                     <?php
                     $id = $_GET['order_id'];
                     $query = mysqli_query($connect, "SELECT * FROM orders WHERE order_id='$id'");
@@ -135,25 +135,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="mb-3">
                             <label>Order Date</label>
                             <input type="text" name="order_date" id="order_date"
-                                value="<?php echo $data['order_date']; ?>" class="form-control" require>
+                                value="<?php echo $data['order_date']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Total Amount</label>
                             <input type="text" name="total_amount" id="total_amount"
-                                value="<?php echo $data['total_amount']; ?>" class="form-control" require>
+                                value="<?php echo $data['total_amount']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label>Customer ID</label>
                             <input type="text" name="cust_id" id="cust_id"
-                                value="<?php echo $data['cust_id']; ?>" class="form-control" require>
+                                value="<?php echo $data['cust_id']; ?>" class="form-control" readonly>
                         </div>
                         <div class="mb-3">
                             <label>Order Status</label>
                             <input type="text" name="order_status" id="order_status" value="<?php echo $data['order_status']; ?>"
-                                class="form-control" require>
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <input type="submit" value="Update Order" class="btn btn-sm btn-primary" />&nbsp;
+                            <input type="submit" value="Update Order" class="btn btn-sm btn-primary" />
                         </div>
                     </form>
                 </div>

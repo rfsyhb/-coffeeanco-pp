@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php include 'includes/navbar.php'; ?>
     <!-- End of the navbar section -->
 
-    <div class="py-12 py-md-24 align-items-center">
+    <div class="py-12 py-md-24 align-items-center mt-8">
 
         <!-- This will make the div take up full viewport height and center its children vertically -->
         <section class="w-100"> <!-- This will ensure the section takes the full width -->
@@ -222,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                         <?php echo $row['prod_name']; ?>
                                                     </h6>
                                                     <p class="card-text text-center small-text mt-auto">IDR
-                                                        <?php echo $row['prod_price']; ?>
+                                                        <?php echo number_format($row['prod_price'], 2); ?>
                                                     </p>
                                                 </div>
                                             </a>

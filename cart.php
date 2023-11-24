@@ -113,7 +113,7 @@ if (isset($_POST['checkout'])) {
         mysqli_commit($connect);
 
         // Redirect ke halaman konfirmasi atau pembayaran
-        header("");
+        header("Location: user_orders.php?cust_id=$cust_id");
         mysqli_stmt_close($emptyCartStmt);
         exit();
 
@@ -125,7 +125,6 @@ if (isset($_POST['checkout'])) {
         mysqli_stmt_close($orderStmt);
         mysqli_stmt_close($orderDetailsStmt);
         mysqli_stmt_close($emptyCartStmt);
-        header("Location: user_orders.php?cust_id=$cust_id");
     }
 }
 ?>
@@ -205,7 +204,7 @@ if (isset($_POST['checkout'])) {
                     <!-- Subtotal -->
                     <div class="d-flex justify-content-end">
                         <div class="subtotal-text">
-                            <strong>SUBTOTAL</strong>
+                            <strong>SUBTOTAL&nbsp;</strong>
                         </div>
                         <div class="subtotal-price">
                             <span>Rp

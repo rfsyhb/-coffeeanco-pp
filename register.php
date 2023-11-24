@@ -69,7 +69,6 @@
 include 'includes/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = "TES01";
     $name = $_POST["name"];
     $email = $_POST["email"];
     $username = $_POST["username"];

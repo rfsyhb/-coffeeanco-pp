@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_execute($statement);
 
     if ($statement) {
-        echo "<script>alert('Product has been updated!'); window.location = 'display_customer.php'</script>";
+        echo "<script>alert('Customer has been updated!'); window.location = 'display_customer.php'</script>";
     } else {
-        echo "<script>alert('Update product failed!'); window.location = 'display_customer.php'</script>";
+        echo "<script>alert('Update Customer failed!'); window.location = 'display_customer.php'</script>";
     }
 }
 ?>
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div id="layoutSidenav_content">
             <main>
 
-                <div class="container-fluid px-4">
+                <div class="container-fluid px-4 mt-3">
                     <?php
                     $id = $_GET['cust_id'];
                     $query = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_id='$id'");

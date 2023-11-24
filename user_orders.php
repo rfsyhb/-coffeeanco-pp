@@ -37,22 +37,26 @@ include "includes/config.php";
                 <div class="col-md-3">
                     <p>View all your pending, delivered, and returned orders here.</p>
                 </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-1">
+                    <a class="btn btn-edit fs-8" href="user_profile.php">Back</a>
+                </div>
             </div>
             <div class="row mx-5 mt-5">
                 <div class="col">
                     <table class="table bg-white rounded shadow-sm  table-hover">
                         <thead>
                             <tr>
-                                <th scope="col" width="100">Order ID</th>
-                                <th scope="col">Order Date</th>
-                                <th scope="col">Total Amount</th>
-                                <th scope="col" width="350">Status</th>
+                                <th scope="col">Order ID</th>
+                                <th scope="col" width="150">Order Date</th>
+                                <th scope="col" width="200">Total Amount</th>
+                                <th scope="col" width="300">Status</th>
                                 <th scope="col" width="250">Pembayaran</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $datas = mysqli_query($connect, "SELECT * FROM orders WHERE cust_id = '".$_SESSION['cust_id']."'");
+                            $datas = mysqli_query($connect, "SELECT * FROM orders WHERE cust_id = '" . $_SESSION['cust_id'] . "'");
                             while ($data = mysqli_fetch_array($datas)) {
                                 ?>
                                 <tr>
@@ -72,9 +76,9 @@ include "includes/config.php";
                                         <a href="https://wa.me/6282154449091?text=Halo!+Saya+ingin+melakukan+pembayaran+untuk+order_id+<?php echo $data['order_id']; ?>"
                                             class="btn-sm btn-primary" target="_blank">
                                             <span class="fa-regular fa-handshake">
-                                            <span>Lakukan Pembayaran</span>
+                                                <span>Lakukan Pembayaran</span>
                                         </a>
-                                    </td>   
+                                    </td>
                                 </tr>
                                 <?php
                             }

@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid px-4">
+                <div class="container-fluid px-4 mt-4">
                     <?php
                     $id = $_GET['prod_id'];
                     $query = mysqli_query($connect, "SELECT * FROM produk WHERE prod_id='$id'");

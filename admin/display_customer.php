@@ -16,9 +16,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_i
     mysqli_stmt_execute($statement);
 
     if ($statement) {
-        echo "<script>alert('Order has been Deleted!'); window.location = 'display_customer.php'</script>";
+        echo "<script>alert('Customer has been Deleted!'); window.location = 'display_customer.php'</script>";
     } else {
-        echo "<script>alert('Delete Order Failed!'); window.location = 'display_customer.php'</script>";
+        echo "<script>alert('Delete Customer Failed!'); window.location = 'display_customer.php'</script>";
     }
 }
 ?>

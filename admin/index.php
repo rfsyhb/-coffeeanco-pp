@@ -9,33 +9,46 @@ include "../includes/config.php";
 
 // Cek jika action dan order_id diterima melalui GET request
 if (isset($_GET['action']) && isset($_GET['order_id'])) {
-    $order_id = $_GET['order_id'];
+    $order_id = mysqli_real_escape_string($connect, $_GET['order_id']); // Sanitasi input
     $action = $_GET['action'];
 
     switch ($action) {
         case 'fail':
             $new_status = 'digagalkan';
+            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
+            mysqli_query($connect, $query);
             break;
         case 'process':
-            $new_status = 'akan diproses';
+            $new_status = 'sedang diproses';
+            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
+            mysqli_query($connect, $query);
             break;
         case 'delay':
             $new_status = 'delayed';
+            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
+            mysqli_query($connect, $query);
             break;
         case 'complete':
-            $new_status = 'diproses';
+            $new_status = 'selesai';
+            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
+            mysqli_query($connect, $query);
+            break;
+        case 'delete':
+            // Query untuk menghapus baris
+            $query = "DELETE FROM order_details WHERE order_id = '$order_id'";
+            mysqli_query($connect, $query);
+            $query = "DELETE FROM orders WHERE order_id = '$order_id'";
+            mysqli_query($connect, $query);
             break;
         default:
             die('Invalid action.');
     }
 
-    $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
-    mysqli_query($connect, $query);
-
     // Redirect back to the page to avoid re-executing the URL on refresh
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
+
 
 ?>
 
@@ -135,25 +148,29 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                         ?>
                         <div class="row">
                             <div class="col-md-10 offset-md-1 mt-5">
-                            <h3 class="fs-3 mb-3 ">Status Pemesanan</h3>
+                                <h3 class="fs-3 mb-3 ">Status Pemesanan</h3>
                                 <table class="table bg-white rounded shadow-sm table-hover pad">
                                     <thead>
                                         <tr>
                                             <th scope="col">Nama Customer</th>
+                                            <th scope="col" width="90">Total</th>
                                             <th scope="col" width="168">Order ID</th>
                                             <th scope="col" width="110">Order Date</th>
                                             <th scope="col" width="235">Order Status</th>
-                                            <th scope="col" width="143">Action</th>
+                                            <th scope="col" width="180">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $datas = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_id = pengunjung.cust_id");
+                                        $datas = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_id = pengunjung.cust_id");
                                         while ($data = mysqli_fetch_array($datas)) {
                                             ?>
                                             <tr>
                                                 <td>
                                                     <?php echo $data['cust_name']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo number_format($data['total_amount'], 1); ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $data['order_id']; ?>
@@ -180,6 +197,10 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                                     <a href="?action=complete&order_id=<?php echo $data['order_id']; ?>"
                                                         class="btn-sm btn-danger">
                                                         <span class="fa-regular fa-calendar-check">
+                                                    </a>
+                                                    <a href="?action=delete&order_id=<?php echo $data['order_id']; ?>"
+                                                        class="btn-sm btn-danger">
+                                                        <span class="fas fa-trash">
                                                     </a>
                                                 </td>
                                             </tr>

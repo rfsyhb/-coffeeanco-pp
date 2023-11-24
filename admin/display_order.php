@@ -117,11 +117,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col" width="80">ID</th>
+                                    <th scope="col">ID</th>
                                     <th scope="col">Order Date</th>
-                                    <th scope="col">Total Amount</th>
-                                    <th scope="col">Customer ID</th>
-                                    <th scope="col">Order Status</th>
+                                    <th scope="col" width="200">Total Amount</th>
+                                    <th scope="col" width="150">Customer ID</th>
+                                    <th scope="col" width="270">Order Status</th>
                                     <th scope="col" width="112">Action</th>
                                 </tr>
                             </thead>

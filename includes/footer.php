@@ -20,12 +20,14 @@
                 </div>
                 <div class="position-relative row justify-content-between align-items-center">
                     <div class="col-auto"><a class="d-inline-block" href="#">
-                    <img src="assets/images/coffeeanco.png" style="height: 43px"alt=""><span class="fs-10"> CoffeeanCo</span>
-                        </a></a></div>
+                            <img src="assets/images/coffeeanco.png" style="height: 43px" alt=""><span class="fs-10">
+                                CoffeeanCo</span>
+                        </a></div>
                     <div class="col-auto">
                         <div class="d-flex align-items-center"><a
                                 class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center me-2 rounded-pill"
-                                href="https://www.facebook.com/OzRafi/" style="width: 35px; height: 35px;">
+                                href="https://www.facebook.com/OzRafi/" target="_blank"
+                                style="width: 35px; height: 35px;">
                                 <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -33,7 +35,7 @@
                                         fill="#27272A"></path>
                                 </svg></a><a
                                 class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center me-2 rounded-pill"
-                                href="https://github.com/rfsyhb" style="width: 35px; height: 35px;">
+                                href="https://github.com/rfsyhb" target="_blank" style="width: 35px; height: 35px;">
                                 <svg width="16" height="15" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -41,7 +43,8 @@
                                         fill="#27272A"></path>
                                 </svg></a><a
                                 class="btn p-0 btn-outline-secondary-dark d-inline-flex align-items-center justify-content-center rounded-pill"
-                                href="https://www.instagram.com/ozrafi/" style="width: 35px; height: 35px;">
+                                href="https://www.instagram.com/ozrafi/" target="_blank"
+                                style="width: 35px; height: 35px;">
                                 <svg width="16" height="15" viewBox="0 0 16 15" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
