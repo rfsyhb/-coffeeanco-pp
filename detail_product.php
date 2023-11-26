@@ -36,6 +36,7 @@ $upsellResult = mysqli_query($connect, $upsellQuery);
 
 // Dapatkan cust_id dari sesi pengguna
 $cust_id = $_SESSION['cust_id']; // Pastikan 'cust_id' tersimpan di sesi saat pengguna login
+$cart_id = $_SESSION['cart_id'];
 
 // Dapatkan data dari form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

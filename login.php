@@ -1,8 +1,10 @@
 <?php
+// memulai sesi
 session_start();
-// menghubungkan dengan koneksi
+// menghubungkan dengan koneksi database
 include 'includes/config.php';
 
+// melakukan verifikasi data untuk login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $check = 0;
     $username = mysqli_real_escape_string($connect, $_POST['username']);
@@ -59,12 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("location:index.php");
         exit();
     } else {
+        // tampilkan error jika salah
         echo "<script>
             alert('Wrong Input Login!')
         </script>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
