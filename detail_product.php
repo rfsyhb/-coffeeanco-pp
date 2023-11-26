@@ -28,6 +28,18 @@ if (!$typeRow) {
     die('Product not found.');
 }
 
+// Query untuk menghitung total cart_quantity dari prod_id yang sama di cart_details
+$totalCartQuantityQuery = "SELECT SUM(cart_quantity) as total_quantity FROM Cart_Details WHERE prod_id = ?";
+$totalCartQuantityStmt = mysqli_prepare($connect, $totalCartQuantityQuery);
+mysqli_stmt_bind_param($totalCartQuantityStmt, 's', $prod_id);
+mysqli_stmt_execute($totalCartQuantityStmt);
+$totalCartQuantityResult = mysqli_stmt_get_result($totalCartQuantityStmt);
+$totalCartQuantityRow = mysqli_fetch_assoc($totalCartQuantityResult);
+$totalCartQuantity = $totalCartQuantityRow ? $totalCartQuantityRow['total_quantity'] : 0;
+
+// Menghitung stok tersisa
+$stockLeft = $product['prod_stock'] - $totalCartQuantity;
+
 $current_prod_type = $typeRow['prod_type'];
 
 // Query untuk mendapatkan 4 produk dengan harga tertinggi dari jenis yang sama
@@ -186,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <!-- Menampilkan stok tersisa -->
                                     <div class="stock-info">
                                         <span class="fs-12 text-muted">Stock left:
-                                            <?php echo $product['prod_stock']; ?>
+                                            <?php echo $stockLeft; ?>
                                         </span>
                                     </div>
                                 </div>
