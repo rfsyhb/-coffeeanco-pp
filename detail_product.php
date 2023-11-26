@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username'])) {
+if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username']) || !isset($_SESSION['cart_id'])) {
     header("location:login.php");
 }
 
@@ -36,23 +36,6 @@ $upsellResult = mysqli_query($connect, $upsellQuery);
 
 // Dapatkan cust_id dari sesi pengguna
 $cust_id = $_SESSION['cust_id']; // Pastikan 'cust_id' tersimpan di sesi saat pengguna login
-
-// Cek apakah user sudah punya cart
-if (!isset($_SESSION['cart_id'])) {
-    // Buat cart baru
-    $cart_id = uniqid('cart_');
-    // Simpan cart_id di sesi
-    $_SESSION['cart_id'] = $cart_id;
-    // Insert cart_id ke database
-    $insertCartQuery = "INSERT INTO Cart (cart_id, cust_id) VALUES (?, ?)";
-    $insertCartStmt = mysqli_prepare($connect, $insertCartQuery);
-    mysqli_stmt_bind_param($insertCartStmt, 'ss', $cart_id, $cust_id);
-    mysqli_stmt_execute($insertCartStmt);
-    mysqli_stmt_close($insertCartStmt);
-} else {
-    // Gunakan cart_id yang sudah ada
-    $cart_id = $_SESSION['cart_id'];
-}
 
 // Dapatkan data dari form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -192,13 +175,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </p>
                             </div>
                             <form action="" method="post">
-                                <div class="mb-8">
-                                    <span class="d-inline-block me-4 fw-bold text-dark">Quantity</span>
-                                    <div class="d-inline-flex fw-bold text-secondary border">
+                                <div class="mb-8 d-flex justify-content-start align-items-center">
+                                    <span class="fw-bold text-dark me-3">Quantity</span>
+                                    <div class="d-flex text-secondary border me-3">
                                         <input class="form-control text-center border-0 bg-transparent" type="number"
-                                            name="cart_quantity" value="1" min="1" style="width: 70px;">
+                                            name="cart_quantity" value="1" min="1"
+                                            max="<?php echo $product['prod_stock']; ?>" style="width: 70px;">
+                                    </div>
+                                    <!-- Menampilkan stok tersisa -->
+                                    <div class="stock-info">
+                                        <span class="fs-12 text-muted">Stock left:
+                                            <?php echo $product['prod_stock']; ?>
+                                        </span>
                                     </div>
                                 </div>
+
                                 <input type="hidden" name="prod_id" value="<?php echo $product['prod_id']; ?>">
                                 <input type="hidden" name="cart_unit_price"
                                     value="<?php echo $product['prod_price']; ?>">
@@ -234,6 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
             </section>
+        </section>
     </div>
     </section>
     </div>

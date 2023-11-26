@@ -69,7 +69,7 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <link href="../assets/css/admin.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 
@@ -153,11 +153,11 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                     <thead>
                                         <tr>
                                             <th scope="col">Nama Customer</th>
-                                            <th scope="col" width="90">Total</th>
-                                            <th scope="col" width="168">Order ID</th>
-                                            <th scope="col" width="110">Order Date</th>
-                                            <th scope="col" width="235">Order Status</th>
-                                            <th scope="col" width="180">Action</th>
+                                            <th scope="col" width="80">Total</th>
+                                            <th scope="col" width="150">Order ID</th>
+                                            <th scope="col" width="85">Order Date</th>
+                                            <th scope="col" width="215">Order Status</th>
+                                            <th scope="col" width="145">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -226,6 +226,14 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
 </body>
 
 </html>
