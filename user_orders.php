@@ -50,8 +50,8 @@ include "includes/config.php";
                                 <th scope="col">Order ID</th>
                                 <th scope="col" width="150">Order Date</th>
                                 <th scope="col" width="200">Total Amount</th>
-                                <th scope="col" width="300">Status</th>
-                                <th scope="col" width="250">Pembayaran</th>
+                                <th scope="col" width="350">Status</th>
+                                <th scope="col" width="200">Pembayaran</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,9 +74,9 @@ include "includes/config.php";
                                     </td>
                                     <td>
                                         <a href="https://wa.me/6282154449091?text=Halo!+Saya+ingin+melakukan+pembayaran+untuk+order_id+<?php echo $data['order_id']; ?>"
-                                            class="btn-sm btn-primary" target="_blank">
-                                            <span class="fa-regular fa-handshake">
-                                                <span>Lakukan Pembayaran</span>
+                                            class="btn-sm btn-primary payment-button" target="_blank">
+                                            <span class="fa-brands fa-whatsapp">
+                                                <span>Hubungi Admin</span>
                                         </a>
                                     </td>
                                 </tr>

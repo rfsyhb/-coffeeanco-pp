@@ -76,3 +76,19 @@ small {font-size: 0.750rem; /* 12px */}
   background-color: var(--accento-color); /* sienna, a lighter brown */
   border-color: var(--accento-color); /* sienna border */
 }
+
+.payment-button {
+  display: inline-block;
+  padding: 8px 15px; /* Adjust padding as needed */
+  border: 2px solid var(--primaryo-color); /* Color of the border */
+  border-radius: 5px; /* Rounded corners */
+  color: var(--primaryo-color); /* Text color */
+  text-decoration: none; /* Removes underline from links */
+  font-size: 14px; /* Adjust font size as needed */
+  background-color: transparent; /* Transparent background */
+}
+
+.payment-button:hover {
+  background-color: var(--primaryo-color); /* Color for hover state */
+  color: white; /* Text color on hover */
+}

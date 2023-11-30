@@ -18,6 +18,7 @@
 </head>
 
 <body>
+  
   <!-- navbar -->
   <?php include 'includes/navbar.php'; ?>
   <!-- End of the navbar section -->
