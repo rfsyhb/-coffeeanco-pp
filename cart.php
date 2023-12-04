@@ -7,7 +7,7 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer") {
     exit(); // Menghentikan eksekusi lebih lanjut dan mengarahkan ke halaman login
 }
 
-include "includes/config.php"; // Memasukkan file konfigurasi untuk koneksi database
+require_once "includes/config.php"; // Memasukkan file konfigurasi untuk koneksi database
 
 $cart_id = $_SESSION['cart_id'] ?? ''; // Mendapatkan cart_id dari session atau default kosong
 $cust_id = $_SESSION['cust_id'] ?? ''; // Mendapatkan cust_id dari session atau default kosong

@@ -1,12 +1,13 @@
 <?php
 session_start();
 
+// Cek apakah pengguna adalah admin, jika tidak, alihkan ke halaman login
 if ($_SESSION['status'] != "admin") {
     header("Location: ../login.php");
     exit;
 }
 
-include "../includes/config.php";
+require_once "../includes/config.php";
 
 // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -18,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_stock = $_POST['prod_stock'];
     $product_price = $_POST['prod_price'];
 
-    // Fungsi untuk mengelola upload file
+    // Fungsi untuk mengunggah gambar
     function uploadImage($image, $target_dir)
     {
         $target_file = $target_dir . basename($_FILES[$image]["name"]);
@@ -28,14 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         return false;
     }
 
-    // Direktori upload
+    // Direktori tempat gambar akan diunggah
     $target_dir = "../assets/images/uploaded/";
 
-    // Mengelola upload untuk prod_image1 dan prod_image2
+    // Mengelola unggahan untuk prod_image1 dan prod_image2
     $product_image1 = uploadImage('prod_image1', $target_dir);
     $product_image2 = uploadImage('prod_image2', $target_dir);
 
     if ($product_image1 && $product_image2) {
+        // Prepared statement untuk menyisipkan produk ke dalam database
         $query = "INSERT INTO produk (prod_id, prod_name, prod_type, prod_desc, prod_stock, prod_price, prod_image1, prod_image2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = mysqli_prepare($connect, $query);
 
@@ -44,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $result = mysqli_stmt_execute($statement);
 
+        // Menampilkan pesan sukses atau kesalahan berdasarkan hasil operasi
         if ($result) {
             echo "<script>alert('Product has been uploaded!'); window.location = 'display_product.php'</script>";
         } else {
@@ -187,7 +190,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 required>
                         </div>
                         <div class="mb-3">
-                            <input type="submit" value="Add Product" class="btn btn-sm btn-light btn-outline-dark" />&nbsp;
+                            <input type="submit" value="Add Product"
+                                class="btn btn-sm btn-light btn-outline-dark" />&nbsp;
                         </div>
                     </form>
                 </div>

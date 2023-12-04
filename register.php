@@ -17,6 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $province = mysqli_real_escape_string($connect, $_POST["province"]);
     $postalcode = mysqli_real_escape_string($connect, $_POST["postalcode"]);
 
+    // Validasi format email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Format email tidak valid!'); window.history.back();</script>";
+        exit;
+    }
+
     // Cek untuk email
     $query_email = $connect->prepare("SELECT cust_id FROM pengunjung WHERE cust_email = ?");
     $query_email->bind_param("s", $email);

@@ -1,20 +1,25 @@
 <?php
 session_start();
 
+// Memeriksa status pengguna; jika bukan admin, alihkan ke halaman login
 if ($_SESSION['status'] != "admin") {
     header("Location: ../login.php");
+    exit;
 }
 
-include "../includes/config.php";
+require_once "../includes/config.php";
 
-// Check if the action is delete and order_item_id is set
+// Cek jika ada aksi 'delete' dan 'order_item_id' yang diberikan
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_item_id'])) {
     $order_item_id = $_GET['order_item_id'];
 
-    $query = "DELETE FROM order_details WHERE order_item_id='$order_item_id'";
+    // Menggunakan prepared statement untuk menghapus detail order
+    $query = "DELETE FROM order_details WHERE order_item_id = ?";
     $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_bind_param($statement, "s", $order_item_id);
     mysqli_stmt_execute($statement);
 
+    // Memberikan feedback kepada admin
     if ($statement) {
         echo "<script>alert('Order Detail has been Deleted!'); window.location = 'display_orderdetails.php'</script>";
     } else {

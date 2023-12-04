@@ -1,33 +1,51 @@
 <?php
 session_start();
 
+// Memastikan hanya admin yang bisa mengakses halaman ini
 if ($_SESSION['status'] != "admin") {
     header("Location: ../login.php");
+    exit;
 }
 
-include "../includes/config.php";
+require_once "../includes/config.php";
 
-// Check if the form has been submitted
+// Memeriksa apakah form telah dikirimkan
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Extract product details from POST request
-    $cust_id = $_POST['cust_id'];
-    $cust_name = $_POST['cust_name'];
-    $cust_email = $_POST['cust_email'];
-    $cust_phone = $_POST['cust_phone'];
-    $cust_address = $_POST['cust_address'];
-    $cust_city = $_POST['cust_city'];
-    $cust_province = $_POST['cust_province'];
-    $cust_postalcode = $_POST['cust_postalcode'];
+    // Sanitasi dan mendapatkan data dari form
+    $cust_id = mysqli_real_escape_string($connect, $_POST['cust_id']);
+    $cust_name = mysqli_real_escape_string($connect, $_POST['cust_name']);
+    $cust_email = mysqli_real_escape_string($connect, $_POST['cust_email']);
+    $cust_phone = mysqli_real_escape_string($connect, $_POST['cust_phone']);
+    $cust_address = mysqli_real_escape_string($connect, $_POST['cust_address']);
+    $cust_city = mysqli_real_escape_string($connect, $_POST['cust_city']);
+    $cust_province = mysqli_real_escape_string($connect, $_POST['cust_province']);
+    $cust_postalcode = mysqli_real_escape_string($connect, $_POST['cust_postalcode']);
 
-    // Update query
-    $query = "UPDATE pengunjung SET cust_name = '$cust_name', cust_email = '$cust_email', cust_phone = '$cust_phone', cust_address = '$cust_address', cust_city = '$cust_city', cust_province = '$cust_province', cust_postalcode = '$cust_postalcode' WHERE cust_id = '$cust_id'";
+    // Validasi email
+    if (!filter_var($cust_email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Format email tidak valid!'); window.history.back();</script>";
+        exit;
+    }
+
+    // Mempersiapkan query update dengan prepared statement
+    $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ? WHERE cust_id = ?";
     $statement = mysqli_prepare($connect, $query);
-    mysqli_stmt_execute($statement);
 
-    if ($statement) {
-        echo "<script>alert('Customer has been updated!'); window.location = 'display_customer.php'</script>";
+    // Error handling jika statement gagal disiapkan
+    if (!$statement) {
+        echo "<script>alert('Gagal menyiapkan statement!'); window.location = 'display_customer.php'</script>";
+        exit;
+    }
+
+    // Mengikat parameter ke statement dan menjalankan
+    mysqli_stmt_bind_param($statement, "sssssssi", $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $cust_id);
+    $execute = mysqli_stmt_execute($statement);
+
+    // Menangani hasil eksekusi statement
+    if (!$execute) {
+        echo "<script>alert('Update Customer gagal! Error: " . mysqli_error($connect) . "'); window.location = 'display_customer.php'</script>";
     } else {
-        echo "<script>alert('Update Customer failed!'); window.location = 'display_customer.php'</script>";
+        echo "<script>alert('Customer berhasil diperbarui!'); window.location = 'display_customer.php'</script>";
     }
 }
 ?>
@@ -137,8 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="mb-3">
                             <label>Name</label>
-                            <input type="text" name="cust_name" id="cust_name"
-                                value="<?php echo $data['cust_name']; ?>" class="form-control" require>
+                            <input type="text" name="cust_name" id="cust_name" value="<?php echo $data['cust_name']; ?>"
+                                class="form-control" require>
                         </div>
                         <div class="mb-3">
                             <label>Email</label>
@@ -157,8 +175,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="mb-3">
                             <label>City</label>
-                            <input type="text" name="cust_city" id="cust_city"
-                                value="<?php echo $data['cust_city']; ?>" class="form-control" require>
+                            <input type="text" name="cust_city" id="cust_city" value="<?php echo $data['cust_city']; ?>"
+                                class="form-control" require>
                         </div>
                         <div class="mb-3">
                             <label>Province</label>
@@ -188,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-        <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 
 </html>

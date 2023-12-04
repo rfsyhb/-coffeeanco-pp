@@ -1,20 +1,25 @@
 <?php
 session_start();
 
+// Memeriksa apakah pengguna adalah admin, jika tidak, mengarahkan ke halaman login
 if ($_SESSION['status'] != "admin") {
     header("Location: ../login.php");
+    exit;
 }
 
-include "../includes/config.php";
+require_once "../includes/config.php";
 
-// Check if the action is delete and cust_id is set
+// Cek jika aksi adalah 'delete' dan 'cust_id' diset
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_id'])) {
     $cust_id = $_GET['cust_id'];
 
-    $query = "DELETE FROM pengunjung WHERE cust_id='$cust_id'";
+    // Menggunakan prepared statement untuk menghapus data
+    $query = "DELETE FROM pengunjung WHERE cust_id = ?";
     $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_bind_param($statement, "s", $cust_id);
     mysqli_stmt_execute($statement);
 
+    // Memberikan feedback kepada admin
     if ($statement) {
         echo "<script>alert('Customer has been Deleted!'); window.location = 'display_customer.php'</script>";
     } else {
@@ -190,7 +195,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_i
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-        <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 
 </html>

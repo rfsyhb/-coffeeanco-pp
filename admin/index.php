@@ -1,55 +1,51 @@
 <?php
 session_start();
 
+// Memeriksa apakah pengguna adalah admin, jika tidak, mengarahkan ke halaman login
 if ($_SESSION['status'] != "admin") {
     header("Location: ../login.php");
+    exit;
 }
 
-include "../includes/config.php";
+require_once "../includes/config.php"; // Menghubungkan ke konfigurasi database
 
-// Cek jika action dan order_id diterima melalui GET request
+// Cek jika aksi dan order_id diterima melalui GET request
 if (isset($_GET['action']) && isset($_GET['order_id'])) {
-    $order_id = mysqli_real_escape_string($connect, $_GET['order_id']); // Sanitasi input
-    $action = $_GET['action'];
+    $order_id = $_GET['order_id']; // Ambil order_id dari GET request
+    $action = $_GET['action']; // Mendapatkan aksi yang diminta
 
+    // Prepared statement untuk berbagai aksi
     switch ($action) {
         case 'fail':
-            $new_status = 'digagalkan';
-            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
-            mysqli_query($connect, $query);
-            break;
         case 'process':
-            $new_status = 'sedang diproses';
-            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
-            mysqli_query($connect, $query);
-            break;
         case 'delay':
-            $new_status = 'delayed';
-            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
-            mysqli_query($connect, $query);
-            break;
         case 'complete':
-            $new_status = 'selesai';
-            $query = "UPDATE orders SET order_status = '$new_status' WHERE order_id = '$order_id'";
-            mysqli_query($connect, $query);
+            $new_status = ($action == 'fail') ? 'digagalkan' :
+                ($action == 'process') ? 'sedang diproses' :
+                ($action == 'delay') ? 'delayed' : 'selesai';
+            $stmt = mysqli_prepare($connect, "UPDATE orders SET order_status = ? WHERE order_id = ?");
+            mysqli_stmt_bind_param($stmt, 'ss', $new_status, $order_id);
+            mysqli_stmt_execute($stmt);
             break;
         case 'delete':
-            // Query untuk menghapus baris
-            $query = "DELETE FROM order_details WHERE order_id = '$order_id'";
-            mysqli_query($connect, $query);
-            $query = "DELETE FROM orders WHERE order_id = '$order_id'";
-            mysqli_query($connect, $query);
+            // Menghapus order_details dan orders
+            $stmt = mysqli_prepare($connect, "DELETE FROM order_details WHERE order_id = ?");
+            mysqli_stmt_bind_param($stmt, 's', $order_id);
+            mysqli_stmt_execute($stmt);
+
+            $stmt = mysqli_prepare($connect, "DELETE FROM orders WHERE order_id = ?");
+            mysqli_stmt_bind_param($stmt, 's', $order_id);
+            mysqli_stmt_execute($stmt);
             break;
         default:
+            // Jika aksi tidak valid, matikan eksekusi script
             die('Invalid action.');
     }
 
-    // Redirect back to the page to avoid re-executing the URL on refresh
+    // Redirect kembali ke halaman ini untuk menghindari eksekusi ulang URL saat refresh
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -76,6 +72,7 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
 </head>
 
 <body class="sb-nav-fixed">
+    <!-- Navbar atas -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="index.php"><i class=""></i>Admin Dashboard
@@ -83,9 +80,6 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-
-        <!-- Navbar-->
         <ul class="navbar-nav d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
@@ -96,6 +90,8 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
             </li>
         </ul>
     </nav>
+
+    <!-- Sidebar navigasi -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -138,16 +134,22 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                 </div>
             </nav>
         </div>
+
+        <!-- Koten utama halaman -->
         <div id="layoutSidenav_content">
             <main>
-                <!-- Page Content -->
+                <!-- Wrapper konten utama -->
                 <div id="page-content-wrapper">
                     <div class="container-fluid px-4">
+                        <!-- Sertakan file container_fluid.php untuk konten dinamis -->
                         <?php
                         include 'container_fluid.php';
                         ?>
+
+                        <!-- Tabel untuk menampilkan status pemesanan -->
                         <div class="row">
                             <div class="col-md-10 offset-md-1 mt-5">
+                                <!-- Judul dan tabel status pemesanan -->
                                 <h3 class="fs-3 mb-3 ">Status Pemesanan</h3>
                                 <table class="table bg-white rounded shadow-sm table-hover pad">
                                     <thead>
@@ -214,6 +216,8 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                     </div>
                 </div>
             </main>
+
+            <!-- Footer halaman -->
             <footer class="py-4 bg-light mt-1">
                 <div class="container-fluid px-4">
                     <div class=" text-center text-secondary">
@@ -223,6 +227,8 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
             </footer>
         </div>
     </div>
+
+    <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>

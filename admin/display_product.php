@@ -1,24 +1,29 @@
 <?php
 session_start();
 
+// Memeriksa status pengguna; jika bukan admin, alihkan ke halaman login
 if ($_SESSION['status'] != "admin") {
     header("Location: ../login.php");
+    exit;
 }
 
-include "../includes/config.php";
+require_once "../includes/config.php";
 
-// Check if the action is delete and prod_id is set
+// Cek jika ada aksi 'delete' dan 'prod_id' yang diberikan
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_id'])) {
     $prod_id = $_GET['prod_id'];
 
-    $query = "DELETE FROM produk WHERE prod_id='$prod_id'";
+    // Menggunakan prepared statement untuk menghapus produk
+    $query = "DELETE FROM produk WHERE prod_id = ?";
     $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_bind_param($statement, "s", $prod_id);
     mysqli_stmt_execute($statement);
 
+    // Memberikan feedback kepada admin
     if ($statement) {
-        echo "<script>alert('Order has been Deleted!'); window.location = 'display_product.php'</script>";
+        echo "<script>alert('Product has been Deleted!'); window.location = 'display_product.php'</script>";
     } else {
-        echo "<script>alert('Delete Order Failed!'); window.location = 'display_product.php'</script>";
+        echo "<script>alert('Delete Product Failed!'); window.location = 'display_product.php'</script>";
     }
 }
 ?>

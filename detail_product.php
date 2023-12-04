@@ -45,7 +45,7 @@ $cart_id = $_SESSION['cart_id'];
 
 // Proses form jika dikirim
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $cart_quantity = isset($_POST['cart_quantity']) ? (int)$_POST['cart_quantity'] : 0;
+    $cart_quantity = isset($_POST['cart_quantity']) ? (int) $_POST['cart_quantity'] : 0;
     $cart_unit_price = $product['prod_price'];
 
     // Cek stok yang tersedia
@@ -102,36 +102,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <!-- navbar -->
     <?php include 'includes/navbar.php'; ?>
-    <!-- End of the navbar section -->
 
+    <!-- Konten utama halaman detail produk -->
     <div class="py-12 py-md-24 align-items-center mt-8">
-
-        <!-- This will make the div take up full viewport height and center its children vertically -->
-        <section class="w-100"> <!-- This will ensure the section takes the full width -->
+        <section class="w-100"> <!-- Mengatur lebar penuh untuk section -->
             <section class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center">
+
+                    <!-- Menampilkan pesan sukses atau kesalahan jika ada -->
                     <?php if (isset($_SESSION['message'])): ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?php
-                            echo $_SESSION['message'];
-                            unset($_SESSION['message']); // Hapus pesan setelah ditampilkan
-                            ?>
+                            <?php echo $_SESSION['message']; ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <?php unset($_SESSION['message']); ?>
                     <?php endif; ?>
-                    <!-- Image Column -->
+
+                    <!-- Kolom untuk gambar produk -->
                     <div class="produk-img-wrapper col-12 col-lg-6 d-flex justify-content-center">
                         <div class="produk-img-container">
                             <img class="produk-img img-fluid d-block"
-                                src="assets/images/uploaded/<?php echo $product['prod_image2']; ?>"
-                                alt="<?php echo $product['prod_name']; ?>">
+                                src="assets/images/uploaded/<?php echo htmlspecialchars($product['prod_image2']); ?>"
+                                alt="<?php echo htmlspecialchars($product['prod_name']); ?>">
                         </div>
                     </div>
-                    <!-- Details Column -->
+
+                    <!-- Kolom untuk detail produk -->
                     <div class="col-12 col-lg-6">
                         <div class="ps-lg-4">
                             <h3 class="fs-5 text-dark mb-4 mt-4">
-                                <?php echo $product['prod_name']; ?>
+                                <?php echo htmlspecialchars($product['prod_name']); ?>
                             </h3>
                             <div class="mb-5">
                                 <span class="me-2 fs-8 fw-bold text-dark">
@@ -139,11 +139,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <?php echo number_format($product['prod_price'], 2); ?>
                                 </span>
                             </div>
-                            <div class="desc-item">
-                                <p class="text-muted">
-                                    <?php echo $product['prod_desc']; ?>
-                                </p>
-                            </div>
+                            <p class="text-muted">
+                                <?php echo htmlspecialchars($product['prod_desc']); ?>
+                            </p>
+
+                            <!-- Form untuk menambahkan produk ke keranjang -->
                             <form action="" method="post">
                                 <div class="mb-8 d-flex justify-content-start align-items-center">
                                     <span class="fw-bold text-dark me-3">Quantity</span>
@@ -166,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <button type="submit" class="btn btn-outline-dark text-dark-white px-8">Add to
                                     Cart</button>
                             </form>
+
                             <!-- Up-selling Products Row -->
                             <div class="row mt-3">
                                 <?php while ($row = mysqli_fetch_assoc($upsellResult)): ?>
@@ -197,8 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </section>
         </section>
     </div>
-    </section>
-    </div>
+
     <?php include 'includes/footer.php'; ?>
     <script type="text/javascript" src="assets/js/navbarscript.js"></script>
     <!-- Bootstrap Bundle with Popper -->
