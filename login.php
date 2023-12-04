@@ -1,42 +1,49 @@
 <?php
-// memulai sesi
+// Inisialisasi sesi untuk menyimpan informasi login dan lainnya
 session_start();
-// menghubungkan dengan koneksi database
-include 'includes/config.php';
 
-// melakukan verifikasi data untuk login
+// Menghubungkan dengan file konfigurasi database
+require_once 'includes/config.php';
+
+// Mengecek metode permintaan; proses login hanya terjadi pada POST request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Inisialisasi variabel untuk mengecek keberhasilan login
     $check = 0;
-    $username = mysqli_real_escape_string($connect, $_POST['username']);
-    $password = $_POST['password']; // Use raw password for verification
 
-    // Retrieve the admin data
-    $admin_query = "SELECT * FROM `Admin` WHERE username='$username'";
+    // Membersihkan input username untuk mencegah SQL injection
+    $username = mysqli_real_escape_string($connect, $_POST['username']);
+    // Mengambil password dari input; perlu dienkripsi sebelum digunakan dalam produksi
+    $password = $_POST['password'];
+
+    // Mencari data admin berdasarkan username
+    $admin_query = "SELECT * FROM `admin` WHERE username='$username'";
     $admin_data = mysqli_query($connect, $admin_query);
     $admin_row = mysqli_fetch_assoc($admin_data);
 
-    // Retrieve the customer data
+    // Mencari data pengunjung/customer berdasarkan username
     $cust_query = "SELECT * FROM pengunjung WHERE cust_username='$username'";
     $cust_data = mysqli_query($connect, $cust_query);
     $cust_row = mysqli_fetch_assoc($cust_data);
 
-    // Verify admin password
+    // Verifikasi password admin dan set session jika cocok
     if ($admin_row && password_verify($password, $admin_row['PASSWORD'])) {
         $_SESSION['username'] = $username;
         $_SESSION['status'] = "admin";
+        // Mengarahkan ke halaman admin setelah login sukses
         header("location:admin/index.php");
         exit();
     }
-    // Verify customer password
+    // Verifikasi password customer dan set session jika cocok
     elseif ($cust_row && password_verify($password, $cust_row['cust_password'])) {
         $_SESSION['username'] = $username;
-        $_SESSION['cust_id'] = $cust_row['cust_id']; // Ambil cust_id dari hasil query
+        $_SESSION['cust_id'] = $cust_row['cust_id'];
         $_SESSION['status'] = "customer";
-        // Dapatkan cust_id dari hasil query, bukan dari sesi
+
+        // Ambil cust_id dari hasil query
         $cust_id = $cust_row['cust_id'];
 
-        // Cek apakah user sudah punya cart
-        $cartCheckQuery = "SELECT cart_id FROM Cart WHERE cust_id = ?";
+        // Cek apakah customer sudah memiliki cart
+        $cartCheckQuery = "SELECT cart_id FROM cart WHERE cust_id = ?";
         $cartCheckStmt = mysqli_prepare($connect, $cartCheckQuery);
         mysqli_stmt_bind_param($cartCheckStmt, 's', $cust_id);
         mysqli_stmt_execute($cartCheckStmt);
@@ -44,24 +51,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cartExists = mysqli_fetch_assoc($result);
 
         if ($cartExists) {
-            // Jika cart_id ditemukan, gunakan cart_id yang sudah ada
+            // Jika sudah ada, gunakan cart_id yang ada
             $_SESSION['cart_id'] = $cartExists['cart_id'];
         } else {
-            // Jika tidak ada, buat cart baru
+            // Jika tidak, buat cart baru dan simpan di database
             $cart_id = uniqid('cart_');
             $_SESSION['cart_id'] = $cart_id;
             $_SESSION['cust_id'] = $cust_id;
-            $insertCartQuery = "INSERT INTO Cart (cart_id, cust_id) VALUES (?, ?)";
+            $insertCartQuery = "INSERT INTO cart (cart_id, cust_id) VALUES (?, ?)";
             $insertCartStmt = mysqli_prepare($connect, $insertCartQuery);
             mysqli_stmt_bind_param($insertCartStmt, 'ss', $cart_id, $cust_id);
             mysqli_stmt_execute($insertCartStmt);
             mysqli_stmt_close($insertCartStmt);
         }
-        
+
+        // Mengarahkan ke halaman utama setelah login sukses
         header("location:index.php");
         exit();
     } else {
-        // tampilkan error jika salah
+        // Menampilkan pesan error jika username atau password salah
         echo "<script>
             alert('Wrong Input Login!')
         </script>";

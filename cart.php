@@ -1,39 +1,42 @@
 <?php
 session_start();
 
-if ($_SESSION['status'] != "customer") {
+// Pengecekan status pengguna dalam session
+if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer") {
     header("Location: login.php");
+    exit(); // Menghentikan eksekusi lebih lanjut dan mengarahkan ke halaman login
 }
 
-include "includes/config.php";
+include "includes/config.php"; // Memasukkan file konfigurasi untuk koneksi database
 
-$cart_id = $_SESSION['cart_id'] ?? '';
-$cust_id = $_SESSION['cust_id'] ?? '';
+$cart_id = $_SESSION['cart_id'] ?? ''; // Mendapatkan cart_id dari session atau default kosong
+$cust_id = $_SESSION['cust_id'] ?? ''; // Mendapatkan cust_id dari session atau default kosong
 
-$cart_items = [];
-$subtotal = 0;
+$cart_items = []; // Array untuk menyimpan item dalam keranjang
+$subtotal = 0; // Variabel untuk menyimpan subtotal
 
 // Query untuk mendapatkan detail produk dalam keranjang
-$cartQuery = "SELECT produk.prod_id, produk.prod_name, produk.prod_image1, Cart_Details.cart_quantity, Cart_Details.cart_unit_price
+$cartQuery = "SELECT produk.prod_id, produk.prod_name, produk.prod_image1, cart_details.cart_quantity, cart_details.cart_unit_price
               FROM produk
-              JOIN Cart_Details ON produk.prod_id = Cart_Details.prod_id
-              WHERE Cart_Details.cart_id = ?";
+              JOIN cart_details ON produk.prod_id = cart_details.prod_id
+              WHERE cart_details.cart_id = ?";
 $cartStmt = mysqli_prepare($connect, $cartQuery);
 mysqli_stmt_bind_param($cartStmt, 's', $cart_id);
 mysqli_stmt_execute($cartStmt);
 $result = mysqli_stmt_get_result($cartStmt);
 
+// Mengumpulkan data produk dan menghitung subtotal
 while ($row = mysqli_fetch_assoc($result)) {
     $cart_items[] = $row;
-    $subtotal += $row['cart_quantity'] * $row['cart_unit_price']; // Menghitung subtotal
+    $subtotal += $row['cart_quantity'] * $row['cart_unit_price']; // Menambahkan ke subtotal
 }
 
+// Logika untuk mengelola aksi pada keranjang (update, remove)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
-    $cart_id = $_SESSION['cart_id']; // Dapatkan cart_id dari sesi
-    $prod_id = $_POST['prod_id'];
-    $cart_quantity = (int) $_POST['cart_quantity'];
+    $prod_id = $_POST['prod_id']; // ID produk yang akan diperbarui atau dihapus
+    $cart_quantity = (int) $_POST['cart_quantity']; // Kuantitas baru dari produk jika di-update
 
-    // Query untuk mendapatkan stok produk
+    // Pengecekan stok produk dari database
     $stockQuery = "SELECT prod_stock FROM produk WHERE prod_id = ?";
     $stockStmt = mysqli_prepare($connect, $stockQuery);
     mysqli_stmt_bind_param($stockStmt, 's', $prod_id);
@@ -42,13 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     $stockRow = mysqli_fetch_assoc($stockResult);
     $availableStock = $stockRow['prod_stock'];
 
-    if ($_POST['action'] == 'update_quantity' && isset($_POST['cart_quantity']) && $_POST['cart_quantity'] > 0) {
+    
+    // Jika aksi adalah update_quantity dan kuantitas valid
+    if ($_POST['action'] == 'update_quantity' && $cart_quantity > 0) {
+        // Pengecekan apakah kuantitas yang diminta melebihi stok yang tersedia
         if ($cart_quantity > $availableStock) {
-            // Jumlah yang diminta melebihi stok yang tersedia
             $_SESSION['message'] = "Jumlah yang diminta melebihi stok yang tersedia.";
         } else {
-            // Update database dengan jumlah baru
-            $updateQuery = "UPDATE Cart_Details SET cart_quantity = ? WHERE cart_id = ? AND prod_id = ?";
+            // Jika stok mencukupi, update kuantitas produk di keranjang
+            $updateQuery = "UPDATE cart_details SET cart_quantity = ? WHERE cart_id = ? AND prod_id = ?";
             $stmt = mysqli_prepare($connect, $updateQuery);
             mysqli_stmt_bind_param($stmt, 'iss', $cart_quantity, $cart_id, $prod_id);
             mysqli_stmt_execute($stmt);
@@ -57,74 +62,64 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
             $_SESSION['message'] = "Jumlah berhasil diperbarui.";
         }
     } elseif ($_POST['action'] == 'remove_item') {
-        // Remove item logic
-        $deleteQuery = "DELETE FROM Cart_Details WHERE cart_id = ? AND prod_id = ?";
+        // Jika aksi adalah remove_item, hapus produk dari keranjang
+        $deleteQuery = "DELETE FROM cart_details WHERE cart_id = ? AND prod_id = ?";
         $stmt = mysqli_prepare($connect, $deleteQuery);
         mysqli_stmt_bind_param($stmt, 'ss', $cart_id, $prod_id);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
 
-        $_SESSION['message'] = "Item removed successfully.";
+        $_SESSION['message'] = "Item berhasil dihapus.";
     }
     mysqli_stmt_close($stockStmt);
 
-    // Redirect kembali ke halaman cart untuk melihat perubahan
     header("Location: cart.php");
     exit();
 }
 
-
-// Jika tombol checkout diklik
+// Logika untuk proses checkout
 if (isset($_POST['checkout'])) {
-    // Mulai transaksi
-    mysqli_begin_transaction($connect);
+    mysqli_begin_transaction($connect); // Memulai transaksi untuk proses checkout
 
     try {
+        // Membuat order baru dengan status awal dan total harga
         $order_id = uniqid("order_");
-        $order_date = date("Y-m-d"); // Format tanggal untuk MySQL
-        $order_status = 'Belum melakukan pembayaran'; // Setel status awal order
-        $total_amount = $subtotal; // This should be calculated as the total amount
+        $order_date = date("Y-m-d");
+        $order_status = 'Belum melakukan pembayaran';
+        $total_amount = $subtotal; // Total harga dihitung dari subtotal keranjang
 
-        // Buat order baru
-        $orderQuery = "INSERT INTO Orders (order_id, order_date, total_amount, cust_id, order_status) VALUES (?, ?, ?, ?, ?)";
+        // Menyimpan informasi order ke database
+        $orderQuery = "INSERT INTO orders (order_id, order_date, total_amount, cust_id, order_status) VALUES (?, ?, ?, ?, ?)";
         $orderStmt = mysqli_prepare($connect, $orderQuery);
-        // Ensure you have the correct number of parameters and types
         mysqli_stmt_bind_param($orderStmt, 'ssdss', $order_id, $order_date, $total_amount, $cust_id, $order_status);
         mysqli_stmt_execute($orderStmt);
         mysqli_stmt_close($orderStmt);
 
-        // Pindahkan setiap item dari Cart_Details ke Order_Details
+        // Memindahkan setiap item dari keranjang ke detail order
         foreach ($cart_items as $item) {
             $orderItem_id = uniqid("orderItem_");
-            $orderDetailsQuery = "INSERT INTO Order_Details (order_item_id, order_id, prod_id, quantity, unit_price) VALUES (?, ?, ?, ?, ?)";
+            $orderDetailsQuery = "INSERT INTO order_details (order_item_id, order_id, prod_id, quantity, unit_price) VALUES (?, ?, ?, ?, ?)";
             $orderDetailsStmt = mysqli_prepare($connect, $orderDetailsQuery);
             mysqli_stmt_bind_param($orderDetailsStmt, 'sssii', $orderItem_id, $order_id, $item['prod_id'], $item['cart_quantity'], $item['cart_unit_price']);
             mysqli_stmt_execute($orderDetailsStmt);
-            mysqli_stmt_close($orderDetailsStmt); // Close inside the loop
+            mysqli_stmt_close($orderDetailsStmt);
         }
 
-        // Kosongkan Cart_Details untuk cart_id yang bersangkutan
-        $emptyCartQuery = "DELETE FROM Cart_Details WHERE cart_id = ?";
+        // Mengosongkan keranjang setelah checkout
+        $emptyCartQuery = "DELETE FROM cart_details WHERE cart_id = ?";
         $emptyCartStmt = mysqli_prepare($connect, $emptyCartQuery);
         mysqli_stmt_bind_param($emptyCartStmt, 's', $cart_id);
         mysqli_stmt_execute($emptyCartStmt);
-
-        // Commit transaksi
-        mysqli_commit($connect);
-
-        // Redirect ke halaman konfirmasi atau pembayaran
-        header("Location: user_orders.php?cust_id=$cust_id");
         mysqli_stmt_close($emptyCartStmt);
+
+        mysqli_commit($connect); // Commit transaksi jika semua operasi berhasil
+
+        header("Location: user_orders.php?cust_id=$cust_id"); // Redirect ke halaman konfirmasi
         exit();
 
     } catch (mysqli_sql_exception $exception) {
-        mysqli_rollback($connect);
-        throw $exception;
-    } finally {
-        // Tutup semua statement
-        mysqli_stmt_close($orderStmt);
-        mysqli_stmt_close($orderDetailsStmt);
-        mysqli_stmt_close($emptyCartStmt);
+        mysqli_rollback($connect); // Rollback transaksi jika terjadi kesalahan
+        throw $exception; // Melempar eksepsi untuk penanganan lebih lanjut
     }
 }
 ?>

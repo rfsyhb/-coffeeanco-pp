@@ -8,21 +8,15 @@
   <link rel="stylesheet" href="assets/css/navbar.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <!-- Bootstrap CSS -->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" /> -->
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-  <!-- AOS Animate -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
   <title>Homepage</title>
 </head>
 
 <body>
-  
-  <!-- navbar -->
   <?php include 'includes/navbar.php'; ?>
-  <!-- End of the navbar section -->
 
+  <!-- Konten utama -->
   <div class="container mt-8">
     <div class="pt-28 pb-28 position-relative">
       <div class="row g-16 align-items-center">
@@ -37,6 +31,7 @@
           </div>
         </div>
         <div class="col-12 col-md-6">
+          <!-- Gambar -->
           <div class="row justify-content-center">
             <div class="position-relative col-auto">
               <img class="position-absolute top-0 start-0 mt-n12 ms-n12" style="z-index: 1;"
@@ -51,8 +46,7 @@
     </div>
   </div>
 
-  <!-- vendia -->
-
+  <!-- Bagian tentang kami -->
   <section id="about" class="bg-secondary-dark" style="background-color: #111215 !important;">
     <div class="position-relative">
       <img class="d-none d-lg-block position-absolute top-0 start-0 h-100 img-fluid col-4 col-lg-5"
@@ -73,6 +67,7 @@
                 <div class="button-action">
                   <a class="btn btn-brown" href="products.php">
                     <span class="me-3">Explore Collections</span>
+                    <!-- Icon SVG -->
                     <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M2.95669 1.7573L9.55635 1.7573M9.55635 1.7573L9.55635 8.35696M9.55635 1.7573L1.07107 10.2426"
@@ -88,10 +83,8 @@
     </div>
   </section>
 
-  <!-- navbar -->
-  <?php include 'includes/footer.php'; ?>
-  <!-- End of the navbar section -->
 
+  <?php include 'includes/footer.php'; ?>
   <script type="text/javascript" src="assets/js/navbarscript.js"></script>
 </body>
 

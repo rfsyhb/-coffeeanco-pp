@@ -1,3 +1,73 @@
+<?php
+// Memastikan konfigurasi termuat sebelum memproses data
+require_once 'includes/config.php';
+
+$error_message = ""; // Inisialisasi variabel untuk pesan error
+
+// Memproses form jika metode request adalah POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Menggunakan mysqli_real_escape_string untuk mencegah SQL Injection
+    $name = mysqli_real_escape_string($connect, $_POST["name"]);
+    $email = mysqli_real_escape_string($connect, $_POST["email"]);
+    $username = mysqli_real_escape_string($connect, $_POST["username"]);
+    $password = mysqli_real_escape_string($connect, $_POST["password"]);
+    $phone = mysqli_real_escape_string($connect, $_POST["phone"]);
+    $address = mysqli_real_escape_string($connect, $_POST["address"]);
+    $city = mysqli_real_escape_string($connect, $_POST["city"]);
+    $province = mysqli_real_escape_string($connect, $_POST["province"]);
+    $postalcode = mysqli_real_escape_string($connect, $_POST["postalcode"]);
+
+    // Cek untuk email
+    $query_email = $connect->prepare("SELECT cust_id FROM pengunjung WHERE cust_email = ?");
+    $query_email->bind_param("s", $email);
+    $query_email->execute();
+    $result_email = $query_email->get_result();
+
+    if ($result_email->num_rows > 0) {
+        $error_message .= "Email sudah terdaftar. ";
+    }
+
+    // Cek untuk nomor telepon
+    $query_phone = $connect->prepare("SELECT cust_id FROM pengunjung WHERE cust_phone = ?");
+    $query_phone->bind_param("s", $phone);
+    $query_phone->execute();
+    $result_phone = $query_phone->get_result();
+
+    if ($result_phone->num_rows > 0) {
+        $error_message .= "Nomor telepon sudah terdaftar. ";
+    }
+
+    // Cek untuk username
+    $query_username = $connect->prepare("SELECT cust_id FROM pengunjung WHERE cust_username = ?");
+    $query_username->bind_param("s", $username);
+    $query_username->execute();
+    $result_username = $query_username->get_result();
+
+    if ($result_username->num_rows > 0) {
+        $error_message .= "Username sudah terdaftar.";
+    }
+
+    if ($error_message == "") {
+        // Lanjutkan dengan pendaftaran
+
+        // Hash password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Menyusun query dengan prepared statement untuk keamanan tambahan
+        $sql = $connect->prepare("INSERT INTO pengunjung (cust_name, cust_email, cust_username, cust_password, cust_phone, cust_address, cust_city, cust_province, cust_postalcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $sql->bind_param("sssssssss", $name, $email, $username, $hashed_password, $phone, $address, $city, $province, $postalcode);
+
+        if ($sql->execute()) {
+            // Mengalihkan ke halaman index setelah pendaftaran berhasil
+            header("Location: index.php");
+            exit();
+        } else {
+            echo "Error: " . $sql->error;
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,10 +83,18 @@
 </head>
 
 <body>
+    <!-- Konten HTML untuk form pendaftaran -->
     <div class="container mb-5">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="register-form">
                 <form action="" method="post">
+                    <!-- Tampilkan pesan error dengan notifikasi Bootstrap jika ada -->
+                    <?php if (!empty($error_message)): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $error_message; ?>
+                        </div>
+                    <?php endif; ?>
+
                     <h3>Daftar User</h3>
                     <div class="form-group">
                         <input type="text" id="name" name="name" class="form-control my-2 py-2" placeholder="Name"
@@ -64,32 +142,3 @@
 </body>
 
 </html>
-
-<?php
-include 'includes/config.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $phone = $_POST["phone"];
-    $address = $_POST["address"];
-    $city = $_POST["city"];
-    $province = $_POST["province"];
-    $postalcode = $_POST["postalcode"];
-
-    // Hash password sebelum disimpan di database (disarankan)
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Query SQL untuk memasukkan data admin ke dalam tabel Admin
-    $sql = "INSERT INTO pengunjung (cust_name, cust_email, cust_username, cust_password, cust_phone, cust_address, cust_city, cust_province, cust_postalcode) VALUES ('$name', '$email', '$username', '$hashed_password', '$phone', '$address', '$city', '$province', '$postalcode')";
-
-    if ($connect->query($sql) === TRUE) {
-        echo "Pendaftaran pengunjung berhasil.";
-        header("location:index.php");
-    } else {
-        echo "Error: " . $sql . "<br>" . $connect->error;
-    }
-}
-?>

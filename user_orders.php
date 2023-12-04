@@ -1,11 +1,13 @@
 <?php
 session_start();
 
+// Cek status pengguna dan arahkan ke halaman login jika tidak sesuai
 if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username'])) {
     header("location:login.php");
+    exit;
 }
 
-include "includes/config.php";
+require_once "includes/config.php"; // Menghubungkan ke konfigurasi database
 ?>
 
 <!DOCTYPE html>
@@ -24,9 +26,7 @@ include "includes/config.php";
 </head>
 
 <body>
-    <!-- navbar -->
-    <?php include 'includes/navbar.php'; ?>
-    <!-- End of the navbar section -->
+    <?php include 'includes/navbar.php'; ?> <!-- Menghubungkan navbar -->
 
     <div id="contents">
         <div class="container account-page mt-28">
@@ -56,27 +56,22 @@ include "includes/config.php";
                         </thead>
                         <tbody>
                             <?php
-                            $datas = mysqli_query($connect, "SELECT * FROM orders WHERE cust_id = '" . $_SESSION['cust_id'] . "'");
+                            // Query untuk mendapatkan data pesanan
+                            $cust_id = mysqli_real_escape_string($connect, $_SESSION['cust_id']); // Sanitasi cust_id
+                            $datas = mysqli_query($connect, "SELECT * FROM orders WHERE cust_id = '$cust_id'");
+
                             while ($data = mysqli_fetch_array($datas)) {
+                                // Menampilkan data pesanan
                                 ?>
                                 <tr>
-                                    <td>
-                                        <?php echo $data['order_id']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $data['order_date']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $data['total_amount']; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $data['order_status']; ?>
-                                    </td>
+                                    <td><?php echo htmlspecialchars($data['order_id']); ?></td>
+                                    <td><?php echo htmlspecialchars($data['order_date']); ?></td>
+                                    <td><?php echo htmlspecialchars($data['total_amount']); ?></td>
+                                    <td><?php echo htmlspecialchars($data['order_status']); ?></td>
                                     <td>
                                         <a href="https://wa.me/6282154449091?text=Halo!+Saya+ingin+melakukan+pembayaran+untuk+order_id+<?php echo $data['order_id']; ?>"
-                                            class="btn-sm btn-primary payment-button" target="_blank">
-                                            <span class="fa-brands fa-whatsapp">
-                                                <span>Hubungi Admin</span>
+                                           class="btn-sm btn-primary payment-button" target="_blank">
+                                           <span class="fa-brands fa-whatsapp"> <Span>Hubungi Admin</Span>
                                         </a>
                                     </td>
                                 </tr>

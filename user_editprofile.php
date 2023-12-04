@@ -1,34 +1,37 @@
 <?php
 session_start();
 
+// Memeriksa status pengguna dan mengarahkan ke halaman login jika tidak sesuai
 if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username'])) {
     header("location:login.php");
     exit;
 }
 
-include "includes/config.php";
+require_once "includes/config.php"; // Memasukkan konfigurasi database
 
-// Check if the form has been submitted
+// Memproses form jika dikirim
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Extract pengunjung details from POST request
-    $cust_id = $_POST['cust_id'];
-    $cust_name = $_POST['cust_name'];
-    $cust_email = $_POST['cust_email'];
-    $cust_phone = $_POST['cust_phone'];
-    $cust_address = $_POST['cust_address'];
-    $cust_city = $_POST['cust_city'];
-    $cust_province = $_POST['cust_province'];
-    $cust_postalcode = $_POST['cust_postalcode'];
+    // Mengambil data dari form dan membersihkannya untuk mencegah injection
+    $cust_id = mysqli_real_escape_string($connect, $_POST['cust_id']);
+    $cust_name = mysqli_real_escape_string($connect, $_POST['cust_name']);
+    $cust_email = mysqli_real_escape_string($connect, $_POST['cust_email']);
+    $cust_phone = mysqli_real_escape_string($connect, $_POST['cust_phone']);
+    $cust_address = mysqli_real_escape_string($connect, $_POST['cust_address']);
+    $cust_city = mysqli_real_escape_string($connect, $_POST['cust_city']);
+    $cust_province = mysqli_real_escape_string($connect, $_POST['cust_province']);
+    $cust_postalcode = mysqli_real_escape_string($connect, $_POST['cust_postalcode']);
 
-    // Update query
-    $query = "UPDATE pengunjung SET cust_name = '$cust_name', cust_email = '$cust_email', cust_phone = '$cust_phone', cust_address = '$cust_address', cust_city = '$cust_city', cust_province = '$cust_province', cust_postalcode = '$cust_postalcode' WHERE cust_id = '$cust_id'";
+    // Query update dengan prepared statement untuk keamanan
+    $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ? WHERE cust_id = ?";
     $statement = mysqli_prepare($connect, $query);
-    mysqli_stmt_execute($statement);
+    mysqli_stmt_bind_param($statement, 'sssssssi', $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $cust_id);
+    $result = mysqli_stmt_execute($statement);
 
-    if ($statement) {
-        echo "<script>alert('User has been updated!'); window.location = 'user_profile.php'</script>";
+    // Memberikan feedback kepada pengguna
+    if ($result) {
+        echo "<script>alert('Profil pengguna berhasil diperbarui!'); window.location = 'user_profile.php'</script>";
     } else {
-        echo "<script>alert('Update user failed!'); window.location = 'user_profile.php'</script>";
+        echo "<script>alert('Pembaruan profil pengguna gagal!'); window.location = 'user_profile.php'</script>";
     }
 }
 ?>
@@ -48,9 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <!-- navbar -->
     <?php include 'includes/navbar.php'; ?>
-    <!-- End of the navbar section -->
 
     <div id="contents">
         <div class="container account-page mt-40">
