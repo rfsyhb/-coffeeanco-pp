@@ -20,11 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cust_city = mysqli_real_escape_string($connect, $_POST['cust_city']);
     $cust_province = mysqli_real_escape_string($connect, $_POST['cust_province']);
     $cust_postalcode = mysqli_real_escape_string($connect, $_POST['cust_postalcode']);
+    
+    // $cust_password = mysqli_real_escape_string($connect, $_POST["cust_password"]);
+    // $hashed_password = password_hash($cust_password, PASSWORD_DEFAULT);
+
+    // Validasi format email
+    if (!filter_var($cust_email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Format email tidak valid!'); window.history.back();</script>";
+        exit;
+    }
 
     // Query update dengan prepared statement untuk keamanan
     $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ? WHERE cust_id = ?";
+    // $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ?, cust_password = ?  WHERE cust_id = ?";
     $statement = mysqli_prepare($connect, $query);
     mysqli_stmt_bind_param($statement, 'sssssssi', $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $cust_id);
+    // mysqli_stmt_bind_param($statement, 'ssssssssi', $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $hashed_password, $cust_id);
     $result = mysqli_stmt_execute($statement);
 
     // Memberikan feedback kepada pengguna
@@ -47,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/uprofile.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
     <title>Edit Profile</title>
 </head>
 
@@ -98,6 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="mb-3">
                                     <input type="text" name="cust_postalcode" id="cust_postalcode"
                                         value="<?php echo $data['cust_postalcode']; ?>" class="form-control" require>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="password" name="cust_password" id="cust_password"
+                                        value="" placeholder="Password" class="form-control" require>
                                 </div>
                                 <div class="action-profile mb-3">
                                     <input type="submit" value="Edit" class="btn-edit" />

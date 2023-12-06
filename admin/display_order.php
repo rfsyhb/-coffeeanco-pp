@@ -11,15 +11,17 @@ require_once "../includes/config.php";
 
 // Cek jika ada aksi 'delete' dan 'order_id' yang diberikan
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_id'])) {
-    $order_id = $_GET['order_id'];
+    $order_id = $_GET['order_id']; // Ambil order_id dari GET request
 
-    // Menggunakan prepared statement untuk menghapus order
-    $query = "DELETE FROM orders WHERE order_id = ?";
+    // Menghapus order_details dan orders
+    $query = "DELETE FROM order_details WHERE order_id='$order_id'";
     $statement = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($statement, "s", $order_id);
+    mysqli_stmt_execute($statement);
+    
+    $query = "DELETE FROM orders WHERE order_id='$order_id'";
+    $statement = mysqli_prepare($connect, $query);
     mysqli_stmt_execute($statement);
 
-    // Memberikan feedback kepada admin
     if ($statement) {
         echo "<script>alert('Order has been Deleted!'); window.location = 'display_order.php'</script>";
     } else {

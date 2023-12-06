@@ -24,6 +24,7 @@ $cust_id = ''; // Mendefinisikan variabel cust_id
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/uprofile.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
     <title>My Profile</title>
 </head>
 

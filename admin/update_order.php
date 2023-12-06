@@ -11,34 +11,22 @@ require_once "../includes/config.php";
 
 // Memeriksa apakah form telah dikirimkan
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Membersihkan dan mengambil data dari form
-    $order_id = mysqli_real_escape_string($connect, $_POST['order_id']);
-    $order_date = mysqli_real_escape_string($connect, $_POST['order_date']);
-    $total_amount = mysqli_real_escape_string($connect, $_POST['total_amount']);
-    $cust_id = mysqli_real_escape_string($connect, $_POST['cust_id']);
-    $order_status = mysqli_real_escape_string($connect, $_POST['order_status']);
+    // Extract order details from POST request
+    $order_id = $_POST['order_id'];
+    $order_date = $_POST['order_date'];
+    $total_amount = $_POST['total_amount'];
+    $cust_id = $_POST['cust_id'];
+    $order_status = $_POST['order_status'];
 
-    // Mempersiapkan query dengan menggunakan prepared statement
-    $query = "UPDATE orders SET order_date = ?, total_amount = ?, cust_id = ?, order_status = ? WHERE order_id = ?";
+    // Update query
+    $query = "UPDATE orders SET order_date = '$order_date', total_amount = '$total_amount', cust_id = '$cust_id', order_status = '$order_status' WHERE order_id = '$order_id'";
     $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
 
-    // Error handling jika statement tidak dapat dipersiapkan
-    if (!$statement) {
-        echo "<script>alert('Gagal menyiapkan statement!'); window.location = 'display_order.php'</script>";
-        exit;
-    }
-
-    // Mengikat parameter ke statement dan menjalankan
-    mysqli_stmt_bind_param($statement, "sdssi", $order_date, $total_amount, $cust_id, $order_status, $order_id);
-    $execute = mysqli_stmt_execute($statement);
-
-    // Menangani hasil eksekusi statement
-    if (!$execute) {
-        // Menangani kesalahan saat menjalankan query
-        echo "<script>alert('Update Order gagal! Error: " . mysqli_error($connect) . "'); window.location = 'display_order.php'</script>";
+    if ($statement) {
+        echo "<script>alert('Order has been updated!'); window.location = 'display_order.php'</script>";
     } else {
-        // Menampilkan pesan sukses dan mengarahkan kembali ke halaman display_order
-        echo "<script>alert('Order berhasil diperbarui!'); window.location = 'display_order.php'</script>";
+        echo "<script>alert('Update Order failed!'); window.location = 'display_order.php'</script>";
     }
 }
 ?>

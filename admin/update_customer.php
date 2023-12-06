@@ -12,14 +12,14 @@ require_once "../includes/config.php";
 // Memeriksa apakah form telah dikirimkan
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitasi dan mendapatkan data dari form
-    $cust_id = mysqli_real_escape_string($connect, $_POST['cust_id']);
-    $cust_name = mysqli_real_escape_string($connect, $_POST['cust_name']);
-    $cust_email = mysqli_real_escape_string($connect, $_POST['cust_email']);
-    $cust_phone = mysqli_real_escape_string($connect, $_POST['cust_phone']);
-    $cust_address = mysqli_real_escape_string($connect, $_POST['cust_address']);
-    $cust_city = mysqli_real_escape_string($connect, $_POST['cust_city']);
-    $cust_province = mysqli_real_escape_string($connect, $_POST['cust_province']);
-    $cust_postalcode = mysqli_real_escape_string($connect, $_POST['cust_postalcode']);
+    $cust_id = $_POST['cust_id'];
+    $cust_name = $_POST['cust_name'];
+    $cust_email = $_POST['cust_email'];
+    $cust_phone = $_POST['cust_phone'];
+    $cust_address = $_POST['cust_address'];
+    $cust_city = $_POST['cust_city'];
+    $cust_province = $_POST['cust_province'];
+    $cust_postalcode = $_POST['cust_postalcode'];
 
     // Validasi email
     if (!filter_var($cust_email, FILTER_VALIDATE_EMAIL)) {
@@ -27,25 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    // Mempersiapkan query update dengan prepared statement
-    $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ? WHERE cust_id = ?";
+    // Update query
+    $query = "UPDATE pengunjung SET cust_name = '$cust_name', cust_email = '$cust_email', cust_phone = '$cust_phone', cust_address = '$cust_address', cust_city = '$cust_city', cust_province = '$cust_province', cust_postalcode = '$cust_postalcode' WHERE cust_id = '$cust_id'";
     $statement = mysqli_prepare($connect, $query);
+    mysqli_stmt_execute($statement);
 
-    // Error handling jika statement gagal disiapkan
-    if (!$statement) {
-        echo "<script>alert('Gagal menyiapkan statement!'); window.location = 'display_customer.php'</script>";
-        exit;
-    }
-
-    // Mengikat parameter ke statement dan menjalankan
-    mysqli_stmt_bind_param($statement, "sssssssi", $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $cust_id);
-    $execute = mysqli_stmt_execute($statement);
-
-    // Menangani hasil eksekusi statement
-    if (!$execute) {
-        echo "<script>alert('Update Customer gagal! Error: " . mysqli_error($connect) . "'); window.location = 'display_customer.php'</script>";
+    if ($statement) {
+        echo "<script>alert('Customer has been updated!'); window.location = 'display_customer.php'</script>";
     } else {
-        echo "<script>alert('Customer berhasil diperbarui!'); window.location = 'display_customer.php'</script>";
+        echo "<script>alert('Update Customer failed!'); window.location = 'display_customer.php'</script>";
     }
 }
 ?>

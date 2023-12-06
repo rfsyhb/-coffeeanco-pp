@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/cinfo.css">
     <link rel="stylesheet" href="assets/css/navbar.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
     <title>Learn</title>
 </head>
 

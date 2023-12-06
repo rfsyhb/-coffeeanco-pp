@@ -44,7 +44,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
     <link href="../assets/css/admin.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -122,13 +122,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col" width="80">ID</th>
+                                    <th scope="col" width="60">ID</th>
                                     <th scope="col">Product</th>
                                     <th scope="col">Type</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Stock</th>
                                     <th scope="col" width="80">Price</th>
-                                    <th scope="col" width="112">Action</th>
+                                    <th scope="col" width="55">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -185,7 +185,19 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
+    <!-- jQuery dimuat terlebih dahulu -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
     <script src="../assets/js/script.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+
 </body>
 
 </html>

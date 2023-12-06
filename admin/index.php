@@ -21,8 +21,8 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
         case 'delay':
         case 'complete':
             $new_status = ($action == 'fail') ? 'digagalkan' :
-                ($action == 'process') ? 'sedang diproses' :
-                ($action == 'delay') ? 'delayed' : 'selesai';
+                (($action == 'process') ? 'sedang diproses' :
+                    (($action == 'delay') ? 'delayed' : 'selesai'));
             $stmt = mysqli_prepare($connect, "UPDATE orders SET order_status = ? WHERE order_id = ?");
             mysqli_stmt_bind_param($stmt, 'ss', $new_status, $order_id);
             mysqli_stmt_execute($stmt);

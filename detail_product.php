@@ -96,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="assets/css/navbar.css">
     <link rel="stylesheet" href="assets/css/pdetail.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
     <title>Detail Product</title>
 </head>
 

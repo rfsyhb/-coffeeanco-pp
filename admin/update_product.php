@@ -12,15 +12,16 @@ require_once "../includes/config.php";
 // Memeriksa apakah form telah disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mengambil detail produk dari POST request
-    $product_id = mysqli_real_escape_string($connect, $_POST['prod_id']);
-    $product_name = mysqli_real_escape_string($connect, $_POST['prod_name']);
-    $product_type = mysqli_real_escape_string($connect, $_POST['prod_type']);
-    $product_desc = mysqli_real_escape_string($connect, $_POST['prod_desc']);
-    $product_stock = mysqli_real_escape_string($connect, $_POST['prod_stock']);
-    $product_price = mysqli_real_escape_string($connect, $_POST['prod_price']);
+    $product_id = $_POST['prod_id'];
+    $product_name = $_POST['prod_name'];
+    $product_type = $_POST['prod_type'];
+    $product_desc = $_POST['prod_desc'];
+    $product_stock = $_POST['prod_stock'];
+    $product_price = $_POST['prod_price'];
 
     // Fungsi untuk mengelola upload gambar
-    function uploadImage($image, $target_dir) {
+    function uploadImage($image, $target_dir)
+    {
         $target_file = $target_dir . basename($_FILES[$image]["name"]);
         if (move_uploaded_file($_FILES[$image]["tmp_name"], $target_file)) {
             return basename($_FILES[$image]["name"]);
@@ -36,28 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_image2 = uploadImage('prod_image2', $target_dir);
 
     if ($product_image1 && $product_image2) {
-        // Mempersiapkan query update dengan prepared statement
-        $query = "UPDATE produk SET prod_name = ?, prod_type = ?, prod_desc = ?, prod_stock = ?, prod_price = ?, prod_image1 = ?, prod_image2 = ? WHERE prod_id = ?";
+        $query = "UPDATE produk SET prod_name = '$product_name', prod_type = '$product_type', prod_desc = '$product_desc', prod_stock = '$product_stock', prod_price = '$product_price', prod_image1 = '$product_image1', prod_image2 = '$product_image2' WHERE prod_id = '$product_id'";
         $statement = mysqli_prepare($connect, $query);
 
-        // Error handling jika statement gagal disiapkan
-        if (!$statement) {
-            echo "<script>alert('Gagal menyiapkan statement!'); window.location = 'display_product.php'</script>";
-            exit;
-        }
+        $result = mysqli_stmt_execute($statement);
 
-        // Mengikat parameter dan menjalankan statement
-        mysqli_stmt_bind_param($statement, "sssiiss", $product_name, $product_type, $product_desc, $product_stock, $product_price, $product_image1, $product_image2);
-        $execute = mysqli_stmt_execute($statement);
-
-        // Menangani hasil eksekusi statement
-        if (!$execute) {
-            echo "<script>alert('Gagal mengupdate produk! Error: " . mysqli_error($connect) . "'); window.location = 'display_product.php'</script>";
+        if ($result) {
+            echo "<script>alert('Product has been updated!'); window.location = 'display_product.php'</script>";
         } else {
-            echo "<script>alert('Produk berhasil diperbarui!'); window.location = 'display_product.php'</script>";
+            echo "<script>alert('Update product failed!'); window.location = 'display_product.php'</script>";
         }
     } else {
-        echo "<script>alert('Upload gambar gagal!'); window.location = 'display_product.php'</script>";
+        echo "<script>alert('Upload image failed!'); window.location = 'display_product.php'</script>";
     }
 }
 ?>

@@ -34,7 +34,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 // Logika untuk mengelola aksi pada keranjang (update, remove)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
     $prod_id = $_POST['prod_id']; // ID produk yang akan diperbarui atau dihapus
-    $cart_quantity = (int) $_POST['cart_quantity']; // Kuantitas baru dari produk jika di-update
+    $cart_quantity = isset($_POST['cart_quantity']) ? (int) $_POST['cart_quantity'] : 0; // Kuantitas baru dari produk jika di-update
 
     // Pengecekan stok produk dari database
     $stockQuery = "SELECT prod_stock FROM produk WHERE prod_id = ?";
@@ -135,6 +135,7 @@ if (isset($_POST['checkout'])) {
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/cart.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
     <title>Cart</title>
 </head>
 
