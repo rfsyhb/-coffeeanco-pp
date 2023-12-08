@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cart_unit_price = $product['prod_price'];
 
     // Cek stok yang tersedia
-    $availableStock = $product['prod_stock'];
+    $availableStock = $stockLeft;
 
     if ($cart_quantity > $availableStock) {
         $_SESSION['message'] = "Jumlah yang diminta melebihi stok yang tersedia.";

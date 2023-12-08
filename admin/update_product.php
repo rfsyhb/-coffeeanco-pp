@@ -73,7 +73,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <link href="../assets/css/admin.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-
+    <style>
+        .required-asterisk {
+            color: red;
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -149,43 +154,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h2>Update Product</h2>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label>ID Product</label>
+                            <label>ID Product <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_id" id="prod_id" value="<?php echo $data['prod_id']; ?>"
                                 class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label>Product Name</label>
+                            <label>Product Name <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_name" id="prod_name" value="<?php echo $data['prod_name']; ?>"
-                                class="form-control" require>
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Product Type</label>
+                            <label>Product Type <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_type" id="prod_type" value="<?php echo $data['prod_type']; ?>"
-                                class="form-control" require>
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Description</label>
+                            <label>Description <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_desc" id="prod_desc" value="<?php echo $data['prod_desc']; ?>"
-                                class="form-control" require>
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Stock</label>
+                            <label>Stock <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_stock" id="prod_stock"
-                                value="<?php echo $data['prod_stock']; ?>" class="form-control" require>
+                                value="<?php echo $data['prod_stock']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Price</label>
+                            <label>Price <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_price" id="prod_price"
-                                value="<?php echo $data['prod_price']; ?>" class="form-control" require>
+                                value="<?php echo $data['prod_price']; ?>" class="form-control" required>
                         </div>
                         <!-- new -->
                         <div class="mb-3">
-                            <label>Image 1</label>
+                            <label>Image 1 <span class="required-asterisk">*</span></label>
                             <input type="file" name="prod_image1" id="prod_image1" class="form-control"
                                 value="<?php echo $data['prod_image1']; ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label>Image 2</label>
+                            <label>Image 2 <span class="required-asterisk">*</span></label>
                             <input type="file" name="prod_image2" id="prod_image2" class="form-control"
                                 value="<?php echo $data['prod_image2']; ?>" required>
                         </div>
@@ -207,6 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/required.js"></script>
 </body>
 
 </html>

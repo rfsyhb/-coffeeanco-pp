@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($sql->execute()) {
             // Mengalihkan ke halaman index setelah pendaftaran berhasil
-            header("Location: index.php");
+            echo "<script>alert('Registrasi berhasil! Silahkan login ulang'); window.location = 'index.php'</script>";
             exit();
         } else {
             echo "Error: " . $sql->error;

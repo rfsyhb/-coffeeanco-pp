@@ -126,7 +126,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Order Date</th>
-                                    <th scope="col" width="200">Total Amount</th>
+                                    <th scope="col" width="150">Total Amount</th>
                                     <th scope="col" width="150">Customer ID</th>
                                     <th scope="col" width="270">Order Status</th>
                                     <th scope="col" width="112">Action</th>
@@ -144,16 +144,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                         <td>
                                             <?php echo $data['order_date']; ?>
                                         </td>
-                                        <td>
-                                            <?php echo $data['total_amount']; ?>
+                                        <td style="text-align: right;">
+                                            <?php echo number_format($data['total_amount'], 0, ',', '.'); ?>
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <?php echo $data['cust_id']; ?>
                                         </td>
                                         <td>
                                             <?php echo $data['order_status']; ?>
                                         </td>
-                                        <td>
+                                        <td style="text-align: right;">
                                             <a href="update_order.php?order_id=<?php echo $data['order_id']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">

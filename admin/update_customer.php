@@ -60,7 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <link href="../assets/css/admin.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-
+    <style>
+        .required-asterisk {
+            color: red;
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -139,44 +144,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h2>Update Customer</h2>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label>ID Customer</label>
+                            <label>ID Customer <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_id" id="cust_id" value="<?php echo $data['cust_id']; ?>"
                                 class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label>Name</label>
+                            <label>Name <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_name" id="cust_name" value="<?php echo $data['cust_name']; ?>"
-                                class="form-control" require>
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Email</label>
+                            <label>Email <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_email" id="cust_email"
-                                value="<?php echo $data['cust_email']; ?>" class="form-control" require>
+                                value="<?php echo $data['cust_email']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Phone</label>
+                            <label>Phone <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_phone" id="cust_phone"
-                                value="<?php echo $data['cust_phone']; ?>" class="form-control" require>
+                                value="<?php echo $data['cust_phone']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Address</label>
+                            <label>Address <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_address" id="cust_address"
-                                value="<?php echo $data['cust_address']; ?>" class="form-control" require>
+                                value="<?php echo $data['cust_address']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>City</label>
+                            <label>City <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_city" id="cust_city" value="<?php echo $data['cust_city']; ?>"
-                                class="form-control" require>
+                                class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Province</label>
+                            <label>Province <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_province" id="cust_province"
-                                value="<?php echo $data['cust_province']; ?>" class="form-control" require>
+                                value="<?php echo $data['cust_province']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Postal Code</label>
+                            <label>Postal Code <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_postalcode" id="cust_postalcode"
-                                value="<?php echo $data['cust_postalcode']; ?>" class="form-control" require>
+                                value="<?php echo $data['cust_postalcode']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <input type="submit" value="Update Customer" class="btn btn-sm btn-primary" />&nbsp;
@@ -197,6 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/required.js"></script>
 </body>
 
 </html>

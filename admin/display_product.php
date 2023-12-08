@@ -126,9 +126,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
                                     <th scope="col">Product</th>
                                     <th scope="col">Type</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Stock</th>
-                                    <th scope="col" width="80">Price</th>
-                                    <th scope="col" width="55">Action</th>
+                                    <th scope="col" style="text-align: center;">Stock</th>
+                                    <th scope="col" width="80" style="text-align: center;">Price</th>
+                                    <th scope="col" width="55" style="text-align: center;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -149,13 +149,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_i
                                         <td>
                                             <?php echo $data['prod_desc']; ?>
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <?php echo $data['prod_stock']; ?>
                                         </td>
-                                        <td>
-                                            <?php echo $data['prod_price']; ?>
+                                        <td style="text-align: right;">
+                                            <?php echo number_format($data['prod_price'], 0, ',', '.'); ?>
                                         </td>
-                                        <td>
+                                        <td style="text-align: right;">
                                             <a href="update_product.php?prod_id=<?php echo $data['prod_id']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">

@@ -111,10 +111,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <input type="text" name="cust_postalcode" id="cust_postalcode"
                                         value="<?php echo $data['cust_postalcode']; ?>" class="form-control" require>
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <input type="password" name="cust_password" id="cust_password"
                                         value="" placeholder="Password" class="form-control" require>
-                                </div>
+                                </div> -->
                                 <div class="action-profile mb-3">
                                     <input type="submit" value="Edit" class="btn-edit" />
                                 </div>

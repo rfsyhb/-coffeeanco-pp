@@ -19,41 +19,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_stock = $_POST['prod_stock'];
     $product_price = $_POST['prod_price'];
 
-    // Fungsi untuk mengunggah gambar
-    function uploadImage($image, $target_dir)
-    {
-        $target_file = $target_dir . basename($_FILES[$image]["name"]);
-        if (move_uploaded_file($_FILES[$image]["tmp_name"], $target_file)) {
-            return basename($_FILES[$image]["name"]);
-        }
-        return false;
-    }
+    // Cek apakah ID produk sudah ada di database
+    $check_query = "SELECT prod_id FROM produk WHERE prod_id = ?";
+    $check_stmt = mysqli_prepare($connect, $check_query);
+    mysqli_stmt_bind_param($check_stmt, "s", $product_id);
+    mysqli_stmt_execute($check_stmt);
+    mysqli_stmt_store_result($check_stmt);
 
-    // Direktori tempat gambar akan diunggah
-    $target_dir = "../assets/images/uploaded/";
-
-    // Mengelola unggahan untuk prod_image1 dan prod_image2
-    $product_image1 = uploadImage('prod_image1', $target_dir);
-    $product_image2 = uploadImage('prod_image2', $target_dir);
-
-    if ($product_image1 && $product_image2) {
-        // Prepared statement untuk menyisipkan produk ke dalam database
-        $query = "INSERT INTO produk (prod_id, prod_name, prod_type, prod_desc, prod_stock, prod_price, prod_image1, prod_image2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $statement = mysqli_prepare($connect, $query);
-
-        // Mengikat parameter ke statement
-        mysqli_stmt_bind_param($statement, "ssssiiss", $product_id, $product_name, $product_type, $product_desc, $product_stock, $product_price, $product_image1, $product_image2);
-
-        $result = mysqli_stmt_execute($statement);
-
-        // Menampilkan pesan sukses atau kesalahan berdasarkan hasil operasi
-        if ($result) {
-            echo "<script>alert('Product has been uploaded!'); window.location = 'display_product.php'</script>";
-        } else {
-            echo "<script>alert('Upload product failed!'); window.location = 'display_product.php'</script>";
-        }
+    if (mysqli_stmt_num_rows($check_stmt) > 0) {
+        // Jika produk dengan ID yang sama sudah ada
+        echo "<script>alert('Kode produk sudah ada!'); window.location = 'add_product.php'</script>";
     } else {
-        echo "<script>alert('Upload image failed!'); window.location = 'display_product.php'</script>";
+        // Fungsi untuk mengunggah gambar
+        function uploadImage($image, $target_dir)
+        {
+            $target_file = $target_dir . basename($_FILES[$image]["name"]);
+            if (move_uploaded_file($_FILES[$image]["tmp_name"], $target_file)) {
+                return basename($_FILES[$image]["name"]);
+            }
+            return false;
+        }
+
+        // Direktori tempat gambar akan diunggah
+        $target_dir = "../assets/images/uploaded/";
+
+        // Mengelola unggahan untuk prod_image1 dan prod_image2
+        $product_image1 = uploadImage('prod_image1', $target_dir);
+        $product_image2 = uploadImage('prod_image2', $target_dir);
+
+        if ($product_image1 && $product_image2) {
+            // Prepared statement untuk menyisipkan produk ke dalam database
+            $query = "INSERT INTO produk (prod_id, prod_name, prod_type, prod_desc, prod_stock, prod_price, prod_image1, prod_image2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $statement = mysqli_prepare($connect, $query);
+
+            // Mengikat parameter ke statement
+            mysqli_stmt_bind_param($statement, "ssssiiss", $product_id, $product_name, $product_type, $product_desc, $product_stock, $product_price, $product_image1, $product_image2);
+
+            $result = mysqli_stmt_execute($statement);
+
+            // Menampilkan pesan sukses atau kesalahan berdasarkan hasil operasi
+            if ($result) {
+                echo "<script>alert('Product has been uploaded!'); window.location = 'display_product.php'</script>";
+            } else {
+                echo "<script>alert('Upload product failed!'); window.location = 'display_product.php'</script>";
+            }
+        } else {
+            echo "<script>alert('Upload image failed!'); window.location = 'display_product.php'</script>";
+        }
     }
 }
 ?>
@@ -78,8 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <link href="../assets/css/admin.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-
+    <style>
+        .required-asterisk {
+            color: red;
+            display: none;
+        }
+    </style>
 </head>
+
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -150,42 +168,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h2>Add New Product</h2>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label>ID Product</label>
+                            <label>ID Product <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_id" id="prod_id" class="form-control my-2 py-2"
                                 class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Product Name</label>
+                            <label>Product Name <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_name" id="prod_name" class="form-control my-2 py-2"
                                 class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Product Type</label>
-                            <input type="text" name="prod_type" id="prod_type" class="form-control my-2 py-2"
-                                class="form-control" required>
+                            <label>Product Type <span class="required-asterisk">*</span></label>
+                            <select name="prod_type" id="prod_type" class="form-control my-2 py-2" required>
+                                <option value="">Pilih tipe produk biji kopi!</option>
+                                <option value="Arabika">Arabika</option>
+                                <option value="Robusta">Robusta</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label>Description</label>
-                            <input type="text" name="prod_desc" id="prod_desc" class="form-control my-2 py-2"
-                                class="form-control" required>
+                            <label>Description <span class="required-asterisk">*</span></label>
+                            <textarea name="prod_desc" id="prod_desc" class="form-control my-2 py-2"
+                                class="form-control" required maxlength="255"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label>Stock</label>
+                            <label>Stock <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_stock" id="prod_stock" class="form-control my-2 py-2"
                                 class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Price</label>
+                            <label>Price <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_price" id="prod_price" class="form-control my-2 py-2"
                                 class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Image 1</label>
+                            <label>Image 1 <span class="required-asterisk">*</span></label>
                             <input type="file" name="prod_image1" id="prod_image1" class="form-control my-2 py-2"
                                 required>
                         </div>
                         <div class="mb-3">
-                            <label>Image 2</label>
+                            <label>Image 2 <span class="required-asterisk">*</span></label>
                             <input type="file" name="prod_image2" id="prod_image2" class="form-control my-2 py-2"
                                 required>
                         </div>
@@ -208,6 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/required.js"></script>
 </body>
 
 </html>

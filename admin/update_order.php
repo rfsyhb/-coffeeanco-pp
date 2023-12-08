@@ -51,7 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <link href="../assets/css/admin.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-
+    <style>
+        .required-asterisk {
+            color: red;
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -130,27 +135,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h2>Update Order</h2>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label>ID Order</label>
+                            <label>ID Order <span class="required-asterisk">*</span></label>
                             <input type="text" name="order_id" id="order_id" value="<?php echo $data['order_id']; ?>"
                                 class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label>Order Date</label>
+                            <label>Order Date <span class="required-asterisk">*</span></label>
                             <input type="text" name="order_date" id="order_date"
                                 value="<?php echo $data['order_date']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Total Amount</label>
+                            <label>Total Amount <span class="required-asterisk">*</span></label>
                             <input type="text" name="total_amount" id="total_amount"
                                 value="<?php echo $data['total_amount']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Customer ID</label>
+                            <label>Customer ID <span class="required-asterisk">*</span></label>
                             <input type="text" name="cust_id" id="cust_id" value="<?php echo $data['cust_id']; ?>"
                                 class="form-control" readonly>
                         </div>
                         <div class="mb-3">
-                            <label>Order Status</label>
+                            <label>Order Status <span class="required-asterisk">*</span></label>
                             <input type="text" name="order_status" id="order_status"
                                 value="<?php echo $data['order_status']; ?>" class="form-control" required>
                         </div>
@@ -173,6 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/required.js"></script>
 </body>
 
 </html>

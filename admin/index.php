@@ -171,8 +171,8 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                                 <td>
                                                     <?php echo $data['cust_name']; ?>
                                                 </td>
-                                                <td>
-                                                    <?php echo number_format($data['total_amount'], 1); ?>
+                                                <td style="text-align: right;">
+                                                    <?php echo number_format($data['total_amount'], 0, ',', '.'); ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $data['order_id']; ?>
