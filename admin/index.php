@@ -155,16 +155,16 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                     <thead>
                                         <tr>
                                             <th scope="col">Nama Customer</th>
-                                            <th scope="col" width="80">Total</th>
+                                            <th scope="col" width="55">Total</th>
                                             <th scope="col" width="150">Order ID</th>
-                                            <th scope="col" width="85">Order Date</th>
+                                            <th scope="col" width="70">Order Date</th>
                                             <th scope="col" width="215">Order Status</th>
                                             <th scope="col" width="145">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $datas = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_id = pengunjung.cust_id");
+                                        $datas = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_id = pengunjung.cust_id WHERE orders.order_status != 'selesai'");
                                         while ($data = mysqli_fetch_array($datas)) {
                                             ?>
                                             <tr>
@@ -175,7 +175,10 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                                     <?php echo number_format($data['total_amount'], 0, ',', '.'); ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $data['order_id']; ?>
+                                                    <a
+                                                        href="display_orderdetails.php?order_id=<?php echo $data['order_id']; ?>">
+                                                        <?php echo $data['order_id']; ?>
+                                                    </a>
                                                 </td>
                                                 <td>
                                                     <?php echo $data['order_date']; ?>
@@ -211,6 +214,73 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                         ?>
                                     </tbody>
                                 </table>
+
+                                <!-- Judul dan tabel status pemesanan -->
+                                <h3 class="fs-3 mb-3 mt-5">Status Pemesanan (Selesai)</h3>
+                                <table class="table bg-white rounded shadow-sm table-hover pad">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nama Customer</th>
+                                            <th scope="col" width="55">Total</th>
+                                            <th scope="col" width="150">Order ID</th>
+                                            <th scope="col" width="70">Order Date</th>
+                                            <th scope="col" width="215">Order Status</th>
+                                            <th scope="col" width="145">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $datas_selesai = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_id = pengunjung.cust_id WHERE orders.order_status = 'selesai'");
+                                        while ($data = mysqli_fetch_array($datas_selesai)) {
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $data['cust_name']; ?>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <?php echo number_format($data['total_amount'], 0, ',', '.'); ?>
+                                                </td>
+                                                <td>
+                                                    <a
+                                                        href="display_orderdetails.php?order_id=<?php echo $data['order_id']; ?>">
+                                                        <?php echo $data['order_id']; ?>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <?php echo $data['order_date']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $data['order_status']; ?>
+                                                </td>
+                                                <td>
+                                                    <a href="?action=fail&order_id=<?php echo $data['order_id']; ?>"
+                                                        class="btn-sm btn-primary">
+                                                        <span class="fa-regular fa-calendar-xmark">
+                                                    </a>
+                                                    <a href="?action=process&order_id=<?php echo $data['order_id']; ?>"
+                                                        class="btn-sm btn-primary">
+                                                        <span class="fa-regular fa-calendar-plus">
+                                                    </a>
+                                                    <a href="?action=delay&order_id=<?php echo $data['order_id']; ?>"
+                                                        class="btn-sm btn-primary">
+                                                        <span class="fa-regular fa-calendar-minus">
+                                                    </a>
+                                                    <a href="?action=complete&order_id=<?php echo $data['order_id']; ?>"
+                                                        class="btn-sm btn-danger">
+                                                        <span class="fa-regular fa-calendar-check">
+                                                    </a>
+                                                    <a href="?action=delete&order_id=<?php echo $data['order_id']; ?>"
+                                                        class="btn-sm btn-danger">
+                                                        <span class="fas fa-trash">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+
                             </div>
                         </div>
                     </div>

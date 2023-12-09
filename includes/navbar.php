@@ -1,3 +1,31 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start(); // Memulai sesi hanya jika sesi belum dimulai
+}
+
+require_once 'config.php'; // Menghubungkan ke file konfigurasi database
+
+$total_item = 0; // Inisialisasi $total_item
+
+// Cek apakah ada pengguna yang login
+if (isset($_SESSION['cust_id'])) {
+    $cust_id = $_SESSION['cust_id'];
+
+    // Query untuk menghitung jumlah item di cart_details
+    $query = "SELECT COUNT(*) AS total_item FROM cart_details 
+              JOIN cart ON cart.cart_id = cart_details.cart_id 
+              WHERE cart.cust_id = ?";
+    $stmt = $connect->prepare($query);
+    $stmt->bind_param("i", $cust_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result) {
+        $row = $result->fetch_assoc();
+        $total_item = $row['total_item'];
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +38,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <style>
+        .cart-indicator {
+            position: relative;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            height: 20px;
+            width: 20px;
+            text-align: center;
+            line-height: 20px;
+            border-radius: 50%;
+        }
+    </style>
     <title>Navbar</title>
 </head>
 
@@ -35,9 +78,16 @@
         </ul>
 
         <div class="main">
+
             <a href="cart.php" class="cart">
                 <i class="ri-shopping-cart-line"></i>
+                <?php if ($total_item > 0): ?>
+                    <span class="cart-indicator">
+                        <?php echo $total_item; ?>
+                    </span>
+                <?php endif; ?>
             </a>
+
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
     </header>

@@ -65,9 +65,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_close($insertCartStmt);
         }
 
-        // Mengarahkan ke halaman utama setelah login sukses
-        header("location:index.php");
-        exit();
+        // Mengarahkan kembali ke halaman yang pengguna coba akses sebelumnya jika ada
+        if (isset($_GET['redirect'])) {
+            $url = urldecode($_GET['redirect']);
+            header("Location: $url");
+            exit();
+        } else {
+            // Jika tidak ada halaman redirect, arahkan ke halaman utama
+            header("location:index.php");
+            exit();
+        }
     } else {
         // Menampilkan pesan error jika username atau password salah
         echo "<script>

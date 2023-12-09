@@ -3,8 +3,9 @@ session_start();
 
 // Pengecekan status pengguna dalam session
 if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer") {
-    header("Location: login.php");
-    exit(); // Menghentikan eksekusi lebih lanjut dan mengarahkan ke halaman login
+    $current_url = urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    header("Location: login.php?redirect=$current_url");
+    exit;
 }
 
 require_once "includes/config.php"; // Memasukkan file konfigurasi untuk koneksi database

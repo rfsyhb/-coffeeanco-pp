@@ -3,7 +3,8 @@ session_start();
 
 // Memeriksa status pengguna dan mengarahkan ke halaman login jika tidak sesuai
 if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username']) || !isset($_SESSION['cart_id'])) {
-    header("location:login.php");
+    $current_url = urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    header("Location: login.php?redirect=$current_url");
     exit;
 }
 
@@ -78,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Tampilkan pesan sukses
-        $_SESSION['message'] = "Produk berhasil ditambahkan ke keranjang.";
+        $_SESSION['message'] = "Produk berhasil ditambahkan ke keranjang. (DALAM 5 MENIT AKAN TERHAPUS DARI KERANJANG BELANJA)";
     }
 
     header("Location: detail_product.php?prod_id=$prod_id");

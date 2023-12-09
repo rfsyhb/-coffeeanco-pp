@@ -3,7 +3,8 @@ session_start();
 
 // Memeriksa status pengguna dan mengarahkan ke halaman login jika tidak sesuai
 if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username'])) {
-    header("location:login.php");
+    $current_url = urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    header("Location: login.php?redirect=$current_url");
     exit;
 }
 

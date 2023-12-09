@@ -17,7 +17,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
     $query = "DELETE FROM order_details WHERE order_id='$order_id'";
     $statement = mysqli_prepare($connect, $query);
     mysqli_stmt_execute($statement);
-    
+
     $query = "DELETE FROM orders WHERE order_id='$order_id'";
     $statement = mysqli_prepare($connect, $query);
     mysqli_stmt_execute($statement);
@@ -124,6 +124,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
+                                    <th scope="col">Customer Name</th> <!-- Tambahkan kolom ini -->
                                     <th scope="col">ID</th>
                                     <th scope="col">Order Date</th>
                                     <th scope="col" width="150">Total Amount</th>
@@ -134,12 +135,17 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                             </thead>
                             <tbody>
                                 <?php
-                                $datas = mysqli_query($connect, "SELECT * FROM orders");
+                                $datas = mysqli_query($connect, "SELECT orders.*, pengunjung.cust_name FROM orders JOIN pengunjung ON orders.cust_id = pengunjung.cust_id");
                                 while ($data = mysqli_fetch_array($datas)) {
                                     ?>
                                     <tr>
                                         <td>
-                                            <?php echo $data['order_id']; ?>
+                                            <?php echo $data['cust_name']; ?> <!-- Tampilkan nama pengunjung -->
+                                        </td>
+                                        <td>
+                                            <a href="display_orderdetails.php?order_id=<?php echo $data['order_id']; ?>"> 
+                                                <?php echo $data['order_id']; ?>
+                                            </a>
                                         </td>
                                         <td>
                                             <?php echo $data['order_date']; ?>
@@ -183,7 +189,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-        <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 
 </html>

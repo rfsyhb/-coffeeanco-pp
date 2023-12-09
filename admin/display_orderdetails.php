@@ -7,6 +7,8 @@ if ($_SESSION['status'] != "admin") {
     exit;
 }
 
+$order_id = isset($_GET['order_id']) ? $_GET['order_id'] : null;
+
 require_once "../includes/config.php";
 
 // Cek jika ada aksi 'delete' dan 'order_item_id' yang diberikan
@@ -117,11 +119,22 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
         <div id="layoutSidenav_content">
             <main>
                 <div class="row mx-5 mt-5">
-                    <h3 class="fs-4 mb-3">Kelola Data Order Detail</h3>
+                    <?php
+                    if ($order_id) {
+                        ?>
+                        <h3 class="fs-4 mb-3">Kelola Data Order Detail (<?php echo $order_id;?>)</h3>
+                        <?php
+                    } else {
+                        ?>
+                        <h3 class="fs-4 mb-3">Kelola Data Order Detail</h3>
+                        <?php
+                    }
+                    ?>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
+                                    <th scope="col">Customer Name</th> <!-- Tambahkan kolom ini -->
                                     <th scope="col">ID</th>
                                     <th scope="col">Order ID</th>
                                     <th scope="col">Product ID</th>
@@ -132,20 +145,37 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                             </thead>
                             <tbody>
                                 <?php
-                                $datas = mysqli_query($connect, "SELECT * FROM order_details");
+                                if ($order_id) {
+                                    // Jika order_id diterima, tampilkan hanya data untuk order_id tersebut
+                                    // dengan nama customer
+                                    $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name FROM order_details 
+                                                                     JOIN orders ON order_details.order_id = orders.order_id 
+                                                                     JOIN pengunjung ON orders.cust_id = pengunjung.cust_id 
+                                                                     WHERE order_details.order_id = '$order_id'");
+                                } else {
+                                    // Jika tidak ada order_id, tampilkan semua data dengan nama customer
+                                    $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name FROM order_details 
+                                                                     JOIN orders ON order_details.order_id = orders.order_id 
+                                                                     JOIN pengunjung ON orders.cust_id = pengunjung.cust_id");
+                                }
                                 while ($data = mysqli_fetch_array($datas)) {
                                     ?>
                                     <tr>
                                         <td>
+                                            <?php echo $data['cust_name']; ?> <!-- Tampilkan nama pengunjung -->
+                                        </td>
+                                        <td>
                                             <?php echo $data['order_item_id']; ?>
                                         </td>
                                         <td>
-                                            <?php echo $data['order_id']; ?>
+                                            <a href="display_orderdetails.php?order_id=<?php echo $data['order_id']; ?>">
+                                                <?php echo $data['order_id']; ?>
+                                            </a>
                                         </td>
                                         <td>
                                             <?php echo $data['prod_id']; ?>
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <?php echo $data['quantity']; ?>
                                         </td>
                                         <td style="text-align: right;">
@@ -163,6 +193,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                 ?>
                             </tbody>
                         </table>
+                        <?php
+                        if ($order_id) {
+                            ?>
+                            <a href="display_orderdetails.php" class="btn btn-light btn-outline-dark mt-3">Tampilkan
+                                Semua</a>
+                            <?php
+                        } else {
+                        }
+                        ?>
+
                     </div>
                 </div>
             </main>
@@ -177,7 +217,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
-        <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 
 </html>
