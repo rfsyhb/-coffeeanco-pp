@@ -37,8 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_image2 = uploadImage('prod_image2', $target_dir);
 
     if ($product_image1 && $product_image2) {
-        $query = "UPDATE produk SET prod_name = '$product_name', prod_type = '$product_type', prod_desc = '$product_desc', prod_stock = '$product_stock', prod_price = '$product_price', prod_image1 = '$product_image1', prod_image2 = '$product_image2' WHERE prod_id = '$product_id'";
+        $query = "UPDATE produk SET prod_name = ?, prod_type = ?, prod_desc = ?, prod_stock = ?, prod_price = ?, prod_image1 = ?, prod_image2 = ? WHERE prod_id = ?";
         $statement = mysqli_prepare($connect, $query);
+        mysqli_stmt_bind_param($statement, 'sssissss', $product_name, $product_type, $product_desc, $product_stock, $product_price, $product_image1, $product_image2, $product_id);
 
         $result = mysqli_stmt_execute($statement);
 
@@ -165,8 +166,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="mb-3">
                             <label>Product Type <span class="required-asterisk">*</span></label>
-                            <input type="text" name="prod_type" id="prod_type" value="<?php echo $data['prod_type']; ?>"
-                                class="form-control" required>
+                            <select name="prod_type" id="prod_type" class="form-control my-2 py-2" required>
+                                <option value="">Pilih tipe produk biji kopi!</option>
+                                <option value="Arabika" <?php echo $data['prod_type'] == 'Arabika' ? 'selected' : ''; ?>>
+                                    Arabika</option>
+                                <option value="Robusta" <?php echo $data['prod_type'] == 'Robusta' ? 'selected' : ''; ?>>
+                                    Robusta</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label>Description <span class="required-asterisk">*</span></label>

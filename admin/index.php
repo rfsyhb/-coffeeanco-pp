@@ -156,10 +156,10 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                         <tr>
                                             <th scope="col">Nama Customer</th>
                                             <th scope="col" width="55">Total</th>
-                                            <th scope="col" width="150">Order ID</th>
-                                            <th scope="col" width="70">Order Date</th>
+                                            <th scope="col" width="140">Order ID</th>
+                                            <th scope="col" width="85">Order Date</th>
                                             <th scope="col" width="215">Order Status</th>
-                                            <th scope="col" width="145">Action</th>
+                                            <th scope="col" width="148">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -218,11 +218,11 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                 <!-- Judul dan tabel status pemesanan -->
                                 <h3 class="fs-3 mb-3 mt-5">Status Pemesanan (Selesai)</h3>
                                 <table class="table bg-white rounded shadow-sm table-hover pad">
-                                    <thead>
+                                <thead>
                                         <tr>
                                             <th scope="col">Nama Customer</th>
                                             <th scope="col" width="55">Total</th>
-                                            <th scope="col" width="150">Order ID</th>
+                                            <th scope="col" width="140">Order ID</th>
                                             <th scope="col" width="70">Order Date</th>
                                             <th scope="col" width="215">Order Status</th>
                                             <th scope="col" width="145">Action</th>
