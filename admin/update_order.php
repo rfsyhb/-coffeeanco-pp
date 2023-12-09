@@ -15,11 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $order_id = $_POST['order_id'];
     $order_date = $_POST['order_date'];
     $total_amount = $_POST['total_amount'];
-    $cust_id = $_POST['cust_id'];
+    $cust_username = $_POST['cust_username'];
     $order_status = $_POST['order_status'];
 
     // Update query
-    $query = "UPDATE orders SET order_date = '$order_date', total_amount = '$total_amount', cust_id = '$cust_id', order_status = '$order_status' WHERE order_id = '$order_id'";
+    $query = "UPDATE orders SET order_date = '$order_date', total_amount = '$total_amount', cust_username = '$cust_username', order_status = '$order_status' WHERE order_id = '$order_id'";
     $statement = mysqli_prepare($connect, $query);
     mysqli_stmt_execute($statement);
 
@@ -150,8 +150,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 value="<?php echo $data['total_amount']; ?>" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Customer ID <span class="required-asterisk">*</span></label>
-                            <input type="text" name="cust_id" id="cust_id" value="<?php echo $data['cust_id']; ?>"
+                            <label>Cust Username <span class="required-asterisk">*</span></label>
+                            <input type="text" name="cust_username" id="cust_username" value="<?php echo $data['cust_username']; ?>"
                                 class="form-control" readonly>
                         </div>
                         <div class="mb-3">

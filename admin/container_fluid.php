@@ -45,7 +45,7 @@
         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
             <div>
                 <?php
-                $query = mysqli_query($connect, "SELECT cust_id FROM pengunjung ORDER BY cust_id");
+                $query = mysqli_query($connect, "SELECT cust_username FROM pengunjung ORDER BY cust_username");
                 $row = mysqli_num_rows($query);
                 echo '<h3 class="fs-2">' . $row . '</h3>';
                 ?>

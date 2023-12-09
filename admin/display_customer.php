@@ -9,14 +9,14 @@ if ($_SESSION['status'] != "admin") {
 
 require_once "../includes/config.php";
 
-// Cek jika aksi adalah 'delete' dan 'cust_id' diset
-if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_id'])) {
-    $cust_id = $_GET['cust_id'];
+// Cek jika aksi adalah 'delete' dan 'cust_username' diset
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_username'])) {
+    $cust_username = $_GET['cust_username'];
 
     // Menggunakan prepared statement untuk menghapus data
-    $query = "DELETE FROM pengunjung WHERE cust_id = ?";
+    $query = "DELETE FROM pengunjung WHERE cust_username = ?";
     $statement = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($statement, "s", $cust_id);
+    mysqli_stmt_bind_param($statement, "s", $cust_username);
     mysqli_stmt_execute($statement);
 
     // Memberikan feedback kepada admin
@@ -123,7 +123,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_i
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col">Purchased</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
@@ -141,7 +141,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_i
                                     ?>
                                     <tr>
                                         <td>
-                                            <?php echo $data['cust_id']; ?>
+                                            <?php echo $data['purchase_count']; ?>
                                         </td>
                                         <td>
                                             <?php echo $data['cust_name']; ?>
@@ -165,11 +165,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cust_i
                                             <?php echo $data['cust_postalcode']; ?>
                                         </td>
                                         <td style="text-align: right;">
-                                            <a href="update_customer.php?cust_id=<?php echo $data['cust_id']; ?> "
+                                            <a href="update_customer.php?cust_username=<?php echo $data['cust_username']; ?> "
                                                 class="btn-sm btn-primary">
                                                 <span class="fas fa-edit">
                                             </a>
-                                            <a href="display_customer.php?action=delete&cust_id=<?php echo $data['cust_id']; ?>"
+                                            <a href="display_customer.php?action=delete&cust_username=<?php echo $data['cust_username']; ?>"
                                                 class="btn-sm btn-danger">
                                                 <span class="fas fa-trash">
                                             </a>

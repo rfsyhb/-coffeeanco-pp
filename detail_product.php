@@ -1,13 +1,6 @@
 <?php
 session_start();
 
-// Memeriksa status pengguna dan mengarahkan ke halaman login jika tidak sesuai
-if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username']) || !isset($_SESSION['cart_id'])) {
-    $current_url = urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-    header("Location: login.php?redirect=$current_url");
-    exit;
-}
-
 require_once "includes/config.php";
 
 // Sanitasi dan mendapatkan prod_id dari URL
@@ -40,50 +33,60 @@ mysqli_stmt_bind_param($upsellStmt, 'ss', $product['prod_type'], $prod_id);
 mysqli_stmt_execute($upsellStmt);
 $upsellResult = mysqli_stmt_get_result($upsellStmt);
 
-// Dapatkan cust_id dan cart_id dari sesi pengguna
-$cust_id = $_SESSION['cust_id'];
-$cart_id = $_SESSION['cart_id'];
+// Cek apakah pengguna sudah login
+$isLoggedIn = isset($_SESSION['status']) && $_SESSION['status'] == "customer" && isset($_SESSION['username']) && isset($_SESSION['cart_id']);
 
-// Proses form jika dikirim
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $cart_quantity = isset($_POST['cart_quantity']) ? (int) $_POST['cart_quantity'] : 0;
-    $cart_unit_price = $product['prod_price'];
+    // Hanya proses form jika pengguna telah login
+    if ($isLoggedIn) {
+        // Dapatkan cust_username dan cart_id dari sesi pengguna
+        $cust_username = $_SESSION['username'];
+        $cart_id = $_SESSION['cart_id'];
 
-    // Cek stok yang tersedia
-    $availableStock = $stockLeft;
+        $cart_quantity = isset($_POST['cart_quantity']) ? (int) $_POST['cart_quantity'] : 0;
+        $cart_unit_price = $product['prod_price'];
 
-    if ($cart_quantity > $availableStock) {
-        $_SESSION['message'] = "Jumlah yang diminta melebihi stok yang tersedia.";
-    } else {
-        // Cek apakah produk sudah ada di keranjang
-        $checkStmt = mysqli_prepare($connect, "SELECT cart_quantity FROM cart_details WHERE cart_id = ? AND prod_id = ?");
-        mysqli_stmt_bind_param($checkStmt, 'ss', $cart_id, $prod_id);
-        mysqli_stmt_execute($checkStmt);
-        $checkResult = mysqli_stmt_get_result($checkStmt);
-        $existingProd = mysqli_fetch_assoc($checkResult);
+        // Cek stok yang tersedia
+        $availableStock = $stockLeft;
 
-        if ($existingProd) {
-            // Jika produk sudah ada, update jumlahnya
-            $newQuantity = $existingProd['cart_quantity'] + $cart_quantity;
-            $updateStmt = mysqli_prepare($connect, "UPDATE cart_details SET cart_quantity = ? WHERE cart_id = ? AND prod_id = ?");
-            mysqli_stmt_bind_param($updateStmt, 'iss', $newQuantity, $cart_id, $prod_id);
-            mysqli_stmt_execute($updateStmt);
-            mysqli_stmt_close($updateStmt);
+        if ($cart_quantity > $availableStock) {
+            $_SESSION['message'] = "Jumlah yang diminta melebihi stok yang tersedia.";
         } else {
-            // Jika belum ada, tambahkan produk baru ke keranjang
-            $cart_detail_id = uniqid("cd_");
-            $insertStmt = mysqli_prepare($connect, "INSERT INTO cart_details (cart_detail_id, cart_id, prod_id, cart_quantity, cart_unit_price) VALUES (?, ?, ?, ?, ?)");
-            mysqli_stmt_bind_param($insertStmt, 'sssii', $cart_detail_id, $cart_id, $prod_id, $cart_quantity, $cart_unit_price);
-            mysqli_stmt_execute($insertStmt);
-            mysqli_stmt_close($insertStmt);
+            // Cek apakah produk sudah ada di keranjang
+            $checkStmt = mysqli_prepare($connect, "SELECT cart_quantity FROM cart_details WHERE cart_id = ? AND prod_id = ?");
+            mysqli_stmt_bind_param($checkStmt, 'ss', $cart_id, $prod_id);
+            mysqli_stmt_execute($checkStmt);
+            $checkResult = mysqli_stmt_get_result($checkStmt);
+            $existingProd = mysqli_fetch_assoc($checkResult);
+
+            if ($existingProd) {
+                // Jika produk sudah ada, update jumlahnya
+                $newQuantity = $existingProd['cart_quantity'] + $cart_quantity;
+                $updateStmt = mysqli_prepare($connect, "UPDATE cart_details SET cart_quantity = ? WHERE cart_id = ? AND prod_id = ?");
+                mysqli_stmt_bind_param($updateStmt, 'iss', $newQuantity, $cart_id, $prod_id);
+                mysqli_stmt_execute($updateStmt);
+                mysqli_stmt_close($updateStmt);
+            } else {
+                // Jika belum ada, tambahkan produk baru ke keranjang
+                $cart_detail_id = uniqid("cd_");
+                $insertStmt = mysqli_prepare($connect, "INSERT INTO cart_details (cart_detail_id, cart_id, prod_id, cart_quantity, cart_unit_price) VALUES (?, ?, ?, ?, ?)");
+                mysqli_stmt_bind_param($insertStmt, 'sssii', $cart_detail_id, $cart_id, $prod_id, $cart_quantity, $cart_unit_price);
+                mysqli_stmt_execute($insertStmt);
+                mysqli_stmt_close($insertStmt);
+            }
+
+            // Tampilkan pesan sukses
+            $_SESSION['message'] = "Produk berhasil ditambahkan ke keranjang. (DALAM 5 MENIT AKAN TERHAPUS DARI KERANJANG BELANJA)";
         }
 
-        // Tampilkan pesan sukses
-        $_SESSION['message'] = "Produk berhasil ditambahkan ke keranjang. (DALAM 5 MENIT AKAN TERHAPUS DARI KERANJANG BELANJA)";
+        header("Location: detail_product.php?prod_id=$prod_id");
+        exit();
+    } else {
+        // Jika pengguna belum login, arahkan ke halaman login
+        $current_url = urlencode("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+        header("Location: login.php?redirect=$current_url");
+        exit;
     }
-
-    header("Location: detail_product.php?prod_id=$prod_id");
-    exit();
 }
 ?>
 

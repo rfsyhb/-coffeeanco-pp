@@ -45,7 +45,7 @@ $cust_id = ''; // Mendefinisikan variabel cust_id
 
                         if (mysqli_num_rows($select_data) > 0) {
                             while ($data = mysqli_fetch_array($select_data)) {
-                                $cust_id = $data['cust_id']; // Menyimpan cust_id untuk digunakan di luar loop
+                                $cust_username = $data['cust_username']; // Menyimpan cust_username untuk digunakan di luar loop
                                 // Menampilkan data pelanggan
                                 ?>
                                 <div class="data-pelanggan">
@@ -69,7 +69,7 @@ $cust_id = ''; // Mendefinisikan variabel cust_id
                                     </p>
                                     <div class="action-profile mt-8">
                                         <a class="btn-edit"
-                                            href="user_editprofile.php?cust_id=<?php echo $data['cust_id']; ?>">Edit</a>
+                                            href="user_editprofile.php?cust_username=<?php echo $data['cust_username']; ?>">Edit</a>
                                     </div>
                                 </div>
                                 <?php
@@ -81,7 +81,7 @@ $cust_id = ''; // Mendefinisikan variabel cust_id
                     </div>
                 </div>
                 <div class="col-md-4 account-actions">
-                    <a class="btn btn-edit fs-8" href="user_orders.php?cust_id=<?php echo $cust_id; ?>">My
+                    <a class="btn btn-edit fs-8" href="user_orders.php?cust_username=<?php echo $cust_username; ?>">My
                         Orders</a>
                     <a class="btn btn-edit fs-8" href="includes/logout.php">Log out</a>
                 </div>

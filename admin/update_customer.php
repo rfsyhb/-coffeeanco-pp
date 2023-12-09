@@ -12,7 +12,7 @@ require_once "../includes/config.php";
 // Memeriksa apakah form telah dikirimkan
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitasi dan mendapatkan data dari form
-    $cust_id = $_POST['cust_id'];
+    $cust_username = $_POST['cust_username'];
     $cust_name = $_POST['cust_name'];
     $cust_email = $_POST['cust_email'];
     $cust_phone = $_POST['cust_phone'];
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update query
-    $query = "UPDATE pengunjung SET cust_name = '$cust_name', cust_email = '$cust_email', cust_phone = '$cust_phone', cust_address = '$cust_address', cust_city = '$cust_city', cust_province = '$cust_province', cust_postalcode = '$cust_postalcode' WHERE cust_id = '$cust_id'";
+    $query = "UPDATE pengunjung SET cust_name = '$cust_name', cust_email = '$cust_email', cust_phone = '$cust_phone', cust_address = '$cust_address', cust_city = '$cust_city', cust_province = '$cust_province', cust_postalcode = '$cust_postalcode' WHERE cust_username = '$cust_username'";
     $statement = mysqli_prepare($connect, $query);
     mysqli_stmt_execute($statement);
 
@@ -136,17 +136,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="container-fluid px-4 mt-3">
                     <?php
-                    $id = $_GET['cust_id'];
-                    $query = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_id='$id'");
+                    $id = $_GET['cust_username'];
+                    $query = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_username='$id'");
                     $data = mysqli_fetch_array($query);
 
                     ?>
                     <h2>Update Customer</h2>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label>ID Customer <span class="required-asterisk">*</span></label>
-                            <input type="text" name="cust_id" id="cust_id" value="<?php echo $data['cust_id']; ?>"
-                                class="form-control" readonly>
+                            <label>Cust Username <span class="required-asterisk">*</span></label>
+                            <input type="text" name="cust_username" id="cust_username"
+                                value="<?php echo $data['cust_username']; ?>" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label>Purchased <span class="required-asterisk">*</span></label>
+                            <input type="text" name="purchase_count" id="purchase_count"
+                                value="<?php echo $data['purchase_count']; ?>" class="form-control" readonly>
                         </div>
                         <div class="mb-3">
                             <label>Name <span class="required-asterisk">*</span></label>

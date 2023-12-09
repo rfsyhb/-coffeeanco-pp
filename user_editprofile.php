@@ -3,7 +3,7 @@ session_start();
 
 // Memeriksa status pengguna dan mengarahkan ke halaman login jika tidak sesuai
 if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer" || !isset($_SESSION['username'])) {
-    $current_url = urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    $current_url = urlencode("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     header("Location: login.php?redirect=$current_url");
     exit;
 }
@@ -13,7 +13,6 @@ require_once "includes/config.php"; // Memasukkan konfigurasi database
 // Memproses form jika dikirim
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mengambil data dari form dan membersihkannya untuk mencegah injection
-    $cust_id = mysqli_real_escape_string($connect, $_POST['cust_id']);
     $cust_name = mysqli_real_escape_string($connect, $_POST['cust_name']);
     $cust_email = mysqli_real_escape_string($connect, $_POST['cust_email']);
     $cust_phone = mysqli_real_escape_string($connect, $_POST['cust_phone']);
@@ -21,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cust_city = mysqli_real_escape_string($connect, $_POST['cust_city']);
     $cust_province = mysqli_real_escape_string($connect, $_POST['cust_province']);
     $cust_postalcode = mysqli_real_escape_string($connect, $_POST['cust_postalcode']);
-    
+
     // $cust_password = mysqli_real_escape_string($connect, $_POST["cust_password"]);
     // $hashed_password = password_hash($cust_password, PASSWORD_DEFAULT);
 
@@ -31,16 +30,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
+    // Periksa apakah username yang diberikan sesuai dengan username pengguna yang login
+    $cust_username = $_SESSION['username']; // Ambil username dari session
+    if ($cust_username != $_GET['cust_username']) {
+        // Jika tidak sesuai, berikan peringatan dan arahkan kembali ke halaman profil
+        echo "<script>alert('Tidak dapat mengupdate profil pengguna lain!'); window.location = 'user_profile.php'</script>";
+        exit;
+    }
+
     // Query update dengan prepared statement untuk keamanan
-    $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ? WHERE cust_id = ?";
-    // $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ?, cust_password = ?  WHERE cust_id = ?";
+    $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ? WHERE cust_username = ?";
+    // $query = "UPDATE pengunjung SET cust_name = ?, cust_email = ?, cust_phone = ?, cust_address = ?, cust_city = ?, cust_province = ?, cust_postalcode = ?, cust_password = ?  WHERE cust_username = ?";
     $statement = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($statement, 'sssssssi', $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $cust_id);
-    // mysqli_stmt_bind_param($statement, 'ssssssssi', $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $hashed_password, $cust_id);
+    mysqli_stmt_bind_param($statement, 'ssssssss', $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $cust_username);
+    // mysqli_stmt_bind_param($statement, 'ssssssssi', $cust_name, $cust_email, $cust_phone, $cust_address, $cust_city, $cust_province, $cust_postalcode, $hashed_password, $cust_username);
     $result = mysqli_stmt_execute($statement);
 
     // Memberikan feedback kepada pengguna
     if ($result) {
+        $_SESSION['cust_name'] = $cust_name;
         echo "<script>alert('Profil pengguna berhasil diperbarui!'); window.location = 'user_profile.php'</script>";
     } else {
         echo "<script>alert('Pembaruan profil pengguna gagal!'); window.location = 'user_profile.php'</script>";
@@ -74,15 +82,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="user-info fs-sm">
                         <div class="data-pelanggan">
                             <?php
-                            $id = $_GET['cust_id'];
-                            $query = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_id='$id'");
+                            $username = $_GET['cust_username'];
+                            $query = mysqli_query($connect, "SELECT * FROM pengunjung WHERE cust_username='$username'");
                             $data = mysqli_fetch_array($query);
                             ?>
-                            <h4>Update User</h4>
+                            <h4>Update User (
+                                <?php echo $data['cust_username']; ?> )
+                            </h4>
                             <form action="" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <input type="hidden" name="cust_id"
-                                        value="<?php echo htmlspecialchars($data['cust_id']); ?>">
+                                    <input type="hidden" name="cust_username"
+                                        value="<?php echo $data['cust_username']; ?>">
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" name="cust_name" id="cust_name"

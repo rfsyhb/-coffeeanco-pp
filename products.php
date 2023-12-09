@@ -58,7 +58,7 @@ require_once "includes/config.php";
                             </h6>
                             <span class="fs-10 text-primary-gradient">
                                 IDR
-                                <?php echo number_format($row['prod_price'], 2); ?>
+                                <?php echo number_format($row['prod_price'], 0, ',', '.'); ?>
                             </span>
                         </div>
                     </div>

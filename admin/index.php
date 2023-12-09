@@ -164,7 +164,7 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $datas = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_id = pengunjung.cust_id WHERE orders.order_status != 'selesai'");
+                                        $datas = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_username = pengunjung.cust_username WHERE orders.order_status != 'selesai'");
                                         while ($data = mysqli_fetch_array($datas)) {
                                             ?>
                                             <tr>
@@ -230,7 +230,7 @@ if (isset($_GET['action']) && isset($_GET['order_id'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $datas_selesai = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_id = pengunjung.cust_id WHERE orders.order_status = 'selesai'");
+                                        $datas_selesai = mysqli_query($connect, "SELECT pengunjung.cust_name, orders.total_amount, orders.order_id, orders.order_date, orders.order_status FROM orders INNER JOIN pengunjung ON orders.cust_username = pengunjung.cust_username WHERE orders.order_status = 'selesai'");
                                         while ($data = mysqli_fetch_array($datas_selesai)) {
                                             ?>
                                             <tr>

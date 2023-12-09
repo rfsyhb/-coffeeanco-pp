@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cust_query = "SELECT * FROM pengunjung WHERE cust_username='$username'";
     $cust_data = mysqli_query($connect, $cust_query);
     $cust_row = mysqli_fetch_assoc($cust_data);
+    $_SESSION['cust_name'] = $cust_row['cust_name']; // mencatat nama cust
 
     // Verifikasi password admin dan set session jika cocok
     if ($admin_row && password_verify($password, $admin_row['PASSWORD'])) {
@@ -35,17 +36,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Verifikasi password customer dan set session jika cocok
     elseif ($cust_row && password_verify($password, $cust_row['cust_password'])) {
+        // Menetapkan session username dan status
         $_SESSION['username'] = $username;
-        $_SESSION['cust_id'] = $cust_row['cust_id'];
         $_SESSION['status'] = "customer";
 
-        // Ambil cust_id dari hasil query
-        $cust_id = $cust_row['cust_id'];
+        // Mengambil cust_username dari hasil query dan menetapkannya ke variabel
+        $cust_username = $cust_row['cust_username']; // Perbaikan di sini
 
-        // Cek apakah customer sudah memiliki cart
-        $cartCheckQuery = "SELECT cart_id FROM cart WHERE cust_id = ?";
+        // Mengecek apakah customer sudah memiliki cart
+        $cartCheckQuery = "SELECT cart_id FROM cart WHERE cust_username = ?";
         $cartCheckStmt = mysqli_prepare($connect, $cartCheckQuery);
-        mysqli_stmt_bind_param($cartCheckStmt, 's', $cust_id);
+        mysqli_stmt_bind_param($cartCheckStmt, 's', $cust_username);
         mysqli_stmt_execute($cartCheckStmt);
         $result = mysqli_stmt_get_result($cartCheckStmt);
         $cartExists = mysqli_fetch_assoc($result);
@@ -57,10 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Jika tidak, buat cart baru dan simpan di database
             $cart_id = uniqid('cart_');
             $_SESSION['cart_id'] = $cart_id;
-            $_SESSION['cust_id'] = $cust_id;
-            $insertCartQuery = "INSERT INTO cart (cart_id, cust_id) VALUES (?, ?)";
+            $_SESSION['cust_username'] = $cust_username; // Mengatur session cust_username
+            $insertCartQuery = "INSERT INTO cart (cart_id, cust_username) VALUES (?, ?)";
             $insertCartStmt = mysqli_prepare($connect, $insertCartQuery);
-            mysqli_stmt_bind_param($insertCartStmt, 'ss', $cart_id, $cust_id);
+            mysqli_stmt_bind_param($insertCartStmt, 'ss', $cart_id, $cust_username);
             mysqli_stmt_execute($insertCartStmt);
             mysqli_stmt_close($insertCartStmt);
         }

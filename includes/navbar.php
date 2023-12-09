@@ -8,15 +8,15 @@ require_once 'config.php'; // Menghubungkan ke file konfigurasi database
 $total_item = 0; // Inisialisasi $total_item
 
 // Cek apakah ada pengguna yang login
-if (isset($_SESSION['cust_id'])) {
-    $cust_id = $_SESSION['cust_id'];
+if (isset($_SESSION['username'])) {
+    $cust_username = $_SESSION['username'];
 
     // Query untuk menghitung jumlah item di cart_details
     $query = "SELECT COUNT(*) AS total_item FROM cart_details 
               JOIN cart ON cart.cart_id = cart_details.cart_id 
-              WHERE cart.cust_id = ?";
+              WHERE cart.cust_username = ?";
     $stmt = $connect->prepare($query);
-    $stmt->bind_param("i", $cust_id);
+    $stmt->bind_param("i", $cust_username);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result) {

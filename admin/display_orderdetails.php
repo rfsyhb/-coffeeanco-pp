@@ -150,13 +150,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                     // dengan nama customer
                                     $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name FROM order_details 
                                                                      JOIN orders ON order_details.order_id = orders.order_id 
-                                                                     JOIN pengunjung ON orders.cust_id = pengunjung.cust_id 
+                                                                     JOIN pengunjung ON orders.cust_username = pengunjung.cust_username 
                                                                      WHERE order_details.order_id = '$order_id'");
                                 } else {
                                     // Jika tidak ada order_id, tampilkan semua data dengan nama customer
                                     $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name FROM order_details 
                                                                      JOIN orders ON order_details.order_id = orders.order_id 
-                                                                     JOIN pengunjung ON orders.cust_id = pengunjung.cust_id");
+                                                                     JOIN pengunjung ON orders.cust_username = pengunjung.cust_username");
                                 }
                                 while ($data = mysqli_fetch_array($datas)) {
                                     ?>

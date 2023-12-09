@@ -128,14 +128,14 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                     <th scope="col">ID</th>
                                     <th scope="col">Order Date</th>
                                     <th scope="col" width="150">Total Amount</th>
-                                    <th scope="col" width="150">Customer ID</th>
+                                    <th scope="col" width="150">Cust Username</th>
                                     <th scope="col" width="270">Order Status</th>
                                     <th scope="col" width="112">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $datas = mysqli_query($connect, "SELECT orders.*, pengunjung.cust_name FROM orders JOIN pengunjung ON orders.cust_id = pengunjung.cust_id");
+                                $datas = mysqli_query($connect, "SELECT orders.*, pengunjung.cust_name FROM orders JOIN pengunjung ON orders.cust_username = pengunjung.cust_username");
                                 while ($data = mysqli_fetch_array($datas)) {
                                     ?>
                                     <tr>
@@ -153,8 +153,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                         <td style="text-align: right;">
                                             <?php echo number_format($data['total_amount'], 0, ',', '.'); ?>
                                         </td>
-                                        <td style="text-align: center;">
-                                            <?php echo $data['cust_id']; ?>
+                                        <td>
+                                            <?php echo $data['cust_username']; ?>
                                         </td>
                                         <td>
                                             <?php echo $data['order_status']; ?>

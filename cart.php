@@ -11,7 +11,7 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] != "customer") {
 require_once "includes/config.php"; // Memasukkan file konfigurasi untuk koneksi database
 
 $cart_id = $_SESSION['cart_id'] ?? ''; // Mendapatkan cart_id dari session atau default kosong
-$cust_id = $_SESSION['cust_id'] ?? ''; // Mendapatkan cust_id dari session atau default kosong
+$cust_username = $_SESSION['username'] ?? ''; // Mendapatkan cust_username dari session atau default kosong
 
 $cart_items = []; // Array untuk menyimpan item dalam keranjang
 $subtotal = 0; // Variabel untuk menyimpan subtotal
@@ -90,9 +90,9 @@ if (isset($_POST['checkout'])) {
         $total_amount = $subtotal; // Total harga dihitung dari subtotal keranjang
 
         // Menyimpan informasi order ke database
-        $orderQuery = "INSERT INTO orders (order_id, order_date, total_amount, cust_id, order_status) VALUES (?, ?, ?, ?, ?)";
+        $orderQuery = "INSERT INTO orders (order_id, order_date, total_amount, cust_username, order_status) VALUES (?, ?, ?, ?, ?)";
         $orderStmt = mysqli_prepare($connect, $orderQuery);
-        mysqli_stmt_bind_param($orderStmt, 'ssdss', $order_id, $order_date, $total_amount, $cust_id, $order_status);
+        mysqli_stmt_bind_param($orderStmt, 'ssdss', $order_id, $order_date, $total_amount, $cust_username, $order_status);
         mysqli_stmt_execute($orderStmt);
         mysqli_stmt_close($orderStmt);
 
@@ -113,9 +113,16 @@ if (isset($_POST['checkout'])) {
         mysqli_stmt_execute($emptyCartStmt);
         mysqli_stmt_close($emptyCartStmt);
 
+        // Menambahkan purchase_count untuk customer
+        $updatePurchaseCountQuery = "UPDATE pengunjung SET purchase_count = purchase_count + 1 WHERE cust_username = ?";
+        $updatePurchaseCountStmt = mysqli_prepare($connect, $updatePurchaseCountQuery);
+        mysqli_stmt_bind_param($updatePurchaseCountStmt, 's', $cust_username);
+        mysqli_stmt_execute($updatePurchaseCountStmt);
+        mysqli_stmt_close($updatePurchaseCountStmt);
+
         mysqli_commit($connect); // Commit transaksi jika semua operasi berhasil
 
-        header("Location: user_orders.php?cust_id=$cust_id"); // Redirect ke halaman konfirmasi
+        header("Location: user_orders.php?cust_username=$cust_username"); // Redirect ke halaman konfirmasi
         exit();
 
     } catch (mysqli_sql_exception $exception) {

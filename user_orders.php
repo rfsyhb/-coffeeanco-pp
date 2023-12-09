@@ -50,17 +50,17 @@ require_once "includes/config.php"; // Menghubungkan ke konfigurasi database
                         <thead>
                             <tr>
                                 <th scope="col">Order ID</th>
-                                <th scope="col" width="150">Order Date</th>
-                                <th scope="col" width="200">Total Amount</th>
-                                <th scope="col" width="350">Status</th>
-                                <th scope="col" width="200">Pembayaran</th>
+                                <th scope="col">Order Date</th>
+                                <th scope="col" width="130">Total Amount</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" width="174">Pembayaran</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             // Query untuk mendapatkan data pesanan
-                            $cust_id = mysqli_real_escape_string($connect, $_SESSION['cust_id']); // Sanitasi cust_id
-                            $datas = mysqli_query($connect, "SELECT * FROM orders WHERE cust_id = '$cust_id'");
+                            $cust_username = mysqli_real_escape_string($connect, $_SESSION['username']); // Sanitasi cust_username
+                            $datas = mysqli_query($connect, "SELECT * FROM orders WHERE cust_username = '$cust_username'");
 
                             while ($data = mysqli_fetch_array($datas)) {
                                 // Menampilkan data pesanan
@@ -68,10 +68,10 @@ require_once "includes/config.php"; // Menghubungkan ke konfigurasi database
                                 <tr>
                                     <td><?php echo htmlspecialchars($data['order_id']); ?></td>
                                     <td><?php echo htmlspecialchars($data['order_date']); ?></td>
-                                    <td><?php echo htmlspecialchars($data['total_amount']); ?></td>
+                                    <td style="text-align: right;"><?php echo number_format($data['total_amount'], 0, ',', '.'); ?></td>                                    
                                     <td><?php echo htmlspecialchars($data['order_status']); ?></td>
-                                    <td>
-                                        <a href="https://wa.me/6282154449091?text=Halo!+Saya+ingin+melakukan+pembayaran+untuk+order_id+<?php echo $data['order_id']; ?>"
+                                    <td style="text-align: right;">
+                                        <a href="https://wa.me/6282154449091?text=Halo!+Saya+<?php echo $_SESSION['cust_name']; ?>+ingin+melakukan+pembayaran+untuk+order_id+<?php echo $data['order_id']; ?>"
                                            class="btn-sm btn-primary payment-button" target="_blank">
                                            <span class="fa-brands fa-whatsapp"> <Span>Hubungi Admin</Span>
                                         </a>

@@ -2,7 +2,7 @@
     $server = "localhost";
     $username = "root";
     $password = "";
-    $db_name = "pp-coffeeanco";
+    $db_name = "coffeeanco";
 
     $connect = mysqli_connect($server, $username, $password, $db_name);
 

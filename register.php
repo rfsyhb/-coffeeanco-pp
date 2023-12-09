@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Cek untuk email
-    $query_email = $connect->prepare("SELECT cust_id FROM pengunjung WHERE cust_email = ?");
+    $query_email = $connect->prepare("SELECT cust_username FROM pengunjung WHERE cust_email = ?");
     $query_email->bind_param("s", $email);
     $query_email->execute();
     $result_email = $query_email->get_result();
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Cek untuk nomor telepon
-    $query_phone = $connect->prepare("SELECT cust_id FROM pengunjung WHERE cust_phone = ?");
+    $query_phone = $connect->prepare("SELECT cust_username FROM pengunjung WHERE cust_phone = ?");
     $query_phone->bind_param("s", $phone);
     $query_phone->execute();
     $result_phone = $query_phone->get_result();
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Cek untuk username
-    $query_username = $connect->prepare("SELECT cust_id FROM pengunjung WHERE cust_username = ?");
+    $query_username = $connect->prepare("SELECT cust_username FROM pengunjung WHERE cust_username = ?");
     $query_username->bind_param("s", $username);
     $query_username->execute();
     $result_username = $query_username->get_result();
