@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <link rel="stylesheet" href="assets/css/register.css">
     <link rel="icon" type="image/png" href="assets/images/coffeeanco.png">
-    <title>Regiter Account</title>
+    <title>Register Account</title>
 </head>
 
 <body>

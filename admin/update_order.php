@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="Login/logout.php">Logout</a></li>
+                    <li><a class="dropdown-item" href="../includes/logout.php">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -151,8 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="mb-3">
                             <label>Cust Username <span class="required-asterisk">*</span></label>
-                            <input type="text" name="cust_username" id="cust_username" value="<?php echo $data['cust_username']; ?>"
-                                class="form-control" readonly>
+                            <input type="text" name="cust_username" id="cust_username"
+                                value="<?php echo $data['cust_username']; ?>" class="form-control" readonly>
                         </div>
                         <div class="mb-3">
                             <label>Order Status <span class="required-asterisk">*</span></label>

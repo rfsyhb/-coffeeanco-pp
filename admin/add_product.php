@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label>Description <span class="required-asterisk">*</span></label>
+                            <label>Description (maksimal 255 huruf) <span class="required-asterisk">*</span></label>
                             <textarea name="prod_desc" id="prod_desc" class="form-control my-2 py-2"
                                 class="form-control" required maxlength="255"></textarea>
                         </div>

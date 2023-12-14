@@ -79,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Menampilkan pesan error jika username atau password salah
         echo "<script>
+            window.location.href='login.php" . (isset($_GET['redirect']) ? "?redirect=" . $_GET['redirect'] : "") . "';
             alert('Wrong Input Login!')
         </script>";
     }

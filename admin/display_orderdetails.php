@@ -122,7 +122,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                     <?php
                     if ($order_id) {
                         ?>
-                        <h3 class="fs-4 mb-3">Kelola Data Order Detail (<?php echo $order_id;?>)</h3>
+                        <h3 class="fs-4 mb-3">Kelola Data Order Detail (
+                            <?php echo $order_id; ?>)
+                        </h3>
                         <?php
                     } else {
                         ?>
@@ -138,6 +140,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                     <th scope="col">ID</th>
                                     <th scope="col">Order ID</th>
                                     <th scope="col">Product ID</th>
+                                    <th scope="col">Product Name</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col" width="120">Unit Price</th>
                                     <th scope="col" width="80">Action</th>
@@ -148,15 +151,17 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                 if ($order_id) {
                                     // Jika order_id diterima, tampilkan hanya data untuk order_id tersebut
                                     // dengan nama customer
-                                    $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name FROM order_details 
-                                                                     JOIN orders ON order_details.order_id = orders.order_id 
-                                                                     JOIN pengunjung ON orders.cust_username = pengunjung.cust_username 
-                                                                     WHERE order_details.order_id = '$order_id'");
+                                    $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name, produk.prod_name FROM order_details 
+                                         JOIN orders ON order_details.order_id = orders.order_id 
+                                         JOIN pengunjung ON orders.cust_username = pengunjung.cust_username
+                                         JOIN produk ON order_details.prod_id = produk.prod_id
+                                         WHERE order_details.order_id = '$order_id'");
                                 } else {
                                     // Jika tidak ada order_id, tampilkan semua data dengan nama customer
-                                    $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name FROM order_details 
-                                                                     JOIN orders ON order_details.order_id = orders.order_id 
-                                                                     JOIN pengunjung ON orders.cust_username = pengunjung.cust_username");
+                                    $datas = mysqli_query($connect, "SELECT order_details.*, pengunjung.cust_name, produk.prod_name FROM order_details 
+                                         JOIN orders ON order_details.order_id = orders.order_id 
+                                         JOIN pengunjung ON orders.cust_username = pengunjung.cust_username
+                                         JOIN produk ON order_details.prod_id = produk.prod_id");
                                 }
                                 while ($data = mysqli_fetch_array($datas)) {
                                     ?>
@@ -174,6 +179,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['order_
                                         </td>
                                         <td>
                                             <?php echo $data['prod_id']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $data['prod_name']; ?>
                                         </td>
                                         <td style="text-align: center;">
                                             <?php echo $data['quantity']; ?>

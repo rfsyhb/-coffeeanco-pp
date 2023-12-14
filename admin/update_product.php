@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="Login/logout.php">Logout</a></li>
+                    <li><a class="dropdown-item" href="../includes/logout.php">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -175,10 +175,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label>Description <span class="required-asterisk">*</span></label>
-                            <input type="text" name="prod_desc" id="prod_desc" value="<?php echo $data['prod_desc']; ?>"
-                                class="form-control" required>
+                            <label>Description (maksimal 255 huruf) <span class="required-asterisk">*</span></label>
+                            <textarea name="prod_desc" id="prod_desc" class="form-control my-2 py-2" required
+                                maxlength="255"><?php echo htmlspecialchars($data['prod_desc']); ?></textarea>
                         </div>
+
                         <div class="mb-3">
                             <label>Stock <span class="required-asterisk">*</span></label>
                             <input type="text" name="prod_stock" id="prod_stock"
